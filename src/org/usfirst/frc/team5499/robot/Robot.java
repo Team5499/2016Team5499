@@ -9,9 +9,16 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 
 public class Robot extends IterativeRobot {
 	
+	public static enum StateEnum{
+		AUTO,
+		TELEOP,
+		DISABLED
+	}
+	
 	MultiLooper controlLooper = new MultiLooper("controllers", 1 / 200.0);
 	Shooter shooter;
 	public static Hardware hardware  = new Hardware();
+	static StateEnum state;
     @Override
 	public void robotInit() {
     	System.out.println("robotInit");
@@ -40,6 +47,10 @@ public class Robot extends IterativeRobot {
     @Override
     public void disabledInit(){
     	controlLooper.stop();
+    }
+    
+    public static StateEnum getState(){
+    	return state;
     }
     
 }

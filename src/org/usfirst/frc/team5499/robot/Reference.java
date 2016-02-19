@@ -11,11 +11,18 @@ public class Reference {
 	public static final int driveLeft1CANID = 6;
 	public static final int driveLeft2CANID = 7;
 	public static final int shooterArmCANID = 8;
+
+	public static final int intakeArmMotorCANID = 9;
+	public static final int intakeRollerMotorCANID = 10;
 	
-	//AI ports
+	//AI DIO ports
 	public static final int shooterTopLightDIOPort = 0;
 	public static final int shooterBottomLightDIOPort = 1;
 	public static final int shooterArmPotAIPort = 0;
+	public static final int driveLeftEncoderA = 2;
+	public static final int driveLeftEncoderB = 3;
+	public static final int driveRightEncoderA = 4;
+	public static final int driveRightEncoderB = 5;
 
 	
 	//Joysticks
@@ -30,6 +37,9 @@ public class Reference {
 	public static final int shooterInTakeButton = 2;
 	public static final int shooterArmUpAxis = 2;
 	public static final int shooterArmDownAxis = 3;
+	public static int intakeArmAxis = 4;
+	public static int intakeRollerInButton = 6;
+	public static int intakeRollerOutButton = 7;
 	
 	//Random Constants
 	public static final double shooterFeedSpeed = .8;
@@ -43,5 +53,6 @@ public class Reference {
 	public static double shooterArmDGain = .000001;
 	public static double armMaxAcc = 10;
 	public static double armMaxVel = 200;
+	
 
 }
