@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.CANTalon;
 public class Intake implements Loopable {
 	CANTalon armMotor;
 	CANTalon rollerMotor;
+	double rollerSpeed;
 	
 	public Intake(CANTalon armMotor, CANTalon rollerMotor){
 		this.armMotor = armMotor;
@@ -20,11 +21,15 @@ public class Intake implements Loopable {
 	public void update() {
 		armMotor.set(Robot.hardware.operatorStation.getStickAxis(StickEnum.XBOX, Reference.intakeArmAxis) * 0.8);
 		if(Robot.hardware.operatorStation.getButton(StickEnum.XBOX, Reference.intakeRollerInButton)){
-			this.rollerMotor.set(.8);
+			this.rollerMotor.set(rollerSpeed);
 		}else if(Robot.hardware.operatorStation.getButton(StickEnum.XBOX, Reference.intakeRollerOutButton)){
-			this.rollerMotor.set(-.8);
+			this.rollerMotor.set(-rollerSpeed);
 		}else{	
 			this.rollerMotor.set(0);
 		}
+	}
+	
+	public void setRollerSpeed(double speed){
+		this.rollerSpeed = speed;
 	}
 }

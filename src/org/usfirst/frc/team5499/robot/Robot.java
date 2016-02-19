@@ -2,6 +2,7 @@
 package org.usfirst.frc.team5499.robot;
 
 import org.usfirst.frc.team5499.lib.util.MultiLooper;
+import org.usfirst.frc.team5499.robot.subsystems.Drive;
 import org.usfirst.frc.team5499.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -16,13 +17,14 @@ public class Robot extends IterativeRobot {
 	}
 	
 	MultiLooper controlLooper = new MultiLooper("controllers", 1 / 200.0);
-	Shooter shooter;
 	public static Hardware hardware  = new Hardware();
 	static StateEnum state;
     @Override
 	public void robotInit() {
     	System.out.println("robotInit");
 		controlLooper.addLoopable(hardware.shooter);
+		controlLooper.addLoopable(hardware.drive);
+		controlLooper.addLoopable(hardware.intake);
 	}
     
     @Override
