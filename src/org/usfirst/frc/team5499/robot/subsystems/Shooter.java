@@ -54,7 +54,7 @@ public class Shooter implements Loopable{
 		
 		topWheelController.enable();
 		bottomWheelController.enable();
-		topWheelController.setContinuous();
+		topWheelController.setContinuous(); 
 		bottomWheelController.setContinuous();
 		System.out.println(topWheelController.isEnabled());
 		currentArmSetpoint = 36.5; //cornershot 62.5 //battershot36.5
