@@ -26,5 +26,11 @@
   <property file="${user.home}/wpilib/java/${version}/ant/build.properties"/>
   
   <import file="${wpilib.ant.dir}/build.xml"/>
+	<target name="scptraj">
+	<scp todir="admin:@roboRIO-5499-FRC.local:/" trust="true">
+		<fileset dir="trajectories">
+		</fileset>	
+	</scp>
+	</target>
 
 </project> 

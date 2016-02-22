@@ -3,51 +3,66 @@ package org.usfirst.frc.team5499.robot.sensors;
 import org.usfirst.frc.team5499.lib.util.Loopable;
 
 import edu.wpi.first.wpilibj.Counter;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 
-public class LightSensor implements Loopable{
+public class LightSensor implements Loopable, PIDSource{
 	double lasttime;
 	double dt;
 	double dtsum;
-	double rps;
+	double rpm;
 	double countsum;
 	protected int currentcount;
 	Counter count;
+	double maxSpeed;
+	double invert;
 	
-	public LightSensor(int DIOPort){
+	public LightSensor(int DIOPort, double maxSpeed){
 		count = new Counter(DIOPort);
-		count.setExternalDirectionMode();
-		
+		count.setUpDownCounterMode();
+		this.maxSpeed = maxSpeed;
+		this.invert = 1;
 		
 	}
 	
 	@Override
 	public void update() {
-		dt = Timer.getFPGATimestamp()- lasttime;
-		lasttime = Timer.getFPGATimestamp();
-		dtsum += dt;
-		currentcount = count.get();
-		countsum += currentcount;
-		rps = countsum / dtsum;
-		count.reset();
-		currentcount=0;
-		if (dtsum > 1){
-			dtsum = 0;	
-			countsum=0;
-		}
+//		dt = Timer.getFPGATimestamp()- lasttime;
+//		lasttime = Timer.getFPGATimestamp();
+		rpm = 60 / (count.getPeriod());
+//		dtsum += dt;
+//		countsum += currentcount;
+		
+//		if(dtsum > 3){
+//			dtsum = 0;
+//			countsum = 0;
+//		
+//		}
+//		count.reset();
 	}
 	
 	public double getRate(){
-		return rps * 60;
+		return rpm;
 	}
-	
-//	class Interrupt extends InterruptHandlerFunction<Object>{
-//		
-//		@Override
-//		public void interruptFired(int interruptAssertedMask, Object param) {
-//			currentcount++;
-//			System.out.println("interrupt fired");
-//		}
-//		
-//	}
+
+	@Override
+	public void setPIDSourceType(PIDSourceType pidSource) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public PIDSourceType getPIDSourceType() {
+		// TODO Auto-generated method stub
+		return PIDSourceType.kRate;
+	}
+
+	@Override
+	public double pidGet() {
+		// TODO Auto-generated method stub
+		return invert * getRate(); /// maxSpeed;
+	}
+	public void setInverted(){
+		invert = -1;
+	}
 }

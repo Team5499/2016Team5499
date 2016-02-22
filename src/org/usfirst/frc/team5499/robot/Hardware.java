@@ -4,10 +4,11 @@ import org.usfirst.frc.team5499.robot.sensors.LightSensor;
 import org.usfirst.frc.team5499.robot.sensors.Pot;
 import org.usfirst.frc.team5499.robot.subsystems.Drive;
 import org.usfirst.frc.team5499.robot.subsystems.Intake;
-import org.usfirst.frc.team5499.robot.subsystems.Operator;
+import org.usfirst.frc.team5499.robot.subsystems.OI;
 import org.usfirst.frc.team5499.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
@@ -18,8 +19,11 @@ public class Hardware {
 	CANTalon shooterTopWheel;
 	CANTalon shooterFeedWheel;
 	CANTalon shooterArmMotor;
+	
 	CANTalon intakeArmMotor;
 	CANTalon intakeRollerMotor;
+	Encoder intakeEncoder;
+	
 	CANTalon driveLeft1;
 	CANTalon driveLeft2;
 	CANTalon driveRight1;
@@ -35,11 +39,14 @@ public class Hardware {
 	Joystick leftStick;
 	Joystick rightStick;
 	Joystick xBoxController;
+	Joystick wheel;
+	Joystick throttle;
 	public Shooter shooter;
-	public Operator operatorStation;
+	public OI operatorStation;
 	public Intake intake;
 	public Drive drive;
 	public PowerDistributionPanel pdp;
+	public Compressor c;
 	
 	public Hardware(){
 		
@@ -48,22 +55,37 @@ public class Hardware {
 		shooterFeedWheel = new CANTalon(Reference.shooterFeedWheelCANID);
 		shooterArmMotor = new CANTalon(Reference.shooterArmCANID);
 		shooterArmPot = new Pot(Reference.shooterArmPotAIPort); 
-		shooterBottomSensor = new LightSensor(Reference.shooterBottomLightDIOPort);
-		shooterTopSensor = new LightSensor(Reference.shooterTopLightDIOPort);
+		shooterBottomSensor = new LightSensor(Reference.shooterBottomLightDIOPort, Reference.shooterWheelMaxBot);
+		shooterTopSensor = new LightSensor(Reference.shooterTopLightDIOPort, Reference.shooterWheelMaxTop);
+		
+		driveLeft1 = new CANTalon(Reference.driveLeft1CANID);
+		driveLeft2 = new CANTalon(Reference.driveLeft2CANID);
+		driveRight1 = new CANTalon(Reference.driveRight1CANID);
+		driveRight2 = new CANTalon(Reference.driveRight2CANID);
+		encLeft = new Encoder(Reference.driveLeftEncoderA, Reference.driveLeftEncoderB, false, Encoder.EncodingType.k4X);
+		encRight = new Encoder(Reference.driveRightEncoderA, Reference.driveRightEncoderB, false, Encoder.EncodingType.k4X);
+		shiftLeft = new DoubleSolenoid(Reference.shiftLeftPCMPort1, Reference.shiftLeftPCMPort2);
+		shiftRight = new DoubleSolenoid(Reference.shiftRightPCMPort1, Reference.shiftRightPCMPort2);
+		
+		c = new Compressor();
 		
 		intakeArmMotor = new CANTalon(Reference.intakeArmMotorCANID);
 		intakeRollerMotor = new CANTalon(Reference.intakeRollerMotorCANID);
+		intakeEncoder = new Encoder(Reference.intakeEncoderA, Reference.intakeEncoderB, false, Encoder.EncodingType.k4X);
+		
 		
 		pdp = new PowerDistributionPanel(12);
 		
 		leftStick = new Joystick(Reference.leftStickPort);
 		rightStick = new Joystick(Reference.rightStickPort);
 		xBoxController = new Joystick(Reference.xBoxController);
+		wheel = new Joystick(Reference.wheel);
+		throttle = new Joystick(Reference.throttle);
 		
 		shooter = new Shooter("shooter", shooterBottomWheel, shooterTopWheel,
 				shooterFeedWheel, shooterArmMotor, shooterBottomSensor, shooterTopSensor, shooterArmPot);
-		operatorStation = new Operator(leftStick, rightStick, xBoxController);
-		intake = new Intake(intakeArmMotor, intakeRollerMotor);
+		operatorStation = new OI(leftStick, rightStick, xBoxController, wheel, throttle);
+		intake = new Intake(intakeArmMotor, intakeRollerMotor, intakeEncoder);
 		drive = new Drive(driveLeft1, driveLeft2, driveRight1, driveRight2, encLeft, encRight, shiftLeft, shiftRight);
 	}
 }
