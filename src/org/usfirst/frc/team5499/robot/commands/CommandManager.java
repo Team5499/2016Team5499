@@ -10,11 +10,8 @@ public class CommandManager {
 	}
 	
 	public void update(Commands commands) {
-		if(commands.intakeRequest == Commands.IntakeRequest.LOWER){
-			setCurrentRoutine(new IntakeLowerRoutine());
-		}else if(commands.intakeRequest == Commands.IntakeRequest.INTAKE){
-			setCurrentRoutine(new IntakeRoutine());
-		}else if(commands.shiftRequest == Commands.ShiftRequest.LOW){
+		
+		if(commands.shiftRequest == Commands.ShiftRequest.LOW){
 			setCurrentRoutine(new ShiftRoutine(commands.shiftRequest));
 			System.out.println("ShiftRequestLow");
 		}else if(commands.shiftRequest == Commands.ShiftRequest.HIGH){
@@ -22,6 +19,18 @@ public class CommandManager {
 			System.out.println("ShiftRequestHigh");
 		}else if(commands.shiftRequest == Commands.ShiftRequest.OFF){
 			setCurrentRoutine(new ShiftRoutine(commands.shiftRequest));
+		}else if(commands.shotPrepRequest == Commands.ShotRequest.BATTER){
+			setCurrentRoutine(new ShootPrepRoutine(commands.shotPrepRequest));
+		}else if(commands.shotPrepRequest == Commands.ShotRequest.CLEAT){
+			setCurrentRoutine(new ShootPrepRoutine(commands.shotPrepRequest));
+			System.out.println("shooter cleat prep");
+		}else if(commands.shootRequest == Commands.Shoot.ON){
+			setCurrentRoutine(new ShootRoutine());
+		}else if(commands.shootRequest == Commands.Shoot.IN){
+			setCurrentRoutine(new ShootInRoutine());
+		}
+		else if(commands.shootRequest == Commands.Shoot.OFF && !state.shooting){
+			setCurrentRoutine(new ShooterOffRoutine());
 		}
 		if(currentRoutine!=null){
 			this.state = currentRoutine.update(commands, this.state);

@@ -76,17 +76,17 @@ public class Drive implements Loopable {
 //					Robot.hardware.operatorStation.getStickAxis(StickEnum.RIGHTSTICK, Reference.driveAxis));
 			curTime = Timer.getFPGATimestamp();
 //			if(Math.abs(lastShiftTime - curTime) > .125){
-//				if(Robot.hardware.operatorStation.getButton(StickEnum.XBOX, Reference.shiftHighButton)){
-//					shift(Commands.ShiftRequest.HIGH);
-//					System.out.println("attempt shift high");
-//					lastShiftTime = curTime;
-//				}else if(Robot.hardware.operatorStation.getButton(StickEnum.XBOX, Reference.shiftLowButton)){
-//					shift(Commands.ShiftRequest.LOW);
-//					System.out.println("attempt shift low");
-//					lastShiftTime = curTime;
-//				}else{
-//					shift(Commands.ShiftRequest.OFF);
-//				}
+				if(Robot.hardware.operatorStation.getButton(StickEnum.THROTTLE, Reference.shiftButton)){
+					shift(Commands.ShiftRequest.HIGH);
+					System.out.println("attempt shift high");
+					lastShiftTime = curTime;
+				}else if(!Robot.hardware.operatorStation.getButton(StickEnum.THROTTLE, Reference.shiftButton)){
+					shift(Commands.ShiftRequest.LOW);
+					System.out.println("attempt shift low");
+					lastShiftTime = curTime;
+				}else{
+					shift(Commands.ShiftRequest.OFF);
+				}
 //				
 //			}else{
 //				shift(Commands.ShiftRequest.OFF);
@@ -107,8 +107,11 @@ public class Drive implements Loopable {
 	}
 	
 	private void setMotorsWheel(double wheel, double throttle) {
-		double left = (.5 + (wheel / 2)) * throttle;
-		double right = (.5 - (wheel / 2)) * throttle;
+		System.out.println(wheel);
+		System.out.println(throttle);
+		throttle = -1.5 * throttle;
+		double left = (.5 + (wheel)) * throttle;
+		double right = (.5 - (wheel)) * throttle;
 		setMotors(left, right);
 		
 	}

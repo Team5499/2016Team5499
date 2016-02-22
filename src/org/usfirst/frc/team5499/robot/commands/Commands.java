@@ -3,7 +3,7 @@ package org.usfirst.frc.team5499.robot.commands;
 public class Commands {
 	public static enum ShotRequest {
 		BATTER,
-		CORNER
+		CLEAT
 	}
 
 	public static enum IntakeRequest{
@@ -17,8 +17,17 @@ public class Commands {
 		LOW,
 		OFF
 	}
+
+	public static enum Shoot{
+		ON,
+		OFF,
+		IN
+	}
 	
 	public IntakeRequest intakeRequest;
 	public ShiftRequest shiftRequest;
+	public Shoot shootRequest;
+	public ShotRequest shotPrepRequest;
+	public Object shooterInRequest;
 	
 }

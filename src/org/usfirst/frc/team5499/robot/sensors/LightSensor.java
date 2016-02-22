@@ -11,6 +11,7 @@ public class LightSensor implements Loopable, PIDSource{
 	double dt;
 	double dtsum;
 	double rpm;
+	double lastrpm;
 	double countsum;
 	protected int currentcount;
 	Counter count;
@@ -30,6 +31,10 @@ public class LightSensor implements Loopable, PIDSource{
 //		dt = Timer.getFPGATimestamp()- lasttime;
 //		lasttime = Timer.getFPGATimestamp();
 		rpm = 60 / (count.getPeriod());
+		if(Math.abs(lastrpm - rpm)>2000){
+			rpm = lastrpm;
+		}
+		lastrpm = rpm;
 //		dtsum += dt;
 //		countsum += currentcount;
 		

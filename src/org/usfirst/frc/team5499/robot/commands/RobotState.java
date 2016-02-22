@@ -10,4 +10,5 @@ public class RobotState {
 	public boolean intakeUp;
 	public boolean shooterUp;
 	public ShiftRequest shift;
+	public boolean shooting;
 }

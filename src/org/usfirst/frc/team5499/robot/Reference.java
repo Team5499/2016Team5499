@@ -35,15 +35,15 @@ public class Reference {
 	public static final int shooterBottomAxis = 5;
 	public static final int driveAxis = 1;
 	public static final int shiftButton = 4;
-	public static final int shooterOutTakeButton = 1;
-	public static final int shooterInTakeButton = 2;
-	public static final int shooterArmUpAxis = 2;
-	public static final int shooterArmDownAxis = 3;
+//	public static final int shooterOutTakeButton = 1;
+//	public static final int shooterInTakeButton = 2;
+//	public static final int shooterArmUpAxis = 2;
+//	public static final int shooterArmDownAxis = 3;
 	public static int intakeArmAxis = 1;
-	public static int intakeRollerInAxis = 2;
-	public static int intakeRollerOutButton = 5;
-	public static final int shooterWheelsInAxis = 3;
-	public static final int shooterWheelsOutButton = 6;
+	public static int intakeRollerInButton = 2;
+	public static int intakeRollerOutButton = 3;
+	public static final int shooterWheelsInButton = 9;
+//	public static final int shooterWheelsOutButton = 6;
 	
 	//Random Constants
 	public static final double shooterFeedSpeed = .8;
@@ -51,7 +51,7 @@ public class Reference {
 	
 	//Shooter Arm Constants
 	public static double shooterArmPotScale = -269.5;//-272.72; //272.72
-	public static double shooterArmPotZero = 213.17;//225;
+	public static double shooterArmPotZero = 270.5;//225;
 	public static double shooterArmPGain = .06;
 	public static double shooterArmIGain = .0001;
 	public static double shooterArmDGain = .000001;
@@ -59,7 +59,7 @@ public class Reference {
 	public static double shooterArmMaxOut = 1;
 	public static double armMaxAcc = 10;
 	public static double armMaxVel = 200;
-	public static double shootSpeed = 2000;
+	public static double shootSpeed = 5000;
 
 	public static int shiftLeftPCMPort1 = 0;
 	public static int shiftLeftPCMPort2 = 1;
@@ -83,18 +83,21 @@ public class Reference {
 	public static double shooterWheelILimit = 1000;
 	public static double shooterWheelMaxTop = 5300;
 	public static double shooterWheelMaxBot = 4800;
-	public static double topWheelBatterSpeed = 4500;
-	public static double bottomWheelBatterSpeed = 4000;
-	public static double topWheelCornerSpeed = 5000;
-	public static double bottomWheelCornerSpeed = 5000;
-	public static double armBatterAng = 36.5;
-	public static double armCornerAng = 62.5;
-	public static int wheelDriveAxis = 1;
+	public static double topWheelBatterSpeed = 5100;
+	public static double bottomWheelBatterSpeed = 5000;
+	public static double topWheelCleatSpeed = 5100;
+	public static double bottomWheelCleatSpeed = 5000;
+	public static double armBatterAng = 17;
+	public static double armCleatAng = 32.5;
+	public static int wheelDriveAxis = 0;
 	public static int throttleAxis = 1;
-	public static int wheel = 0;
-	public static int throttle = 3;
+	public static int wheel = 3;
+	public static int throttle = 4;
 	public static int shiftHighButton = 1;
 	public static int shiftLowButton = 2;
+	public static int shooterBatterShotButton = 8;
+	public static int shooterCleatShotButton = 10;
+	public static int shootButton = 1; 
 	
 
 }

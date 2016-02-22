@@ -55,6 +55,8 @@ public class Robot extends IterativeRobot {
     public void teleopInit(){
     	state = StateEnum.TELEOP;
     	controlLooper.start();
+    	hardware.shooter.stopWheels();
+    	hardware.shooter.lower();
 
     }
     @Override
