@@ -65,10 +65,12 @@ public class Reference {
 	public static int shiftLeftPCMPort2 = 1;
 	public static int shiftRightPCMPort1 = 2;
 	public static int shiftRightPCMPort2 = 3;
+
 	public static double wheelCircum = Math.PI * (6.0/12.0);
 	public static double encPulsesPerRev = 245;
 	public static double distancePerPulseRight = .006414368;
 	public static double distancePerPulseLeft = .006529546;
+
 	public static int driveLeft1PDPPort = 12;
 	public static int driveLeft2PDPPort = 13;
 	public static int driveRight1PDPPort = 14;
