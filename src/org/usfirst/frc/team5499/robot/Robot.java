@@ -39,21 +39,13 @@ public class Robot extends IterativeRobot {
 		fileString = new AutoModeFileHandler().readAutoModeFile();
 		autoModePath = (new TextFileDeserializer()).deserialize(fileString);
 		trajPair = autoModePath.getPair();
-		System.out.println(trajPair.toString());
-		hardware.drive.gyro.gyro.calibrate();
 		
 	}
     
     @Override
     public void autonomousInit() {
-    	state = StateEnum.AUTO;
-    	controlLooper.start();
-		hardware.drive.setTrajectory(trajPair);
-		hardware.shooter.lower();
-		hardware.drive.setInverted(false);
-		hardware.encLeft.reset();
-		hardware.encRight.reset();
-		hardware.drive.gyro.gyro.reset();
+//    	state = StateEnum.AUTO;
+//    	controlLooper.start();
     }
 
     @Override

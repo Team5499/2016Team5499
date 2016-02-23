@@ -24,10 +24,10 @@ public class Intake implements Loopable {
 
 	@Override
 	public void update() {
-		armMotor.set(Robot.hardware.operatorStation.getStickAxis(StickEnum.OPERATORSTICK, Reference.intakeArmAxis) * 0.8);
-		if(Robot.hardware.operatorStation.getButton(StickEnum.OPERATORSTICK, Reference.intakeRollerInButton)){
+		armMotor.set(Robot.hardware.operatorStation.getStickAxis(StickEnum.OPERATOR, Reference.intakeArmAxis) * 0.8);
+		if(Robot.hardware.operatorStation.getButton(StickEnum.OPERATOR, Reference.intakeRollerInButton)){
 			this.rollerMotor.set(rollerSpeed);
-		}else if(Robot.hardware.operatorStation.getButton(StickEnum.OPERATORSTICK, Reference.intakeRollerOutButton)){
+		}else if(Robot.hardware.operatorStation.getButton(StickEnum.OPERATOR, Reference.intakeRollerOutButton)){
 			this.rollerMotor.set(-rollerSpeed);
 		}else{	
 			this.rollerMotor.set(0);
