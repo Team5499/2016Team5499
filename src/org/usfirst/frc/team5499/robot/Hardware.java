@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 public class Hardware {
 	CANTalon shooterBottomWheel;
@@ -62,8 +63,8 @@ public class Hardware {
 		driveLeft2 = new CANTalon(Reference.driveLeft2CANID);
 		driveRight1 = new CANTalon(Reference.driveRight1CANID);
 		driveRight2 = new CANTalon(Reference.driveRight2CANID);
-		encLeft = new Encoder(Reference.driveLeftEncoderA, Reference.driveLeftEncoderB, false, Encoder.EncodingType.k4X);
-		encRight = new Encoder(Reference.driveRightEncoderA, Reference.driveRightEncoderB, false, Encoder.EncodingType.k4X);
+		encLeft = new Encoder(Reference.driveLeftEncoderA, Reference.driveLeftEncoderB, false, Encoder.EncodingType.k1X);
+		encRight = new Encoder(Reference.driveRightEncoderA, Reference.driveRightEncoderB, false, Encoder.EncodingType.k1X);
 		shiftLeft = new DoubleSolenoid(Reference.shiftLeftPCMPort1, Reference.shiftLeftPCMPort2);
 		shiftRight = new DoubleSolenoid(Reference.shiftRightPCMPort1, Reference.shiftRightPCMPort2);
 		
@@ -84,7 +85,7 @@ public class Hardware {
 		
 		shooter = new Shooter("shooter", shooterBottomWheel, shooterTopWheel,
 				shooterFeedWheel, shooterArmMotor, shooterBottomSensor, shooterTopSensor, shooterArmPot);
-		operatorStation = new OI(leftStick, rightStick, xBoxController, wheel, throttle);
+		operatorStation = new OI(xBoxController, wheel, throttle);
 		intake = new Intake(intakeArmMotor, intakeRollerMotor, intakeEncoder);
 		drive = new Drive(driveLeft1, driveLeft2, driveRight1, driveRight2, encLeft, encRight, shiftLeft, shiftRight);
 	}

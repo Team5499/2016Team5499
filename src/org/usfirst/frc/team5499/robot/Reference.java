@@ -65,8 +65,10 @@ public class Reference {
 	public static int shiftLeftPCMPort2 = 1;
 	public static int shiftRightPCMPort1 = 2;
 	public static int shiftRightPCMPort2 = 3;
-	public static double wheelCircum = 2.0 * Math.PI * (4/12);
-	public static double encPulsesPerRev = 1000;
+	public static double wheelCircum = Math.PI * (6.0/12.0);
+	public static double encPulsesPerRev = 245;
+	public static double distancePerPulseRight = .006414368;
+	public static double distancePerPulseLeft = .006529546;
 	public static int driveLeft1PDPPort = 12;
 	public static int driveLeft2PDPPort = 13;
 	public static int driveRight1PDPPort = 14;
@@ -87,17 +89,21 @@ public class Reference {
 	public static double bottomWheelBatterSpeed = 5000;
 	public static double topWheelCleatSpeed = 5100;
 	public static double bottomWheelCleatSpeed = 5000;
-	public static double armBatterAng = 17;
+	public static double armBatterAng = 18.5;
 	public static double armCleatAng = 32.5;
 	public static int wheelDriveAxis = 0;
 	public static int throttleAxis = 1;
-	public static int wheel = 3;
-	public static int throttle = 4;
+	public static int wheel = 0;
+	public static int throttle = 1;
+	public static int operatorStick = 2;
+	public static int operatorPanel = 6;
 	public static int shiftHighButton = 1;
 	public static int shiftLowButton = 2;
 	public static int shooterBatterShotButton = 8;
 	public static int shooterCleatShotButton = 10;
-	public static int shootButton = 1; 
+	public static int shootButton = 1;
+	public static int shooterCancelButton = 6; 
+	public static int driveSwitchButton = 7;
 	
 
 }
