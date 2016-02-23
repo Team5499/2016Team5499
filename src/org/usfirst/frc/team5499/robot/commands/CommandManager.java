@@ -24,6 +24,8 @@ public class CommandManager {
 		}else if(commands.shotPrepRequest == Commands.ShotRequest.CLEAT){
 			setCurrentRoutine(new ShootPrepRoutine(commands.shotPrepRequest));
 			//System.out.println("shooter cleat prep");
+		}else if(commands.shotPrepRequest == Commands.ShotRequest.AUTO){
+			setCurrentRoutine(new ShootPrepRoutine(commands.shotPrepRequest));
 		}else if(commands.shotPrepRequest == Commands.ShotRequest.OFF && !state.shooting){
 			setCurrentRoutine(new ShooterOffRoutine());
 			//System.out.println("shooter off");

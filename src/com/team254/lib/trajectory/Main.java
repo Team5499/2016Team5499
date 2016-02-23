@@ -65,7 +65,8 @@ public class Main {
       WaypointSequence p = new WaypointSequence(10);
       p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
       p.addWaypoint(new WaypointSequence.Waypoint(17, 0 , 0));
-      p.addWaypoint(new WaypointSequence.Waypoint(21, 1, 0));
+     // p.addWaypoint(new WaypointSequence.Waypoint(20, 0, 0));
+      p.addWaypoint(new WaypointSequence.Waypoint(19, 2, Math.PI / 6));
      // p.addWaypoint(new WaypointSequence.Waypoint(10, 0, -1 * Math.PI/2.1));
     //  p.addWaypoint(new WaypointSequence.Waypoint(8, 4, 0));
       //p.addWaypoint(new WaypointSequence.Waypoint(14,0,0));
@@ -92,14 +93,14 @@ public class Main {
       config.max_jerk = 50.0;
       config.max_vel = 10.0;
       // Path name must be a valid Java class name.
-      final String path_name = "CenterLanePathFar";
+      final String path_name = "AutoReturn";
       
       // Description of this auto mode path.
       // Remember that this is for the GO LEFT CASE!
       WaypointSequence p = new WaypointSequence(10);
+      p.addWaypoint(new WaypointSequence.Waypoint(21, 1, 0));
+      p.addWaypoint(new WaypointSequence.Waypoint(17.0, 0, 0));
       p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
-      p.addWaypoint(new WaypointSequence.Waypoint(7.0, 0, 0));
-      p.addWaypoint(new WaypointSequence.Waypoint(14.0, 5.0, Math.PI / 12.0));
 
       Path path = PathGenerator.makePath(p, config,
           kWheelbaseWidth, path_name);

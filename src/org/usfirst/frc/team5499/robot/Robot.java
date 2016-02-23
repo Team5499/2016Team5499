@@ -3,6 +3,7 @@ package org.usfirst.frc.team5499.robot;
 
 import org.usfirst.frc.team5499.lib.util.MultiLooper;
 import org.usfirst.frc.team5499.robot.auto.AutoModeFileHandler;
+import org.usfirst.frc.team5499.robot.auto.AutoModeSingleBall;
 import org.usfirst.frc.team5499.robot.commands.CommandManager;
 import org.usfirst.frc.team5499.robot.commands.Commands;
 
@@ -27,6 +28,8 @@ public class Robot extends IterativeRobot {
 	Path autoModePath;
 	Trajectory.Pair trajPair;
 	String fileString;
+	boolean autohasshot;
+	AutoModeSingleBall autoMode;
 	
     @Override
 	public void robotInit() {
@@ -41,7 +44,8 @@ public class Robot extends IterativeRobot {
 		trajPair = autoModePath.getPair();
 		System.out.println(trajPair.toString());
 		hardware.drive.gyro.gyro.calibrate();
-		
+		autohasshot = false;
+		autoMode = new AutoModeSingleBall();
 	}
     
     @Override
@@ -58,6 +62,8 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void autonomousPeriodic() {
+//    	Commands cmds = autoMode.getCmds();
+//    	cmdManager.update(cmds);
     }
     @Override
     public void teleopInit(){

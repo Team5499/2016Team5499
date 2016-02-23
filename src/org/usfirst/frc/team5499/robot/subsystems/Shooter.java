@@ -152,6 +152,10 @@ public class Shooter implements Loopable{
 			bottomWheelController.setSetpoint(Reference.bottomWheelCleatSpeed);
 			currentArmSetpoint = Reference.armCleatAng;
 			break;
+		case AUTO:
+			topWheelController.setSetpoint(Reference.autoShotSpeedTop);
+			bottomWheelController.setSetpoint(Reference.autoShotSpeedBottom);
+			currentArmSetpoint = Reference.autoShotAngle;
 		case OFF:
 			stopWheels();
 			lower();

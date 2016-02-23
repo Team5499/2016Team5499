@@ -28,8 +28,8 @@ public class Drive implements Loopable {
 	DoubleSolenoid leftShift;
 	DoubleSolenoid rightShift;
 	public Gyro gyro;
-	TrajectoryFollower leftFollower;
-	TrajectoryFollower rightFollower;
+	public TrajectoryFollower leftFollower;
+	public TrajectoryFollower rightFollower;
 	static final double kp = 1.7;
 	static final double ki = 0;
 	static final double kd = 0;
@@ -39,9 +39,11 @@ public class Drive implements Loopable {
 	double curTime;
 	double inverted;
 	DriveStraightController angControl;
+	public boolean trajFinished;
 	
 	public Drive(CANTalon motorLeft1, CANTalon motorLeft2, CANTalon motorRight1, CANTalon motorRight2, 
 			Encoder encLeft, Encoder encRight, DoubleSolenoid leftShift, DoubleSolenoid rightShift){
+		trajFinished = false;
 		this.motorLeft1 = motorLeft1;
 		this.motorLeft2 = motorLeft2;
 		this.motorRight1 = motorRight1;
@@ -115,23 +117,31 @@ public class Drive implements Loopable {
 //			}else{
 				angControl.update();
 				if(leftFollower.isFinishedTrajectory()){
+					angControl.turnSplineOff();
+					//System.out.println("spline finished");
 					angControl.turnOn();
 					angControl.setSetpoint(70);//leftFollower.getHeading() * 180 / Math.PI);
+					if(Math.abs(gyro.gyro.getAngle() - 70) < 10 ){
+						trajFinished = true;
+					}
+					
 				}else{
 					angControl.setSetpoint(0);
-				}
-				System.out.println("Heading: " + leftFollower.getHeading());
+//				}
+//				System.out.println("Heading: " + leftFollower.getHeading());
 				System.out.println("Gyro: " + gyro.gyro.getAngle());
 				double leftSetpoint = angControl.getOutputLeft();
 				double rightSetpoint = angControl.getOutputRight();
 				//double leftSetpoint = leftFollower.calculate(encLeft.getDistance());
 				//double rightSetpoint = rightFollower.calculate(encRight.getDistance());
-				System.out.println("left: " + encLeft.getDistance());
-				System.out.println("right: " + encRight.getDistance());
+//				System.out.println("left: " + encLeft.getDistance());
+//				System.out.println("right: " + encRight.getDistance());
 //				System.out.println("leftSetpoint: " + leftSetpoint);
 				setMotors(leftSetpoint, rightSetpoint);
+				//trajFinished = true;
 			//}
 			
+				}
 		}
 		
 		

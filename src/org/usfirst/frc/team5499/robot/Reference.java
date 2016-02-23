@@ -105,5 +105,9 @@ public class Reference {
 	public static int shooterCancelButton = 6; 
 	public static int driveSwitchButton = 7;
 	
+	public static double autoShotAngle = 45;
+	public static double autoShotSpeedBottom = 5100;
+	public static double autoShotSpeedTop = 5100;
+	
 
 }
