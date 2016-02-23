@@ -23,7 +23,6 @@ public class CommandManager {
 			setCurrentRoutine(new ShootPrepRoutine(commands.shotPrepRequest));
 		}else if(commands.shotPrepRequest == Commands.ShotRequest.CLEAT){
 			setCurrentRoutine(new ShootPrepRoutine(commands.shotPrepRequest));
-<<<<<<< HEAD
 			//System.out.println("shooter cleat prep");
 		}else if(commands.shotPrepRequest == Commands.ShotRequest.AUTO){
 			setCurrentRoutine(new ShootPrepRoutine(commands.shotPrepRequest));
@@ -32,10 +31,6 @@ public class CommandManager {
 			//System.out.println("shooter off");
 		}
 		else if(commands.shootRequest == Commands.Shoot.ON){
-=======
-			System.out.println("shooter cleat prep");
-		}else if(commands.shootRequest == Commands.Shoot.ON){
->>>>>>> 79677f8f981f162b3f65709c115ae6ffca847d5e
 			setCurrentRoutine(new ShootRoutine());
 		}else if(commands.shootRequest == Commands.Shoot.IN){
 			setCurrentRoutine(new ShootInRoutine());
