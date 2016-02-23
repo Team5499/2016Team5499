@@ -50,14 +50,8 @@ public class Robot extends IterativeRobot {
     
     @Override
     public void autonomousInit() {
-    	state = StateEnum.AUTO;
-    	controlLooper.start();
-		hardware.drive.setTrajectory(trajPair);
-		hardware.shooter.lower();
-		hardware.drive.setInverted(false);
-		hardware.encLeft.reset();
-		hardware.encRight.reset();
-		hardware.drive.gyro.gyro.reset();
+//    	state = StateEnum.AUTO;
+//    	controlLooper.start();
     }
 
     @Override

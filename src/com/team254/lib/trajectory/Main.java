@@ -54,7 +54,7 @@ public class Main {
     final double kWheelbaseWidth = 20.5/12;
     {
       config.dt = .01;
-      config.max_acc = 4.0;
+      config.max_acc = 8.0;
       config.max_jerk = 50.0;
       config.max_vel = 10.0;
       // Path name must be a valid Java class name.
@@ -64,12 +64,17 @@ public class Main {
       // Remember that this is for the GO LEFT CASE!
       WaypointSequence p = new WaypointSequence(10);
       p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
+<<<<<<< HEAD
       p.addWaypoint(new WaypointSequence.Waypoint(17, 0 , 0));
      // p.addWaypoint(new WaypointSequence.Waypoint(20, 0, 0));
       p.addWaypoint(new WaypointSequence.Waypoint(19, 2, Math.PI / 6));
      // p.addWaypoint(new WaypointSequence.Waypoint(10, 0, -1 * Math.PI/2.1));
     //  p.addWaypoint(new WaypointSequence.Waypoint(8, 4, 0));
       //p.addWaypoint(new WaypointSequence.Waypoint(14,0,0));
+=======
+      p.addWaypoint(new WaypointSequence.Waypoint(7.0, 0, 0));
+     // p.addWaypoint(new WaypointSequence.Waypoint(14.0, 1.0, Math.PI / 12.0));
+>>>>>>> 79677f8f981f162b3f65709c115ae6ffca847d5e
 
       Path path = PathGenerator.makePath(p, config,
           kWheelbaseWidth, path_name);

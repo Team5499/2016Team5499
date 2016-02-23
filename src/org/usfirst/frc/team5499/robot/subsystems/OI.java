@@ -8,22 +8,30 @@ import org.usfirst.frc.team5499.robot.subsystems.OI.StickEnum;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class OI {
-	Joystick operatorStick;
+	Joystick leftStick;
+	Joystick rightStick;
+	Joystick xBoxController;
 	Joystick wheel;
 	Joystick throttle;
 	public enum StickEnum{
-		LEFTSTICK, RIGHTSTICK, OPERATORSTICK, WHEEL, THROTTLE, OPERATORPANEL
+		LEFTSTICK, RIGHTSTICK, OPERATOR, WHEEL, THROTTLE
 	}
 	
-	public OI(Joystick operatorStick, Joystick wheel, Joystick throttle){
-		this.operatorStick = operatorStick;
+	public OI(Joystick leftStick, Joystick rightStick, Joystick xBoxController, Joystick wheel, Joystick throttle){
+		this.leftStick = leftStick;
+		this.rightStick = rightStick;
+		this.xBoxController = xBoxController;
 		this.wheel = wheel;
 		this.throttle = throttle;
 	}
 	public double getStickAxis(StickEnum stick, int axis){
 		switch(stick){
-			case OPERATORSTICK:
-				return operatorStick.getRawAxis(axis);
+			case LEFTSTICK:
+				return leftStick.getRawAxis(axis) * .875;
+			case RIGHTSTICK:
+				return rightStick.getRawAxis(axis) * .875;
+			case OPERATOR:
+				return xBoxController.getRawAxis(axis);
 			case WHEEL:
 				return wheel.getRawAxis(axis);
 			case THROTTLE:
@@ -34,8 +42,12 @@ public class OI {
 	}
 	public boolean getButton(StickEnum stick, int button){
 		switch(stick){
-			case OPERATORSTICK:
-				return operatorStick.getRawButton(button);
+			case LEFTSTICK:
+				return leftStick.getRawButton(button);
+			case RIGHTSTICK:
+				return rightStick.getRawButton(button);
+			case OPERATOR:
+				return xBoxController.getRawButton(button);
 			case WHEEL:
 				return wheel.getRawButton(button);
 			case THROTTLE:
@@ -53,25 +65,19 @@ public class OI {
 //		}else{
 //			cmds.shiftRequest = Commands.ShiftRequest.OFF;
 //		}
-		if(Robot.hardware.operatorStation.getButton(StickEnum.OPERATORSTICK, Reference.shooterBatterShotButton)){
+		if(Robot.hardware.operatorStation.getButton(StickEnum.OPERATOR, Reference.shooterBatterShotButton)){
 			cmds.shotPrepRequest = Commands.ShotRequest.BATTER;
-		}else if(Robot.hardware.operatorStation.getButton(StickEnum.OPERATORSTICK, Reference.shooterCleatShotButton)){
+		}else if(Robot.hardware.operatorStation.getButton(StickEnum.OPERATOR, Reference.shooterCleatShotButton)){
 			cmds.shotPrepRequest = Commands.ShotRequest.CLEAT;
 		}
-		if(Robot.hardware.operatorStation.getButton(StickEnum.OPERATORSTICK, Reference.shootButton)){
+		if(Robot.hardware.operatorStation.getButton(StickEnum.OPERATOR, Reference.shootButton)){
 			cmds.shootRequest = Commands.Shoot.ON;
-		}else if(Robot.hardware.operatorStation.getButton(StickEnum.OPERATORSTICK, Reference.shooterWheelsInButton)){
+		}else if(Robot.hardware.operatorStation.getButton(StickEnum.OPERATOR, Reference.shooterWheelsInButton)){
 			cmds.shootRequest = Commands.Shoot.IN;
 		}else{
 			cmds.shootRequest = Commands.Shoot.OFF;
-		}if(Robot.hardware.operatorStation.getButton(StickEnum.OPERATORSTICK, Reference.shooterCancelButton)){
-			cmds.shotPrepRequest = Commands.ShotRequest.OFF;
-		}if(Robot.hardware.operatorStation.getButton(StickEnum.WHEEL, Reference.driveSwitchButton)){
-			Robot.hardware.drive.setInverted(true);
-		}else{
-			Robot.hardware.drive.setInverted(false);
 		}
-		//System.out.println(cmds.shootRequest);
+		System.out.println(cmds.shootRequest);
 		//System.out.println(cmds.shiftRequest);
 		return cmds;
 	}

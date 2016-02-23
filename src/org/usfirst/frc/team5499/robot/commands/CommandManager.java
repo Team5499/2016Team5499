@@ -13,16 +13,17 @@ public class CommandManager {
 		
 		if(commands.shiftRequest == Commands.ShiftRequest.LOW){
 			setCurrentRoutine(new ShiftRoutine(commands.shiftRequest));
-			//System.out.println("ShiftRequestLow");
+			System.out.println("ShiftRequestLow");
 		}else if(commands.shiftRequest == Commands.ShiftRequest.HIGH){
 			setCurrentRoutine(new ShiftRoutine(commands.shiftRequest));
-			//System.out.println("ShiftRequestHigh");
+			System.out.println("ShiftRequestHigh");
 		}else if(commands.shiftRequest == Commands.ShiftRequest.OFF){
 			setCurrentRoutine(new ShiftRoutine(commands.shiftRequest));
 		}else if(commands.shotPrepRequest == Commands.ShotRequest.BATTER){
 			setCurrentRoutine(new ShootPrepRoutine(commands.shotPrepRequest));
 		}else if(commands.shotPrepRequest == Commands.ShotRequest.CLEAT){
 			setCurrentRoutine(new ShootPrepRoutine(commands.shotPrepRequest));
+<<<<<<< HEAD
 			//System.out.println("shooter cleat prep");
 		}else if(commands.shotPrepRequest == Commands.ShotRequest.AUTO){
 			setCurrentRoutine(new ShootPrepRoutine(commands.shotPrepRequest));
@@ -31,6 +32,10 @@ public class CommandManager {
 			//System.out.println("shooter off");
 		}
 		else if(commands.shootRequest == Commands.Shoot.ON){
+=======
+			System.out.println("shooter cleat prep");
+		}else if(commands.shootRequest == Commands.Shoot.ON){
+>>>>>>> 79677f8f981f162b3f65709c115ae6ffca847d5e
 			setCurrentRoutine(new ShootRoutine());
 		}else if(commands.shootRequest == Commands.Shoot.IN){
 			setCurrentRoutine(new ShootInRoutine());
