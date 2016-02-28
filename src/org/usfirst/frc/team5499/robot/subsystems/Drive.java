@@ -6,13 +6,14 @@ import org.usfirst.frc.team5499.robot.Robot;
 import org.usfirst.frc.team5499.robot.commands.Commands;
 import org.usfirst.frc.team5499.robot.commands.Commands.ShiftRequest;
 import org.usfirst.frc.team5499.robot.controllers.DriveStraightController;
+import org.usfirst.frc.team5499.robot.controllers.PIDBase;
+import org.usfirst.frc.team5499.robot.sensors.EncoderSource;
 import org.usfirst.frc.team5499.robot.sensors.Gyro;
 import org.usfirst.frc.team5499.robot.subsystems.OI.StickEnum;
 
 import com.team254.lib.trajectory.Trajectory;
 import com.team254.lib.trajectory.TrajectoryFollower;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
@@ -23,8 +24,8 @@ public class Drive implements Loopable {
 	CANTalon motorLeft2;
 	CANTalon motorRight1;
 	CANTalon motorRight2;
-	Encoder encLeft;
-	Encoder encRight;
+	public Encoder encLeft;
+	public Encoder encRight;
 	DoubleSolenoid leftShift;
 	DoubleSolenoid rightShift;
 	public Gyro gyro;
@@ -38,8 +39,13 @@ public class Drive implements Loopable {
 	double lastShiftTime;
 	double curTime;
 	double inverted;
-	DriveStraightController angControl;
+	//DriveStraightController angControl;
 	public boolean trajFinished;
+	public PIDBase leftPosControl;
+	public PIDBase rightPosControl;
+	public PIDBase angControl;
+	public boolean posControl;
+	private boolean control;
 	
 	public Drive(CANTalon motorLeft1, CANTalon motorLeft2, CANTalon motorRight1, CANTalon motorRight2, 
 			Encoder encLeft, Encoder encRight, DoubleSolenoid leftShift, DoubleSolenoid rightShift){
@@ -50,20 +56,25 @@ public class Drive implements Loopable {
 		this.motorRight2 = motorRight2;
 		this.encLeft = encLeft;
 		this.encRight = encRight;
-		
+		this.gyro = new Gyro();
 		this.encLeft.setDistancePerPulse(Reference.distancePerPulseLeft);
 		this.encRight.setDistancePerPulse(Reference.distancePerPulseRight);
 		this.encRight.setReverseDirection(false);
 		this.encLeft.setReverseDirection(true);
 		this.leftShift = leftShift;
 		this.rightShift = rightShift;
-		this.leftFollower = new TrajectoryFollower();
-		this.rightFollower = new TrajectoryFollower();
-		this.leftFollower.configure(kp, ki, kd, kv, ka);
-		this.rightFollower.configure(kp, ki, kd, kv, ka);
+		this.leftPosControl = new PIDBase(1, 0, 0, 1000, 1, new EncoderSource(encLeft), 2);
+		this.rightPosControl = new PIDBase(1, 0, 0, 1000, 1, new EncoderSource(encRight), 2);
+		this.angControl = new PIDBase(.6, 0 ,0, 1000, 1, gyro, 2);
+		this.control = true;
+//		this.leftFollower = new TrajectoryFollower();
+//		this.rightFollower = new TrajectoryFollower();
+//		this.leftFollower.configure(kp, ki, kd, kv, ka);
+//		this.rightFollower.configure(kp, ki, kd, kv, ka);
+		
 		
 		this.lastShiftTime = 0;
-		this.gyro = new Gyro();
+		
 		
 //		try{
 //			ahrs = new AHRS(SPI.Port.kMXP);
@@ -72,7 +83,8 @@ public class Drive implements Loopable {
 //		}catch (RuntimeException ex){
 //			DriverStation.reportError("Error initializing Navx:" + ex.getMessage(), true);
 //		}
-		this.angControl = new DriveStraightController(gyro, leftFollower, rightFollower, encLeft, encRight);
+//		this.angControl = new DriveStraightController(gyro, leftFollower, rightFollower, encLeft, encRight);
+//		this.angControl.setSetpoint(0);
 		this.angControl.setSetpoint(0);
 	}
 	
@@ -110,39 +122,65 @@ public class Drive implements Loopable {
 //				shift(Commands.ShiftRequest.OFF);
 //			}
 		}else if(Robot.getState() == Robot.StateEnum.AUTO){
+			leftPosControl.update();
+			rightPosControl.update();
+			angControl.update();
+			if(control){
+				double leftOutput = -1 * angControl.getOutput();
+				double rightOutput = angControl.getOutput();
+				if(posControl){
+					System.out.println("position control");
+					System.out.println("left distance: " + encLeft.getDistance());
+					leftOutput +=  leftPosControl.getOutput();
+					rightOutput += rightPosControl.getOutput();
+				}
+				setMotors(leftOutput, rightOutput);
+			}else{
+				setMotors(0,0);
+			}
+				
+//			System.out.println("left: " +leftOutput);
+//			System.out.println("right: " + rightOutput);
+			System.out.println(gyro.getInput());
+
 //			if(leftFollower.isFinishedTrajectory()&&rightFollower.isFinishedTrajectory()){
-//				encLeft.reset();
+//				encLeft.reset();	
 //				encRight.reset();
 //				setMotors(0,0);
 //			}else{
-				angControl.update();
-				if(leftFollower.isFinishedTrajectory()){
-					angControl.turnSplineOff();
-					//System.out.println("spline finished");
-					angControl.turnOn();
-					angControl.setSetpoint(70);//leftFollower.getHeading() * 180 / Math.PI);
-					if(Math.abs(gyro.gyro.getAngle() - 70) < 10 ){
-						trajFinished = true;
-					}
-					
-				}else{
-					angControl.setSetpoint(0);
+//				angControl.update();
+//				if(leftFollower.isFinishedTrajectory() && rightFollower.isFinishedTrajectory()){
+////					angControl.turnSplineOff();
+////					System.out.println("spline finished");
+////					angControl.turnOn();
+////					angControl.setSetpoint(30);//leftFollower.getHeading() * 180 / Math.PI);
+////					if(Math.abs(gyro.gyro.getAngle() - 30) < 10 ){
+////						trajFinished = true;
+////					}
+//					trajFinished = true;
+////					
+//				}else{
+//					//angControl.turnOff();
+//					if(Math.abs(leftFollower.getHeading()) <.01){
+//						angControl.setSetpoint(0);
+//					}else{
+//						angControl.turnOff();
+//					}
 //				}
 //				System.out.println("Heading: " + leftFollower.getHeading());
-				System.out.println("Gyro: " + gyro.gyro.getAngle());
-				double leftSetpoint = angControl.getOutputLeft();
-				double rightSetpoint = angControl.getOutputRight();
-				//double leftSetpoint = leftFollower.calculate(encLeft.getDistance());
-				//double rightSetpoint = rightFollower.calculate(encRight.getDistance());
+				//ystem.out.println("Gyro: " + gyro.gyro.getAngle());
+				//double leftSetpoint = angControl.getOutputLeft();
+				//double rightSetpoint = angControl.getOutputRight();
+//				double leftSetpoint = leftFollower.calculate(encLeft.getDistance());
+//				double rightSetpoint = rightFollower.calculate(encRight.getDistance());
 //				System.out.println("left: " + encLeft.getDistance());
 //				System.out.println("right: " + encRight.getDistance());
-//				System.out.println("leftSetpoint: " + leftSetpoint);
-				setMotors(leftSetpoint, rightSetpoint);
+				//System.out.println("leftSetpoint: " + leftSetpoint);
+				//setMotors(leftSetpoint, rightSetpoint);
 				//trajFinished = true;
 			//}
 			
 				}
-		}
 		
 		
 	}
@@ -150,14 +188,16 @@ public class Drive implements Loopable {
 	private void setMotorsWheel(double wheel, double throttle) {
 		//System.out.println(wheel);
 		//System.out.println(throttle);
-		throttle = -1.5 * throttle;
-		double left = (.5 + (wheel)) * throttle;
-		double right = (.5 - (wheel)) * throttle;
+		throttle = -2 * throttle;
+		double left = (.5 + inverted * (wheel)) * throttle;
+		double right = (.5 - inverted * (wheel)) * throttle;
 		setMotors(left, right);
 		
 	}
 
 	public void setMotors(double leftSpeed, double rightSpeed){
+		leftSpeed = .875* leftSpeed;
+		rightSpeed = .875 * rightSpeed;
 		motorLeft1.set(inverted * leftSpeed);
 		motorLeft2.set(inverted * leftSpeed);
 		motorRight1.set(-1 * inverted * rightSpeed);
@@ -186,12 +226,16 @@ public class Drive implements Loopable {
 		}
 	}
 	
-	public void setTrajectory(Trajectory.Pair pair){
-		leftFollower.setTrajectory(pair.left);
-		rightFollower.setTrajectory(pair.right);
-	}
+//	public void setTrajectory(Trajectory.Pair pair){
+//		leftFollower.setTrajectory(pair.left);
+//		rightFollower.setTrajectory(pair.right);
+//	}
 	public void setInverted(boolean invert){
 		this.inverted = invert ? -1:1;
+	}
+
+	public void controlOff() {
+		this.control = false;
 	}
 
 }

@@ -18,7 +18,7 @@ public class DriveStraightController extends PIDBase implements Loopable{
 	boolean splineOff;
 	
 	public DriveStraightController(Gyro source, TrajectoryFollower left, TrajectoryFollower right, Encoder encLeft, Encoder encRight) {
-		super(.2, 0, .01, 1000, 1, source);
+		super(.1, 0, .001, 1000, 1, source, 5);
 		this.left = left;
 		this.right = right;
 		this.encLeft = encLeft;
@@ -42,8 +42,8 @@ public class DriveStraightController extends PIDBase implements Loopable{
 		System.out.println(leftOutput);
 		System.out.println(rightOutput);
 		if(off){
-			this.leftOutput = leftSet;
-			this.rightOutput = rightSet;
+			this.leftOutput = leftSet / 10;
+			this.rightOutput = rightSet / 10;
 		}
 		
 	}

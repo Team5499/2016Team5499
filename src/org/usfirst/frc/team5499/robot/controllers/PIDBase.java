@@ -16,8 +16,10 @@ public class PIDBase implements Loopable {
 	double lasterror;
 	double iLimit;
 	double maxOut;
+	double tolerance;
+	boolean off;
 	
-	public PIDBase(double pGain, double iGain, double dGain, double iLimit, double maxOut, PIDInput source){
+	public PIDBase(double pGain, double iGain, double dGain, double iLimit, double maxOut, PIDInput source, double tolerance){
 		this.kp = pGain;
 		this.ki = iGain;
 		this.kd = dGain;
@@ -25,7 +27,11 @@ public class PIDBase implements Loopable {
 		this.inputSource = source;
 		this.output = 0;
 		this.maxOut = maxOut;
+		this.tolerance = tolerance;
 	}
+//	public PIDBase(double pGain, double iGain, double dGain, double iLimit, double maxOut, PIDInput source){
+//		PIDBase(pGain, iGain, dGain, iLimit, maxOut, source, 1.0);
+//	}
 	
 	public double calculateOutput(double setPoint, double input, double dt){
 		double pTerm = (setPoint - input);
@@ -46,20 +52,40 @@ public class PIDBase implements Loopable {
 		//System.out.println("iTerm: " + iTerm);
 		double dt = Timer.getFPGATimestamp() - lasttime;
 		lasttime = Timer.getFPGATimestamp();
-		output = calculateOutput(setpoint, input, dt); 
+		if(!off){
+			output = calculateOutput(setpoint, input, dt); 
+		}else{
+			output = .5;
+		}
 	}
 	
 	public void setSetpoint(double setPoint){
 		this.setpoint = setPoint;
 	}
 	public double getOutput(){
-//		if(this.output > .6){
-//			this.output = .6;
-//		}else if(this.output < -.6){
-//			this.output = -.6;
-//		}
+		if(this.output > 1){
+			this.output = 1;
+		}else if(this.output < -1){
+			this.output = -1;
+		}
 //		System.out.println(output);
 		return this.output;
+	}
+	
+	public boolean isFinished(){
+		if(Math.abs(inputSource.getInput() - this.setpoint) < this.tolerance || this.off == true){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public void turnOff(boolean off){
+		if(off){
+			this.off = true;
+		}else{
+			this.off = false;
+		}
 	}
 	
 }

@@ -30,6 +30,7 @@ public class Robot extends IterativeRobot {
 	String fileString;
 	boolean autohasshot;
 	AutoModeSingleBall autoMode;
+	public static Commands cmds;
 	
     @Override
 	public void robotInit() {
@@ -39,35 +40,39 @@ public class Robot extends IterativeRobot {
 		controlLooper.addLoopable(hardware.drive);
 		controlLooper.addLoopable(hardware.intake);
 		cmdManager = new CommandManager();
-		fileString = new AutoModeFileHandler().readAutoModeFile();
-		autoModePath = (new TextFileDeserializer()).deserialize(fileString);
-		trajPair = autoModePath.getPair();
-		System.out.println(trajPair.toString());
+//		fileString = new AutoModeFileHandler().readAutoModeFile();
+//		autoModePath = (new TextFileDeserializer()).deserialize(fileString);
+//		trajPair = autoModePath.getPair();
+//		System.out.println(trajPair.toString());
 		hardware.drive.gyro.gyro.calibrate();
 		autohasshot = false;
 		autoMode = new AutoModeSingleBall();
+		hardware.shooter.lower();
 	}
     
     @Override
     public void autonomousInit() {
     	state = StateEnum.AUTO;
+    	controlLooper.addLoopable(autoMode);
     	controlLooper.start();
-		hardware.drive.setTrajectory(trajPair);
-		hardware.shooter.lower();
+		//hardware.drive.setTrajectory(trajPair);
+		//hardware.shooter.lower();
 		hardware.drive.setInverted(false);
 		hardware.encLeft.reset();
 		hardware.encRight.reset();
+		hardware.drive.gyro.gyro.calibrate();
 		hardware.drive.gyro.gyro.reset();
     }
 
     @Override
     public void autonomousPeriodic() {
-//    	Commands cmds = autoMode.getCmds();
-//    	cmdManager.update(cmds);
+    	cmdManager.update(cmds);
+    	
     }
     @Override
     public void teleopInit(){
     	state = StateEnum.TELEOP;
+    	controlLooper.stop();
     	controlLooper.start();
     	hardware.shooter.stopWheels();
     	hardware.shooter.lower();
@@ -77,7 +82,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
     //	System.out.println(hardware.shooter.getTopWheelSpeed());
     	Commands cmds = hardware.operatorStation.getCommands();
-    	//System.out.println(cmds.shiftRequest);
+    	System.out.println(Robot.hardware.drive.gyro.gyro.getRate());
     	cmdManager.update(cmds);
     }
     @Override

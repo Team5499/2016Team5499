@@ -1,5 +1,8 @@
 package org.usfirst.frc.team5499.robot.commands;
 
+import org.usfirst.frc.team5499.robot.Robot;
+import org.usfirst.frc.team5499.robot.Robot.StateEnum;
+
 public class CommandManager {
 
 	Routine currentRoutine;
@@ -24,12 +27,13 @@ public class CommandManager {
 		}else if(commands.shotPrepRequest == Commands.ShotRequest.CLEAT){
 			setCurrentRoutine(new ShootPrepRoutine(commands.shotPrepRequest));
 			//System.out.println("shooter cleat prep");
-		}else if(commands.shotPrepRequest == Commands.ShotRequest.AUTO){
+		}else if(commands.shotPrepRequest == Commands.ShotRequest.AUTO && Robot.getState() == StateEnum.AUTO){
 			setCurrentRoutine(new ShootPrepRoutine(commands.shotPrepRequest));
-		}else if(commands.shotPrepRequest == Commands.ShotRequest.OFF && !state.shooting){
-			setCurrentRoutine(new ShooterOffRoutine());
-			//System.out.println("shooter off");
 		}
+//		}else if(commands.shotPrepRequest == Commands.ShotRequest.OFF && !state.shooting){
+//			setCurrentRoutine(new ShooterOffRoutine());
+//			//System.out.println("shooter off");
+//		}
 		else if(commands.shootRequest == Commands.Shoot.ON){
 			setCurrentRoutine(new ShootRoutine());
 		}else if(commands.shootRequest == Commands.Shoot.IN){

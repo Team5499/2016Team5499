@@ -23,7 +23,7 @@ public class Shooter implements Loopable{
 	private LightSensor bottomWheelSensor;
 	private CANTalon armPivot;
 	private LightSensor topWheelSensor;
-	private Pot armPivotPot;
+	public Pot armPivotPot;
 	PIDBase armController;
 	double currentArmSetpoint;
 	double intakeSpeed;
@@ -45,7 +45,7 @@ public class Shooter implements Loopable{
 		this.bottomWheelSensor.setInverted();
 		this.armPivotPot = armPivotPot;
 		this.armController = new PIDBase(Reference.shooterArmPGain, Reference.shooterArmIGain, 
-				Reference.shooterArmDGain, Reference.shooterWheelILimit, Reference.shooterArmMaxOut, armPivotPot);
+				Reference.shooterArmDGain, Reference.shooterWheelILimit, Reference.shooterArmMaxOut, armPivotPot, 5);
 		this.bottomWheelController = new FeedForwardWithPID(Reference.shooterWheelPGainBot, Reference.shooterWheelIGainBot, 
 				Reference.shooterWheelDGainBot, Reference.shooterWheelKV,
 				bottomWheelSensor, new FeedForwardOutput(), Reference.shooterWheelMaxBot);
@@ -59,8 +59,8 @@ public class Shooter implements Loopable{
 		topWheelController.setContinuous(); 
 		bottomWheelController.setContinuous();
 		System.out.println(topWheelController.isEnabled());
-		currentArmSetpoint = 0; //cornershot 62.5 //battershot16.5
-		this.armController.setSetpoint(currentArmSetpoint);
+		//currentArmSetpoint = 0; //cornershot 62.5 //battershot16.5
+		//this.armController.setSetpoint(currentArmSetpoint);
 		this.intakeSpeed = .8;
 		this.wheelsOn = false;
 		this.intaking =false;
@@ -74,14 +74,14 @@ public class Shooter implements Loopable{
 	public void update() {
 		bottomWheelSensor.update();
 		topWheelSensor.update();
-		bottomWheelController.setSetpoint(-1 * Reference.topWheelBatterSpeed);// / Reference.shooterWheelMaxBot);
-		topWheelController.setSetpoint(Reference.bottomWheelBatterSpeed);// / Reference.shooterWheelMaxTop);
+		//bottomWheelController.setSetpoint(-1 * Reference.topWheelBatterSpeed);// / Reference.shooterWheelMaxBot);
+		//topWheelController.setSetpoint(Reference.bottomWheelBatterSpeed);// / Reference.shooterWheelMaxTop);
 		SmartDashboard.putNumber("Bottom Speed", bottomWheelSensor.getRate());
 		SmartDashboard.putNumber("Top Speed", topWheelSensor.getRate());
 		//		System.out.println("Control Loop Output: " + armController.getOutput());
 //		System.out.println("Bottom Wheel: " + bottomWheelSensor.getRate());
 //		System.out.println("Top Wheel: " + topWheelSensor.getRate());
-//		System.out.println(armPivotPot.getInput());
+	//	System.out.println(armPivotPot.getInput());
 		
 //		topFlyWheel.set(-1 * Robot.hardware.operatorStation.getStickAxis(StickEnum.XBOX, Reference.shooterTopAxis));
 //		//topFlyWheel.set(1);
@@ -107,8 +107,14 @@ public class Shooter implements Loopable{
 //			feedWheel.set(0);
 //		}
 		armController.update();
-		armPivot.set(-1*armController.getOutput());
-		
+		if(currentArmSetpoint > 2){
+			armPivot.set(-1*armController.getOutput());
+		}else{
+			armPivot.set(0);
+		}
+		//		}else{
+//			armPivot.set(0);
+//		}
 		if(wheelsOn){
 			shootWheels();
 		}else if(!intaking){
@@ -146,24 +152,30 @@ public class Shooter implements Loopable{
 			topWheelController.setSetpoint(Reference.topWheelBatterSpeed);
 			bottomWheelController.setSetpoint(Reference.bottomWheelBatterSpeed);
 			currentArmSetpoint = Reference.armBatterAng;
+			//armController.setSetpoint(setpoint2);
 			break;
 		case CLEAT:
 			topWheelController.setSetpoint(Reference.topWheelCleatSpeed);
 			bottomWheelController.setSetpoint(Reference.bottomWheelCleatSpeed);
 			currentArmSetpoint = Reference.armCleatAng;
+		//	armController.setSetpoint(setpoint);
 			break;
 		case AUTO:
 			topWheelController.setSetpoint(Reference.autoShotSpeedTop);
 			bottomWheelController.setSetpoint(Reference.autoShotSpeedBottom);
 			currentArmSetpoint = Reference.autoShotAngle;
+			//armController.setSetpoint(currentArmSetpoint);
+			break;
 		case OFF:
 			stopWheels();
 			lower();
+			break;
 		}
 	}
 
 	public void lower() {
 		armPivot.set(0);
+		currentArmSetpoint = 0;
 		armController.setSetpoint(0);
 	}
 
