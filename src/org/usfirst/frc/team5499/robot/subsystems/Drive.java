@@ -11,12 +11,15 @@ import org.usfirst.frc.team5499.robot.sensors.EncoderSource;
 import org.usfirst.frc.team5499.robot.sensors.Gyro;
 import org.usfirst.frc.team5499.robot.subsystems.OI.StickEnum;
 
+import com.kauailabs.navx.frc.AHRS;
 import com.team254.lib.trajectory.Trajectory;
 import com.team254.lib.trajectory.TrajectoryFollower;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 
 public class Drive implements Loopable {
@@ -28,14 +31,16 @@ public class Drive implements Loopable {
 	public Encoder encRight;
 	DoubleSolenoid leftShift;
 	DoubleSolenoid rightShift;
+
 	public Gyro gyro;
 	public TrajectoryFollower leftFollower;
 	public TrajectoryFollower rightFollower;
 	static final double kp = 1.7;
+
 	static final double ki = 0;
-	static final double kd = 0;
-	static final double kv = .008;
-	static final double ka = .0017;
+	static final double kd = .005;
+	static final double kv = .8;
+	static final double ka = .4;
 	double lastShiftTime;
 	double curTime;
 	double inverted;
@@ -75,11 +80,8 @@ public class Drive implements Loopable {
 		
 		this.lastShiftTime = 0;
 		
-		
 //		try{
 //			ahrs = new AHRS(SPI.Port.kMXP);
-//			System.out.println(ahrs.isConnected());
-//			navx = new NavX(ahrs);
 //		}catch (RuntimeException ex){
 //			DriverStation.reportError("Error initializing Navx:" + ex.getMessage(), true);
 //		}
@@ -91,15 +93,11 @@ public class Drive implements Loopable {
 	@Override
 	public void update() {
 		Robot.hardware.c.setClosedLoopControl(true);
-		
 		if(Robot.getState() == Robot.StateEnum.TELEOP){
-			System.out.println(gyro.getInput());
 //			System.out.println(Robot.hardware.pdp.getCurrent(Reference.driveLeft1PDPPort));
 //			System.out.println(Robot.hardware.pdp.getCurrent(Reference.driveLeft2PDPPort));
 //			System.out.println(Robot.hardware.pdp.getCurrent(Reference.driveRight1PDPPort));
 //			System.out.println(Robot.hardware.pdp.getCurrent(Reference.driveRight2PDPPort));
-//			System.out.println("left: " + encLeft.getDistance());
-//			System.out.println("right: " + encRight.getDistance());
 			setMotorsWheel(Robot.hardware.operatorStation.getStickAxis(StickEnum.WHEEL, Reference.wheelDriveAxis),
 					Robot.hardware.operatorStation.getStickAxis(StickEnum.THROTTLE, Reference.throttleAxis));
 //			setMotors(Robot.hardware.operatorStation.getStickAxis(StickEnum.LEFTSTICK,Reference.driveAxis),
@@ -108,11 +106,11 @@ public class Drive implements Loopable {
 //			if(Math.abs(lastShiftTime - curTime) > .125){
 				if(Robot.hardware.operatorStation.getButton(StickEnum.THROTTLE, Reference.shiftButton)){
 					shift(Commands.ShiftRequest.HIGH);
-					//System.out.println("attempt shift high");
+					System.out.println("attempt shift high");
 					lastShiftTime = curTime;
 				}else if(!Robot.hardware.operatorStation.getButton(StickEnum.THROTTLE, Reference.shiftButton)){
 					shift(Commands.ShiftRequest.LOW);
-				//	System.out.println("attempt shift low");
+					System.out.println("attempt shift low");
 					lastShiftTime = curTime;
 				}else{
 					shift(Commands.ShiftRequest.OFF);
@@ -179,6 +177,7 @@ public class Drive implements Loopable {
 				//setMotors(leftSetpoint, rightSetpoint);
 				//trajFinished = true;
 			//}
+
 			
 				}
 		
@@ -191,13 +190,12 @@ public class Drive implements Loopable {
 		throttle = -2 * throttle;
 		double left = (.5 + inverted * (wheel)) * throttle;
 		double right = (.5 - inverted * (wheel)) * throttle;
+
 		setMotors(left, right);
 		
 	}
 
 	public void setMotors(double leftSpeed, double rightSpeed){
-		leftSpeed = .875* leftSpeed;
-		rightSpeed = .875 * rightSpeed;
 		motorLeft1.set(inverted * leftSpeed);
 		motorLeft2.set(inverted * leftSpeed);
 		motorRight1.set(-1 * inverted * rightSpeed);
@@ -209,12 +207,12 @@ public class Drive implements Loopable {
 		case HIGH:
 			leftShift.set(DoubleSolenoid.Value.kForward);
 			rightShift.set(DoubleSolenoid.Value.kForward);
-			//System.out.println("shiftHigh");
+			System.out.println("shiftHigh");
 			break;
 		case LOW:
 			leftShift.set(DoubleSolenoid.Value.kReverse);
 			rightShift.set(DoubleSolenoid.Value.kReverse);
-		//	System.out.println("shiftLow");
+			System.out.println("shiftLow");
 			break;
 		case OFF:
 			leftShift.set(DoubleSolenoid.Value.kOff);

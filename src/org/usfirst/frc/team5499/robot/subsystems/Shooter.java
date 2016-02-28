@@ -132,7 +132,7 @@ public class Shooter implements Loopable{
 	}
 	public void shootWheels(){
 		topFlyWheel.set(topWheelController.getOutput());//Reference.shootSpeed);//topWheelController.getOutput());
-		//System.out.println(bottomWheelController.getOutput());
+		System.out.println(bottomWheelController.getOutput());
 		bottomFlyWheel.set(-1 * topWheelController.getOutput());//-1 * Reference.shootSpeed);//bottomWheelController.getOutput());
 		//Timer.delay(.2);
 		//feedWheel.set(Reference.shooterFeedSpeed);

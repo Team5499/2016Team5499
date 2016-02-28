@@ -5,8 +5,6 @@ public class ShooterOffRoutine extends Routine {
 	@Override
 	public RobotState update(Commands commands, RobotState state) {
 		shooter.stopWheels();
-		shooter.lower();
-		state.shooting = false;
 		return state;
 	}
 
