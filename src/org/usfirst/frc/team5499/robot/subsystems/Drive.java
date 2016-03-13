@@ -11,7 +11,6 @@ import org.usfirst.frc.team5499.robot.sensors.EncoderSource;
 import org.usfirst.frc.team5499.robot.sensors.Gyro;
 import org.usfirst.frc.team5499.robot.subsystems.OI.StickEnum;
 
-import com.kauailabs.navx.frc.AHRS;
 import com.team254.lib.trajectory.Trajectory;
 import com.team254.lib.trajectory.TrajectoryFollower;
 
@@ -51,10 +50,15 @@ public class Drive implements Loopable {
 	public PIDBase angControl;
 	public boolean posControl;
 	private boolean control;
+	public PIDBase angControlLow;
+	public PIDBase leftPosControlLow;
+	public boolean low;
+	public PIDBase rightPosControlLow;
 	
 	public Drive(CANTalon motorLeft1, CANTalon motorLeft2, CANTalon motorRight1, CANTalon motorRight2, 
 			Encoder encLeft, Encoder encRight, DoubleSolenoid leftShift, DoubleSolenoid rightShift){
 		trajFinished = false;
+		this.inverted = -1;
 		this.motorLeft1 = motorLeft1;
 		this.motorLeft2 = motorLeft2;
 		this.motorRight1 = motorRight1;
@@ -71,7 +75,11 @@ public class Drive implements Loopable {
 		this.leftPosControl = new PIDBase(1, 0, 0, 1000, 1, new EncoderSource(encLeft), 2);
 		this.rightPosControl = new PIDBase(1, 0, 0, 1000, 1, new EncoderSource(encRight), 2);
 		this.angControl = new PIDBase(.6, 0 ,0, 1000, 1, gyro, 2);
+		this.leftPosControlLow = new PIDBase(1,0,0,1000, 1, new EncoderSource(encLeft), 1);
+		this.rightPosControlLow = new PIDBase(1,0,0,1000, 1, new EncoderSource(encRight), 1);
+		this.angControlLow = new PIDBase(.6, 0, 0, 1000, 1, gyro, 2);
 		this.control = true;
+		this.low = false;
 //		this.leftFollower = new TrajectoryFollower();
 //		this.rightFollower = new TrajectoryFollower();
 //		this.leftFollower.configure(kp, ki, kd, kv, ka);
@@ -94,12 +102,18 @@ public class Drive implements Loopable {
 	public void update() {
 		Robot.hardware.c.setClosedLoopControl(true);
 		if(Robot.getState() == Robot.StateEnum.TELEOP){
+			inverted = -1;
 //			System.out.println(Robot.hardware.pdp.getCurrent(Reference.driveLeft1PDPPort));
 //			System.out.println(Robot.hardware.pdp.getCurrent(Reference.driveLeft2PDPPort));
 //			System.out.println(Robot.hardware.pdp.getCurrent(Reference.driveRight1PDPPort));
 //			System.out.println(Robot.hardware.pdp.getCurrent(Reference.driveRight2PDPPort));
-			setMotorsWheel(Robot.hardware.operatorStation.getStickAxis(StickEnum.WHEEL, Reference.wheelDriveAxis),
-					Robot.hardware.operatorStation.getStickAxis(StickEnum.THROTTLE, Reference.throttleAxis));
+			double throttleVal = Robot.hardware.operatorStation.getStickAxis(StickEnum.THROTTLE, Reference.throttleAxis);
+			if(Math.abs(throttleVal) > .05){
+				setMotorsWheel(Robot.hardware.operatorStation.getStickAxis(StickEnum.WHEEL, Reference.wheelDriveAxis),
+						throttleVal);
+			}else{
+				setMotorsWheel(Robot.hardware.operatorStation.getStickAxis(StickEnum.WHEEL, Reference.wheelDriveAxis), 0);
+			}
 //			setMotors(Robot.hardware.operatorStation.getStickAxis(StickEnum.LEFTSTICK,Reference.driveAxis),
 //					Robot.hardware.operatorStation.getStickAxis(StickEnum.RIGHTSTICK, Reference.driveAxis));
 			curTime = Timer.getFPGATimestamp();
@@ -123,16 +137,31 @@ public class Drive implements Loopable {
 			leftPosControl.update();
 			rightPosControl.update();
 			angControl.update();
+			if(low){
+				leftPosControlLow.update();
+				rightPosControlLow.update();
+				angControlLow.update();
+			}
 			if(control){
-				double leftOutput = -1 * angControl.getOutput();
-				double rightOutput = angControl.getOutput();
-				if(posControl){
-					System.out.println("position control");
-					System.out.println("left distance: " + encLeft.getDistance());
-					leftOutput +=  leftPosControl.getOutput();
-					rightOutput += rightPosControl.getOutput();
-				}
-				setMotors(leftOutput, rightOutput);
+//				if(!low){
+					double leftOutput = -1 * angControl.getOutput();
+					double rightOutput = angControl.getOutput();
+					if(posControl){
+						System.out.println("position control");
+						System.out.println("left distance: " + encLeft.getDistance());
+						leftOutput +=  leftPosControl.getOutput();
+						rightOutput += rightPosControl.getOutput();
+					}
+					setMotors(.6 * leftOutput, .6 * rightOutput);
+//				}else{
+//					double leftOutput = -1 * angControlLow.getOutput();
+//					double rightOutput = angControlLow.getOutput();
+//					if(posControl){
+//						leftOutput += leftPosControlLow.getOutput();
+//						rightOutput += rightPosControlLow.getOutput();
+//					}
+//					setMotors(leftOutput, rightOutput);
+//				}
 			}else{
 				setMotors(0,0);
 			}
@@ -190,7 +219,7 @@ public class Drive implements Loopable {
 		throttle = -2 * throttle;
 		double left = (.5 + inverted * (wheel)) * throttle;
 		double right = (.5 - inverted * (wheel)) * throttle;
-
+		System.out.println("Left: " + left);
 		setMotors(left, right);
 		
 	}
@@ -234,6 +263,9 @@ public class Drive implements Loopable {
 
 	public void controlOff() {
 		this.control = false;
+	}
+	public void controlOn(){
+		this.control = true;
 	}
 
 }

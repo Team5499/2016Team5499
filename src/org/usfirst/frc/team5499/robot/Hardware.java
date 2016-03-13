@@ -2,6 +2,7 @@ package org.usfirst.frc.team5499.robot;
 
 import org.usfirst.frc.team5499.robot.sensors.LightSensor;
 import org.usfirst.frc.team5499.robot.sensors.Pot;
+import org.usfirst.frc.team5499.robot.subsystems.Aflip;
 import org.usfirst.frc.team5499.robot.subsystems.Drive;
 import org.usfirst.frc.team5499.robot.subsystems.Intake;
 import org.usfirst.frc.team5499.robot.subsystems.OI;
@@ -19,6 +20,7 @@ public class Hardware {
 	CANTalon shooterTopWheel;
 	CANTalon shooterFeedWheel;
 	CANTalon shooterArmMotor;
+	CANTalon aFlipMotor;
 	
 	CANTalon intakeArmMotor;
 	CANTalon intakeRollerMotor;
@@ -47,8 +49,12 @@ public class Hardware {
 	public Drive drive;
 	public PowerDistributionPanel pdp;
 	public Compressor c;
+	public Aflip aflip;
 	
 	public Hardware(){
+
+		aFlipMotor = new CANTalon(Reference.aFlipCANID);
+		aflip = new Aflip(aFlipMotor);
 		
 		shooterBottomWheel = new CANTalon(Reference.shooterBottomWheelCANID);
 		shooterTopWheel = new CANTalon(Reference.shooterTopWheelCANID);

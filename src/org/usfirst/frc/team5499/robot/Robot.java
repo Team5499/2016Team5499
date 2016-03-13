@@ -2,14 +2,12 @@
 package org.usfirst.frc.team5499.robot;
 
 import org.usfirst.frc.team5499.lib.util.MultiLooper;
-import org.usfirst.frc.team5499.robot.auto.AutoModeFileHandler;
 import org.usfirst.frc.team5499.robot.auto.AutoModeSingleBall;
 import org.usfirst.frc.team5499.robot.commands.CommandManager;
 import org.usfirst.frc.team5499.robot.commands.Commands;
 
 import com.team254.lib.trajectory.Path;
 import com.team254.lib.trajectory.Trajectory;
-import com.team254.lib.trajectory.io.TextFileDeserializer;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 
@@ -39,6 +37,7 @@ public class Robot extends IterativeRobot {
 		controlLooper.addLoopable(hardware.shooter);
 		controlLooper.addLoopable(hardware.drive);
 		controlLooper.addLoopable(hardware.intake);
+		controlLooper.addLoopable(hardware.aflip);
 		cmdManager = new CommandManager();
 //		fileString = new AutoModeFileHandler().readAutoModeFile();
 //		autoModePath = (new TextFileDeserializer()).deserialize(fileString);
@@ -67,11 +66,12 @@ public class Robot extends IterativeRobot {
     @Override
     public void autonomousPeriodic() {
     	cmdManager.update(cmds);
-    	
+    	System.out.println(Robot.hardware.drive.gyro.gyro.getAngle());
     }
     @Override
     public void teleopInit(){
     	state = StateEnum.TELEOP;
+    	controlLooper.removeLoopable(autoMode);
     	controlLooper.stop();
     	controlLooper.start();
     	hardware.shooter.stopWheels();
@@ -82,7 +82,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
     //	System.out.println(hardware.shooter.getTopWheelSpeed());
     	Commands cmds = hardware.operatorStation.getCommands();
-    	System.out.println(Robot.hardware.drive.gyro.gyro.getRate());
+    	System.out.println(Robot.hardware.drive.gyro.gyro.getAngle());
     	cmdManager.update(cmds);
     }
     @Override

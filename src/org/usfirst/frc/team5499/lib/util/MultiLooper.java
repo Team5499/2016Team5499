@@ -34,4 +34,8 @@ public class MultiLooper implements Loopable{
     	loopables.addElement(c);
         System.err.println("loopable added");
     }
+    public void removeLoopable(Loopable c){
+    	loopables.removeElement(c);
+    	System.err.println("loopable removed");
+    }
 }

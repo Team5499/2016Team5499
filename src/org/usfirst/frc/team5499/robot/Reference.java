@@ -51,10 +51,10 @@ public class Reference {
 	
 	//Shooter Arm Constants
 	public static double shooterArmPotScale = -269.5;//-272.72; //272.72
-	public static double shooterArmPotZero = 271;//225;
-	public static double shooterArmPGain = .27505;
+	public static double shooterArmPotZero = 247;//225;
+	public static double shooterArmPGain = .122;//.27505;
 	public static double shooterArmIGain = 0;
-	public static double shooterArmDGain = 0;
+	public static double shooterArmDGain = 0.004;
 	public static double shooterArmILimit = 1000;
 	public static double shooterArmMaxOut = 1;
 	public static double armMaxAcc = 10;
@@ -88,24 +88,28 @@ public class Reference {
 	public static double shooterWheelMaxTop = 5300;
 	public static double shooterWheelMaxBot = 4800;
 	public static double topWheelBatterSpeed = 4500;
-	public static double bottomWheelBatterSpeed = 2800;
+	public static double bottomWheelBatterSpeed = 4000;
 	public static double topWheelCleatSpeed = 5100;
 	public static double bottomWheelCleatSpeed = 5000;
-	public static double armBatterAng = 23.5;
+	public static double armBatterAng = 31.5;
 	public static double armCleatAng = 38.5;
 	public static int wheelDriveAxis = 0;
 	public static int throttleAxis = 1;
-	public static int wheel = 3;
-	public static int throttle = 4;
+	public static int wheel = 0;
+	public static int throttle = 1;
 	public static int shiftHighButton = 1;
 	public static int shiftLowButton = 2;
 	public static int shooterBatterShotButton = 8;
 	public static int shooterCleatShotButton = 10;
 	public static int shootButton = 1; 
+	public static int shooterCancelButton = 6;
 	
-	public static double autoShotAngle = 53;
+	public static double autoShotAngle = 51;// 36;
 	public static double autoShotSpeedBottom = 5200;
 	public static double autoShotSpeedTop = 5400;
+	public static int aFlipButton = 11;
+	public static int aFlipCANID = 11;
+	public static int shooterAutoButton = 5;
 	
 
 }

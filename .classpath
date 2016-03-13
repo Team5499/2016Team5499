@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="var" path="wpilib" sourcepath="wpilib.sources"/>
-	<classpathentry kind="var" path="networktables" sourcepath="networktables.sources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="var" path="navx-mxp"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/TrajectoryLib"/>
-	<classpathentry kind="lib" path="C:/Users/James Bartlett/commons-net-3.4/commons-net-3.4.jar"/>
-	<classpathentry kind="lib" path="src/org/usfirst/frc/team5499/robot/auto/AutoModeSingleBall.java"/>
+	<classpathentry kind="var" path="networktables"/>
+	<classpathentry kind="var" path="wpilib"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

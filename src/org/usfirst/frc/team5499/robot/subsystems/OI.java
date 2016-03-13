@@ -74,7 +74,12 @@ public class OI {
 			cmds.shootRequest = Commands.Shoot.ON;
 		}else if(Robot.hardware.operatorStation.getButton(StickEnum.OPERATOR, Reference.shooterWheelsInButton)){
 			cmds.shootRequest = Commands.Shoot.IN;
-		}else{
+		}else if(Robot.hardware.operatorStation.getButton(StickEnum.OPERATOR, Reference.shooterCancelButton)){
+			cmds.shotPrepRequest = Commands.ShotRequest.OFF;
+		}else if(Robot.hardware.operatorStation.getButton(StickEnum.OPERATOR, Reference.shooterAutoButton)){
+			cmds.shotPrepRequest = Commands.ShotRequest.AUTO;
+		}
+		else{
 			cmds.shootRequest = Commands.Shoot.OFF;
 		}
 		System.out.println(cmds.shootRequest);
