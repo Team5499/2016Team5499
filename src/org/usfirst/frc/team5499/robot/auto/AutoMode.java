@@ -8,6 +8,8 @@ public class AutoMode implements Loopable{
 	
 	ArrayDeque<Command> cmdSeq;
 	Command currentCommand;
+	Timer timer;
+	Hardware hardware;
 	
 	@Override
 	public void update() {
@@ -22,17 +24,17 @@ public class AutoMode implements Loopable{
 			case Command.commandType.CMD_INTAKE:
 				if(currentCommand.intakestate)
 				{
-					// run intake down
+					hardware.intake.lowerArm();
 				} else {
-					// run intake up
+					hardware.intake.raiseArm();
 				}
 				break;
 			case Command.commandType.CMD_AFLIP:
 				if(currentCommand.aflipstate)
 				{
-					// run aflip down
+					hardware.aflip.lowerArm();
 				} else {
-					// run flip up
+					hardware.aflip.raiseArm();
 				}
 				break;
 			case Command.commandType.CMD_DRIVE:
@@ -49,16 +51,34 @@ public class AutoMode implements Loopable{
 			case Command.commandType.CMD_CHANGESHOTSETPOINT:
 				break;
 			case Command.commandType.CMD_SHOOT:
-				break;s
-		if(result) { // OR we run out of time
-			// get next command
+				break;
+		if(result || timer.get() > currentCommand.timeout) {
+			if(currentCommand.commandType != Command.commandType.CMD_NULL) {
+				if(cmdSeq.size() == 0)
+				{
+					currentCommand = new Command();
+					currentCommand.commandType = CMD_NULL;
+				} else {
+					urrentCommand = cmdSeq.getFirst();
+					cmdSeq.removeFirst();
+					timer.start();
+				}
+			}
 		}
+	}
+
+	public void setHardware(Hardware hardware) {
+		this.hardware = hardware;
 	}
 	
 	public void setCommandSequence(ArrayDeque<Command> cmdSeq){
 		this.cmdSeq = cmdSeq;
+	}
+
+	public void start() {
 		currentCommand = cmdSeq.getFirst();
 		cmdSeq.removeFirst();
+		timer.start();
 	}
 
 }
