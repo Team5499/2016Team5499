@@ -104,12 +104,17 @@ public class Reference {
 	public static int shootButton = 1; 
 	public static int shooterCancelButton = 6;
 	
-	public static double autoShotAngle = 51;// 36;
-	public static double autoShotSpeedBottom = 5200;
-	public static double autoShotSpeedTop = 5400;
+	public static double autoShotAngle = 36;
+	public static double autoShotSpeedBottom = 5000;
+	public static double autoShotSpeedTop = 5200;
 	public static int aFlipButton = 11;
 	public static int aFlipCANID = 11;
 	public static int shooterAutoButton = 5;
 	
+	public static double driveP = 1;
+	public static double turnP = .6;
+	public static double spyShotSpeedTop = 5400;
+	public static double spyShotSpeedBottom = 5200;
+	public static double spyShotAngle = 51;
 
 }

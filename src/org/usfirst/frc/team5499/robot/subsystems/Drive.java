@@ -134,41 +134,41 @@ public class Drive implements Loopable {
 //				shift(Commands.ShiftRequest.OFF);
 //			}
 		}else if(Robot.getState() == Robot.StateEnum.AUTO){
-			leftPosControl.update();
-			rightPosControl.update();
-			angControl.update();
-			if(low){
-				leftPosControlLow.update();
-				rightPosControlLow.update();
-				angControlLow.update();
-			}
-			if(control){
-//				if(!low){
-					double leftOutput = -1 * angControl.getOutput();
-					double rightOutput = angControl.getOutput();
-					if(posControl){
-						System.out.println("position control");
-						System.out.println("left distance: " + encLeft.getDistance());
-						leftOutput +=  leftPosControl.getOutput();
-						rightOutput += rightPosControl.getOutput();
-					}
-					setMotors(.6 * leftOutput, .6 * rightOutput);
-//				}else{
-//					double leftOutput = -1 * angControlLow.getOutput();
-//					double rightOutput = angControlLow.getOutput();
+//			leftPosControl.update();
+//			rightPosControl.update();
+//			angControl.update();
+//			if(low){
+//				leftPosControlLow.update();
+//				rightPosControlLow.update();
+//				angControlLow.update();
+//			}
+//			if(control){
+////				if(!low){
+//					double leftOutput = -1 * angControl.getOutput();
+//					double rightOutput = angControl.getOutput();
 //					if(posControl){
-//						leftOutput += leftPosControlLow.getOutput();
-//						rightOutput += rightPosControlLow.getOutput();
+//						System.out.println("position control");
+//						System.out.println("left distance: " + encLeft.getDistance());
+//						leftOutput +=  leftPosControl.getOutput();
+//						rightOutput += rightPosControl.getOutput();
 //					}
-//					setMotors(leftOutput, rightOutput);
-//				}
-			}else{
-				setMotors(0,0);
-			}
-				
-//			System.out.println("left: " +leftOutput);
-//			System.out.println("right: " + rightOutput);
-			System.out.println(gyro.getInput());
+//					setMotors(.6 * leftOutput, .6 * rightOutput);
+////				}else{
+////					double leftOutput = -1 * angControlLow.getOutput();
+////					double rightOutput = angControlLow.getOutput();
+////					if(posControl){
+////						leftOutput += leftPosControlLow.getOutput();
+////						rightOutput += rightPosControlLow.getOutput();
+////					}
+////					setMotors(leftOutput, rightOutput);
+////				}
+//			}else{
+//				setMotors(0,0);
+//			}
+//				
+////			System.out.println("left: " +leftOutput);
+////			System.out.println("right: " + rightOutput);
+//			System.out.println(gyro.getInput());
 
 //			if(leftFollower.isFinishedTrajectory()&&rightFollower.isFinishedTrajectory()){
 //				encLeft.reset();	

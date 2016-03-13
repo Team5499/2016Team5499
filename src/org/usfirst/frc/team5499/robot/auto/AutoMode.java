@@ -3,87 +3,91 @@ package org.usfirst.frc.team5499.robot.auto;
 import java.util.ArrayDeque;
 
 import org.usfirst.frc.team5499.lib.util.Loopable;
+import org.usfirst.frc.team5499.robot.Hardware;
+import org.usfirst.frc.team5499.robot.Reference;
+import org.usfirst.frc.team5499.robot.Robot;
 
-import org.usfirst.frc.team5499.robot.commands.Commands;
+import edu.wpi.first.wpilibj.Timer;
 
 public class AutoMode implements Loopable{
 	
 	ArrayDeque<Command> cmdSeq;
 	Command currentCommand;
 	Timer timer;
-	Hardware hardware;
+	
+	public AutoMode(){
+		timer = new Timer();
+	}
 	
 	@Override
 	public void update() {
 		boolean result = false;
 		switch(currentCommand.type){
-			case Command.commandType.CMD_NULL:
+			case CMD_NULL:
 				// make robot do nothihng (kill all mtors)
 				break;
-			case Command.commandType.CMD_WAIT:
+			case CMD_WAIT:
 				// same here
 				break;
-			case Command.commandType.CMD_INTAKE:
+			case CMD_INTAKE:
 				if(currentCommand.intakestate)
 				{
-					hardware.intake.lowerArm();
+					Robot.hardware.intake.lowerArm();
 				} else {
-					hardware.intake.raiseArm();
+					Robot.hardware.intake.raiseArm();
 				}
 				break;
-			case Command.commandType.CMD_AFLIP:
+			case CMD_AFLIP:
 				if(currentCommand.aflipstate)
 				{
-					hardware.aflip.lowerArm();
+					Robot.hardware.aflip.lowerArm();
 				} else {
-					hardware.aflip.raiseArm();
+					Robot.hardware.aflip.raiseArm();
 				}
 				break;
-			case Command.commandType.CMD_DRIVE:
-				double driveError = currentCommand.encLeftDistance - hardware.drive.leftEnc.getDistance();
-				double output = driveError * DRIVE_PID_P; // james fill this in
-				hardware.robot.drive.setWheels(output, output);
-				if(driveError > -1 && driveError < 1) {
+			case CMD_DRIVE:
+				double driveError = currentCommand.encLeftDistance - Robot.hardware.drive.encLeft.getDistance();
+				double output = driveError * Reference.driveP; // james fill this in
+				double turnError = currentCommand.heading - Robot.hardware.drive.gyro.getInput();
+				double outputTurn = turnError * Reference.turnP; // james fill this in
+				Robot.hardware.drive.setMotors(output + outputTurn, output - outputTurn);
+				if(driveError > -1 && driveError < 1 && turnError > -1 && turnError < 1) {
 					result = true;
 				}
 				break;
-			case Command.commandType.CMD_TURN:
-				double turnError = currentCommand.heading - hardware.drive.gyro.getAngle();
-				double output = turnError * TURN_PID_P; // james fill this in
-				hardware.robot.drive.setWheels(output, -output);
+			case CMD_TURN:
+				turnError = currentCommand.heading - Robot.hardware.drive.gyro.getInput();
+				outputTurn = turnError * Reference.turnP; // james fill this in
+				Robot.hardware.drive.setMotors(outputTurn, -outputTurn);
 				if(turnError > -1 && turnError < 1) {
 					result = true;
 				}
 				break;
-			case Command.commandType.CMD_CHANGE_SHOT:
-				hardware.shooter.setShotSpeeds(currentCommand.shooterShotRequest);
+			case CMD_CHANGE_SHOT:
+				Robot.hardware.shooter.setShotSpeeds(currentCommand.shooterShotRequest);
 				break;
-			case Command.commandType.CMD_SHOOT:
-				hardware.shooter.setShotSpeeds(currentCommand.shooterShotRequest);
-				hardware.shooter.feed();
+			case CMD_SHOOT:
+				Robot.hardware.shooter.setShotSpeeds(currentCommand.shooterShotRequest);
+				Robot.hardware.shooter.feed();
 				break;
-			case Command.commandType.CMD_SHIFT;
-				hardware.drive.shift(currentCommand.shiftRequest);
+			case CMD_SHIFT:
+				Robot.hardware.drive.shift(currentCommand.shiftRequest);
 				result = true;
 				break;
 		}
 		if(result || timer.get() > currentCommand.timeout) {
-			if(currentCommand.commandType != Command.commandType.CMD_NULL) {
+			if(currentCommand.type != Command.commandType.CMD_NULL) {
 				if(cmdSeq.size() == 0)
 				{
 					currentCommand = new Command();
-					currentCommand.commandType = CMD_NULL;
+					currentCommand.type = Command.commandType.CMD_NULL;
 				} else {
-					urrentCommand = cmdSeq.getFirst();
+					currentCommand = cmdSeq.getFirst();
 					cmdSeq.removeFirst();
 					timer.reset();
 				}
 			}
 		}
-	}
-
-	public void setHardware(Hardware hardware) {
-		this.hardware = hardware;
 	}
 	
 	public void setCommandSequence(ArrayDeque<Command> cmdSeq){

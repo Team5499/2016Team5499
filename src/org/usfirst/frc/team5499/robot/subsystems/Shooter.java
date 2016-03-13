@@ -166,6 +166,10 @@ public class Shooter implements Loopable{
 			currentArmSetpoint = Reference.autoShotAngle;
 			//armController.setSetpoint(currentArmSetpoint);
 			break;
+		case SPY:
+			topWheelController.setSetpoint(Reference.spyShotSpeedTop);
+			bottomWheelController.setSetpoint(Reference.spyShotSpeedBottom);
+			currentArmSetpoint = Reference.spyShotAngle;
 		case OFF:
 			stopWheels();
 			lower();

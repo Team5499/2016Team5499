@@ -36,6 +36,8 @@ public class Command {
 		
 	}
 	public Command(commandType type){
-		this(type, 0.0,0.0,0.0, false, false, 0.0, 0.0, 0.0, true, 15.0);
+		this(type, 0.0,0.0,0.0, false, false, Commands.ShotRequest.OFF, 0.0, 0.0, Commands.ShiftRequest.HIGH, 15.0);
+	}
+	public Command(){
 	}
 }

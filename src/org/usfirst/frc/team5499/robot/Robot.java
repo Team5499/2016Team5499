@@ -1,16 +1,23 @@
 
 package org.usfirst.frc.team5499.robot;
 
+import java.util.ArrayDeque;
+import java.util.Iterator;
+import java.util.Map.Entry;
+
 import org.usfirst.frc.team5499.lib.util.MultiLooper;
-import org.usfirst.frc.team5499.robot.auto.AudoMode;
-import org.usfirst.frc.team5499.robot.auto.AudoModeSequences;
+import org.usfirst.frc.team5499.robot.auto.AutoMode;
+import org.usfirst.frc.team5499.robot.auto.AutoModeSequences;
+import org.usfirst.frc.team5499.robot.auto.Command;
 import org.usfirst.frc.team5499.robot.commands.CommandManager;
 import org.usfirst.frc.team5499.robot.commands.Commands;
+import org.usfirst.frc.team5499.robot.subsystems.OI.StickEnum;
 
 import com.team254.lib.trajectory.Path;
 import com.team254.lib.trajectory.Trajectory;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 
 
 public class Robot extends IterativeRobot {
@@ -29,8 +36,8 @@ public class Robot extends IterativeRobot {
 	String fileString;
 	boolean autohasshot;
 	AutoMode autoMode;
-    AudoModeSequences autoModeSequences;
-    Iterator sequenceIterator;
+    AutoModeSequences autoModeSequences;
+    Iterator<Entry<String, ArrayDeque<Command>>> sequenceIterator;
 
 	public static Commands cmds;
 	
@@ -50,8 +57,8 @@ public class Robot extends IterativeRobot {
 		hardware.drive.gyro.gyro.calibrate();
 		autohasshot = false;
 		autoMode = new AutoMode();
-        autoModeSequences = new AudoModeSequences();
-        sequenceIterator = autoModeSequences.entrySet().iterator();
+        autoModeSequences = new AutoModeSequences();
+        sequenceIterator = autoModeSequences.modes.entrySet().iterator();
         this.cycleNextAutoMode();
 
 		hardware.shooter.lower();
@@ -60,8 +67,6 @@ public class Robot extends IterativeRobot {
     @Override
     public void autonomousInit() {
     	state = StateEnum.AUTO;
-        autoMode.setHardware(hardware);
-
     	controlLooper.addLoopable(autoMode);
     	controlLooper.start();
 		//hardware.drive.setTrajectory(trajPair);
@@ -105,8 +110,9 @@ public class Robot extends IterativeRobot {
     }
     @Override
     public void disabledPeriodic(){
-        if(hardware.operatorStation.getButton(james pick a button))
+        if(hardware.operatorStation.getButton(StickEnum.OPERATOR, 7))
         {
+        	System.out.println("switch button pushed");
             Timer.delay(0.5);
             this.cycleNextAutoMode();
         }
@@ -114,11 +120,11 @@ public class Robot extends IterativeRobot {
 
     public void cycleNextAutoMode() {
         if(!sequenceIterator.hasNext()) {
-            sequenceIterator = autoModeSequences.entrySet().iterator();
+            sequenceIterator = autoModeSequences.modes.entrySet().iterator();
         }
-        Entry sequence = (Entry)sequenceIterator.next();
+        Entry<String, ArrayDeque<Command>> sequence = (Entry<String, ArrayDeque<Command>>)sequenceIterator.next();
         System.out.println(sequence.getKey());
-        autoMode.setCommandSequence(sequence.getValue());
+        autoMode.setCommandSequence((ArrayDeque<Command>)sequence.getValue());
     }
     
     public static StateEnum getState(){
