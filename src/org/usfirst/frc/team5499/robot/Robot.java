@@ -2,7 +2,8 @@
 package org.usfirst.frc.team5499.robot;
 
 import org.usfirst.frc.team5499.lib.util.MultiLooper;
-import org.usfirst.frc.team5499.robot.auto.AutoModeSingleBall;
+import org.usfirst.frc.team5499.robot.auto.AudoMode;
+import org.usfirst.frc.team5499.robot.auto.AudoModeSequences;
 import org.usfirst.frc.team5499.robot.commands.CommandManager;
 import org.usfirst.frc.team5499.robot.commands.Commands;
 
@@ -27,7 +28,10 @@ public class Robot extends IterativeRobot {
 	Trajectory.Pair trajPair;
 	String fileString;
 	boolean autohasshot;
-	AutoModeSingleBall autoMode;
+	AutoMode autoMode;
+    AudoModeSequences autoModeSequences;
+    Iterator sequenceIterator;
+
 	public static Commands cmds;
 	
     @Override
@@ -45,13 +49,19 @@ public class Robot extends IterativeRobot {
 //		System.out.println(trajPair.toString());
 		hardware.drive.gyro.gyro.calibrate();
 		autohasshot = false;
-		autoMode = new AutoModeSingleBall();
+		autoMode = new AutoMode();
+        autoModeSequences = new AudoModeSequences();
+        sequenceIterator = autoModeSequences.entrySet().iterator();
+        this.cycleNextAutoMode();
+
 		hardware.shooter.lower();
 	}
     
     @Override
     public void autonomousInit() {
     	state = StateEnum.AUTO;
+        autoMode.setHardware(hardware);
+
     	controlLooper.addLoopable(autoMode);
     	controlLooper.start();
 		//hardware.drive.setTrajectory(trajPair);
@@ -92,6 +102,23 @@ public class Robot extends IterativeRobot {
     @Override
     public void disabledInit(){
     	controlLooper.stop();
+    }
+    @Override
+    public void disabledPeriodic(){
+        if(hardware.operatorStation.getButton(james pick a button))
+        {
+            Timer.delay(0.5);
+            this.cycleNextAutoMode();
+        }
+    }
+
+    public void cycleNextAutoMode() {
+        if(!sequenceIterator.hasNext()) {
+            sequenceIterator = autoModeSequences.entrySet().iterator();
+        }
+        Entry sequence = (Entry)sequenceIterator.next();
+        System.out.println(sequence.getKey());
+        autoMode.setCommandSequence(sequence.getValue());
     }
     
     public static StateEnum getState(){

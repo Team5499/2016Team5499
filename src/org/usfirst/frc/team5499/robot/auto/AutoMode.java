@@ -4,6 +4,8 @@ import java.util.ArrayDeque;
 
 import org.usfirst.frc.team5499.lib.util.Loopable;
 
+import org.usfirst.frc.team5499.robot.commands.Commands;
+
 public class AutoMode implements Loopable{
 	
 	ArrayDeque<Command> cmdSeq;
@@ -38,20 +40,33 @@ public class AutoMode implements Loopable{
 				}
 				break;
 			case Command.commandType.CMD_DRIVE:
-				// PID the distance
-				base_speed = result of distance PID
-				// PID the heading
-				offset_speed = results of heading PID
-				left = base + offset
-				right = base - offset
-				if(close enoguht o gaols) {
+				double driveError = currentCommand.encLeftDistance - hardware.drive.leftEnc.getDistance();
+				double output = driveError * DRIVE_PID_P; // james fill this in
+				hardware.robot.drive.setWheels(output, output);
+				if(driveError > -1 && driveError < 1) {
 					result = true;
 				}
 				break;
-			case Command.commandType.CMD_CHANGESHOTSETPOINT:
+			case Command.commandType.CMD_TURN:
+				double turnError = currentCommand.heading - hardware.drive.gyro.getAngle();
+				double output = turnError * TURN_PID_P; // james fill this in
+				hardware.robot.drive.setWheels(output, -output);
+				if(turnError > -1 && turnError < 1) {
+					result = true;
+				}
+				break;
+			case Command.commandType.CMD_CHANGE_SHOT:
+				hardware.shooter.setShotSpeeds(currentCommand.shooterShotRequest);
 				break;
 			case Command.commandType.CMD_SHOOT:
+				hardware.shooter.setShotSpeeds(currentCommand.shooterShotRequest);
+				hardware.shooter.feed();
 				break;
+			case Command.commandType.CMD_SHIFT;
+				hardware.drive.shift(currentCommand.shiftRequest);
+				result = true;
+				break;
+		}
 		if(result || timer.get() > currentCommand.timeout) {
 			if(currentCommand.commandType != Command.commandType.CMD_NULL) {
 				if(cmdSeq.size() == 0)
@@ -61,7 +76,7 @@ public class AutoMode implements Loopable{
 				} else {
 					urrentCommand = cmdSeq.getFirst();
 					cmdSeq.removeFirst();
-					timer.start();
+					timer.reset();
 				}
 			}
 		}
