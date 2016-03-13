@@ -12,7 +12,7 @@ public class AutoMode implements Loopable{
 	@Override
 	public void update() {
 		boolean result = false;
-		switch(currentCommand.commandType){
+		switch(currentCommand.type){
 			case Command.commandType.CMD_NULL:
 				// make robot do nothihng (kill all mtors)
 				break;
