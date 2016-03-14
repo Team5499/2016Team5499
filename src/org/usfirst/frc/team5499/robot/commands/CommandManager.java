@@ -1,7 +1,5 @@
 package org.usfirst.frc.team5499.robot.commands;
 
-import org.usfirst.frc.team5499.robot.Robot;
-import org.usfirst.frc.team5499.robot.Robot.StateEnum;
 
 public class CommandManager {
 

@@ -81,7 +81,7 @@ public class Shooter implements Loopable{
 		//		System.out.println("Control Loop Output: " + armController.getOutput());
 //		System.out.println("Bottom Wheel: " + bottomWheelSensor.getRate());
 //		System.out.println("Top Wheel: " + topWheelSensor.getRate());
-		System.out.println(armPivotPot.getInput());
+		//System.out.println(armPivotPot.getInput());
 		
 //		topFlyWheel.set(-1 * Robot.hardware.operatorStation.getStickAxis(StickEnum.XBOX, Reference.shooterTopAxis));
 //		//topFlyWheel.set(1);

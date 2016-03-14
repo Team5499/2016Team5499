@@ -52,7 +52,7 @@ public class Reference {
 	//Shooter Arm Constants
 	public static double shooterArmPotScale = -269.5;//-272.72; //272.72
 	public static double shooterArmPotZero = 247;//225;
-	public static double shooterArmPGain = .122;//.27505;
+	public static double shooterArmPGain = .1;//.27505;
 	public static double shooterArmIGain = 0;
 	public static double shooterArmDGain = 0.004;
 	public static double shooterArmILimit = 1000;
@@ -111,8 +111,8 @@ public class Reference {
 	public static int aFlipCANID = 11;
 	public static int shooterAutoButton = 5;
 	
-	public static double driveP = 1;
-	public static double turnP = .6;
+	public static double driveP = .13;
+	public static double turnP = .03;
 	public static double spyShotSpeedTop = 5400;
 	public static double spyShotSpeedBottom = 5200;
 	public static double spyShotAngle = 51;

@@ -129,6 +129,7 @@ public class Drive implements Loopable {
 				}else{
 					shift(Commands.ShiftRequest.OFF);
 				}
+			System.out.println("teleop drive");
 //				
 //			}else{
 //				shift(Commands.ShiftRequest.OFF);
@@ -216,12 +217,26 @@ public class Drive implements Loopable {
 	private void setMotorsWheel(double wheel, double throttle) {
 		//System.out.println(wheel);
 		//System.out.println(throttle);
-		throttle = -2 * throttle;
-		double left = (.5 + inverted * (wheel)) * throttle;
-		double right = (.5 - inverted * (wheel)) * throttle;
-		System.out.println("Left: " + left);
+//		throttle = -2 * throttle;
+//		double left = (.5 + inverted * (wheel)) * throttle;
+//		double right = (.5 - inverted * (wheel)) * throttle;
+//		System.out.println("Left: " + left);
+//		setMotors(left, right);
+		if(!Robot.hardware.operatorStation.getButton(StickEnum.WHEEL, 6)) {
+			if(this.low) {
+				wheel *= 0.3;
+			} else { 
+				wheel *= 0.6;
+			}
+		}
+		if(throttle < 0)
+			wheel *= -1;
+			
+		throttle *= -1;
+			
+		double left = throttle + wheel;
+		double right = throttle - wheel;
 		setMotors(left, right);
-		
 	}
 
 	public void setMotors(double leftSpeed, double rightSpeed){

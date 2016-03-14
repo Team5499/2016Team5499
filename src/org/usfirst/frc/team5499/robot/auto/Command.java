@@ -5,7 +5,7 @@ import org.usfirst.frc.team5499.robot.commands.Commands;
 public class Command {
 
 	public enum commandType{
-		CMD_NULL, CMD_WAIT, CMD_INTAKE, CMD_AFLIP, CMD_DRIVE, CMD_TURN, CMD_CHANGE_SHOT, CMD_SHOOT, CMD_SHIFT
+		CMD_NULL, CMD_WAIT, CMD_INTAKE, CMD_AFLIP, CMD_DRIVE, CMD_DRIVESTRAIGHT, CMD_TURN, CMD_CHANGE_SHOT, CMD_SHOOT, CMD_SHIFT
 	};
 	public double encLeftDistance;
 	public double encRightDistance;

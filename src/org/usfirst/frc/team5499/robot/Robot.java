@@ -67,6 +67,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void autonomousInit() {
     	state = StateEnum.AUTO;
+    	autoMode.start();
     	controlLooper.addLoopable(autoMode);
     	controlLooper.start();
 		//hardware.drive.setTrajectory(trajPair);
@@ -80,8 +81,8 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void autonomousPeriodic() {
-    	cmdManager.update(cmds);
-    	System.out.println(Robot.hardware.drive.gyro.gyro.getAngle());
+//    	cmdManager.update(cmds);
+//    	System.out.println(Robot.hardware.drive.gyro.gyro.getAngle());
     }
     @Override
     public void teleopInit(){
