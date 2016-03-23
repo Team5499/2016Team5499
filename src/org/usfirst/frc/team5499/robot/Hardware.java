@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5499.robot;
 
+import org.usfirst.frc.team5499.robot.sensors.Camera;
 import org.usfirst.frc.team5499.robot.sensors.LightSensor;
 import org.usfirst.frc.team5499.robot.sensors.Pot;
 import org.usfirst.frc.team5499.robot.subsystems.Aflip;
@@ -34,6 +35,8 @@ public class Hardware {
 	Encoder encRight;
 	DoubleSolenoid shiftLeft;
 	DoubleSolenoid shiftRight;
+	
+	Camera camera;
 	
 	Pot shooterArmPot; 
 	LightSensor shooterBottomSensor;
@@ -74,6 +77,8 @@ public class Hardware {
 		shiftRight = new DoubleSolenoid(Reference.shiftRightPCMPort1, Reference.shiftRightPCMPort2);
 		
 		c = new Compressor();
+		
+		camera = new Camera();
 		
 		intakeArmMotor = new CANTalon(Reference.intakeArmMotorCANID);
 		intakeRollerMotor = new CANTalon(Reference.intakeRollerMotorCANID);

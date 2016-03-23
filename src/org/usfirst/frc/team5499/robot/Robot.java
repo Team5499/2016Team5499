@@ -62,6 +62,8 @@ public class Robot extends IterativeRobot {
         this.cycleNextAutoMode();
 
 		hardware.shooter.lower();
+		
+		hardware.camera.startAcquire();
 	}
     
     @Override
