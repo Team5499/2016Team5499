@@ -11,6 +11,7 @@ import org.usfirst.frc.team5499.robot.sensors.EncoderSource;
 import org.usfirst.frc.team5499.robot.sensors.Gyro;
 import org.usfirst.frc.team5499.robot.subsystems.OI.StickEnum;
 
+import com.team1538.lib.CowGyro;
 import com.team254.lib.trajectory.Trajectory;
 import com.team254.lib.trajectory.TrajectoryFollower;
 
@@ -31,7 +32,7 @@ public class Drive implements Loopable {
 	DoubleSolenoid leftShift;
 	DoubleSolenoid rightShift;
 
-	public Gyro gyro;
+	public CowGyro gyro;
 	public TrajectoryFollower leftFollower;
 	public TrajectoryFollower rightFollower;
 	static final double kp = 1.7;
@@ -65,7 +66,7 @@ public class Drive implements Loopable {
 		this.motorRight2 = motorRight2;
 		this.encLeft = encLeft;
 		this.encRight = encRight;
-		this.gyro = new Gyro();
+		this.gyro = new CowGyro();
 		this.encLeft.setDistancePerPulse(Reference.distancePerPulseLeft);
 		this.encRight.setDistancePerPulse(Reference.distancePerPulseRight);
 		this.encRight.setReverseDirection(false);

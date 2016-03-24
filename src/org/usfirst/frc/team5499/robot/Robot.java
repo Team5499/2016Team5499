@@ -13,6 +13,7 @@ import org.usfirst.frc.team5499.robot.commands.CommandManager;
 import org.usfirst.frc.team5499.robot.commands.Commands;
 import org.usfirst.frc.team5499.robot.subsystems.OI.StickEnum;
 
+import com.team1538.lib.CowDisplay;
 import com.team254.lib.trajectory.Path;
 import com.team254.lib.trajectory.Trajectory;
 
@@ -41,6 +42,8 @@ public class Robot extends IterativeRobot {
 
 	public static Commands cmds;
 	
+	private CowDisplay m_Display;
+	
     @Override
 	public void robotInit() {
     	System.out.println("robotInit");
@@ -54,7 +57,6 @@ public class Robot extends IterativeRobot {
 //		autoModePath = (new TextFileDeserializer()).deserialize(fileString);
 //		trajPair = autoModePath.getPair();
 //		System.out.println(trajPair.toString());
-		hardware.drive.gyro.gyro.calibrate();
 		autohasshot = false;
 		autoMode = new AutoMode();
         autoModeSequences = new AutoModeSequences();
@@ -64,6 +66,8 @@ public class Robot extends IterativeRobot {
 		hardware.shooter.lower();
 		
 		hardware.camera.startAcquire();
+		
+		m_Display = new CowDisplay();
 	}
     
     @Override
@@ -77,8 +81,7 @@ public class Robot extends IterativeRobot {
 		hardware.drive.setInverted(false);
 		hardware.encLeft.reset();
 		hardware.encRight.reset();
-		hardware.drive.gyro.gyro.calibrate();
-		hardware.drive.gyro.gyro.reset();
+		hardware.drive.gyro.FinalizeCalibration();
     }
 
     @Override
@@ -94,14 +97,15 @@ public class Robot extends IterativeRobot {
     	controlLooper.start();
     	hardware.shooter.stopWheels();
     	hardware.shooter.lower();
-
+    	hardware.drive.gyro.FinalizeCalibration();
     }
     @Override
     public void teleopPeriodic() {
     //	System.out.println(hardware.shooter.getTopWheelSpeed());
     	Commands cmds = hardware.operatorStation.getCommands();
-    	System.out.println(Robot.hardware.drive.gyro.gyro.getAngle());
+    	System.out.println(Robot.hardware.drive.gyro.GetAngle());
     	cmdManager.update(cmds);
+    	m_Display.DisplayPeriodic();
     }
     @Override
     public void testPeriodic() {
@@ -110,6 +114,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void disabledInit(){
     	controlLooper.stop();
+    	hardware.drive.gyro.BeginCalibration();
     }
     @Override
     public void disabledPeriodic(){
@@ -119,6 +124,7 @@ public class Robot extends IterativeRobot {
             Timer.delay(0.5);
             this.cycleNextAutoMode();
         }
+        m_Display.DisplayPeriodic();
     }
 
     public void cycleNextAutoMode() {
