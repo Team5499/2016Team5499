@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="5499-extras" default="all">
+  <target name="CowGyroJNI-generateHeader">
+  	<echo>Generating CowGyroJNI header...</echo>
+    <javah outputFile="src/com/team1538/lib/c/CowGyroJNI.h" classpath="build">
+	   <class name="com.team1538.lib.CowGyro"/>
+	 </javah>
+  </target>
+	
+  <target name="CowGyroJNI-build">
+  	<echo>Building CowGyroJNI shared object...</echo>
+  	<exec executable="/usr/local/bin/arm-frc-linux-gnueabi-g++">
+      <arg value="-I${user.home}/wpilib/cpp/current/include"/>
+  		<arg value="-I${java.home}/../include"/>
+  		<arg value="-I${java.home}/../include/darwin"/>
+  		<arg value="-std=c++14"/>
+  		<arg value="-fPIC"/>
+  		<arg value="-shared"/>
+  		<arg value="-o CowGyroJNI.so"/>
+  		<arg value="src/com/team1538/lib/c/CowGyro.cpp"/>
+  		<arg value="src/com/team1538/lib/c/CowGyroJNI.cpp"/>
+  	</exec>
+  </target>
+	
+	<target name="CowGyroJNI-build-test">
+	    <exec executable="/usr/bin/g++">
+	      <arg value="-I${user.home}/wpilib/cpp/current/include"/>
+	      <arg value="-I${java.home}/../include"/>
+	      <arg value="-I${java.home}/../include/darwin"/>
+	      <arg value="-std=c++14"/>
+	      <arg value="-fPIC"/>
+	      <arg value="-shared"/>
+	      <arg value="-o CowGyroJNI-Test.so"/>
+	      <arg value="src/com/team1538/lib/c/CowGyro.cpp"/>
+	      <arg value="src/com/team1538/lib/c/CowGyroJNI.cpp"/>
+	    </exec>
+	  </target>
+	
+	<target name="CowGyroJNI" depends="CowGyroJNI-generateHeader,CowGyroJNI-build"/>
+	
+  <target name="all" depends="CowGyroJNI"/>
+</project>
