@@ -65,7 +65,7 @@ public class Robot extends IterativeRobot {
 		
 		hardware.camera.startAcquire();
 		
-		System.load("/CowGyroJNI.so");
+		System.loadLibrary("CowGyroJNI");
 	}
     
     @Override
