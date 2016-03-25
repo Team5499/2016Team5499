@@ -13,7 +13,7 @@ import org.usfirst.frc.team5499.robot.commands.CommandManager;
 import org.usfirst.frc.team5499.robot.commands.Commands;
 import org.usfirst.frc.team5499.robot.subsystems.OI.StickEnum;
 
-import com.team1538.lib.CowDisplay;
+import com.team1538.lib.CowGyro;
 import com.team254.lib.trajectory.Path;
 import com.team254.lib.trajectory.Trajectory;
 
@@ -41,9 +41,7 @@ public class Robot extends IterativeRobot {
     Iterator<Entry<String, ArrayDeque<Command>>> sequenceIterator;
 
 	public static Commands cmds;
-	
-	private CowDisplay m_Display;
-	
+		
     @Override
 	public void robotInit() {
     	System.out.println("robotInit");
@@ -67,7 +65,7 @@ public class Robot extends IterativeRobot {
 		
 		hardware.camera.startAcquire();
 		
-		m_Display = new CowDisplay();
+		System.load("/CowGyroJNI.so");
 	}
     
     @Override
@@ -81,7 +79,7 @@ public class Robot extends IterativeRobot {
 		hardware.drive.setInverted(false);
 		hardware.encLeft.reset();
 		hardware.encRight.reset();
-		hardware.drive.gyro.FinalizeCalibration();
+		CowGyro.FinalizeCalibration();
     }
 
     @Override
@@ -97,15 +95,14 @@ public class Robot extends IterativeRobot {
     	controlLooper.start();
     	hardware.shooter.stopWheels();
     	hardware.shooter.lower();
-    	hardware.drive.gyro.FinalizeCalibration();
+    	CowGyro.FinalizeCalibration();
     }
     @Override
     public void teleopPeriodic() {
     //	System.out.println(hardware.shooter.getTopWheelSpeed());
     	Commands cmds = hardware.operatorStation.getCommands();
-    	System.out.println(Robot.hardware.drive.gyro.GetAngle());
+    	System.out.println(CowGyro.GetAngle());
     	cmdManager.update(cmds);
-    	m_Display.DisplayPeriodic();
     }
     @Override
     public void testPeriodic() {
@@ -114,7 +111,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void disabledInit(){
     	controlLooper.stop();
-    	hardware.drive.gyro.BeginCalibration();
+    	CowGyro.BeginCalibration();
     }
     @Override
     public void disabledPeriodic(){
@@ -124,7 +121,6 @@ public class Robot extends IterativeRobot {
             Timer.delay(0.5);
             this.cycleNextAutoMode();
         }
-        m_Display.DisplayPeriodic();
     }
 
     public void cycleNextAutoMode() {

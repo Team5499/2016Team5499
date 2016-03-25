@@ -9,8 +9,6 @@ import org.usfirst.frc.team5499.robot.subsystems.Intake;
 import org.usfirst.frc.team5499.robot.subsystems.OI;
 import org.usfirst.frc.team5499.robot.subsystems.Shooter;
 
-import com.team1538.lib.CowAlphaNum;
-
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -55,12 +53,8 @@ public class Hardware {
 	public PowerDistributionPanel pdp;
 	public Compressor c;
 	public Aflip aflip;
-	
-	public CowAlphaNum mxpAlphaNumDisplay;
-	
-	public Hardware(){
-		mxpAlphaNumDisplay = new CowAlphaNum();
 		
+	public Hardware(){		
 		aFlipMotor = new CANTalon(Reference.aFlipCANID);
 		aflip = new Aflip(aFlipMotor);
 		
