@@ -9,7 +9,7 @@
   </target>
 	
   <target name="CowGyroJNI-build">
-  	<echo>Building CowGyroJNI shared object...</echo>
+  	<echo>Building CowGyroJNI shared object for RoboRIO...</echo>
   	<exec executable="/usr/local/bin/arm-frc-linux-gnueabi-g++">
       <arg value="-I${user.home}/wpilib/cpp/current/include"/>
   		<arg value="-I${java.home}/../include"/>
@@ -24,6 +24,7 @@
   </target>
 	
 	<target name="CowGyroJNI-build-test">
+		<echo>Building CowGyroJNI shared object for ${os.name}...</echo>
     <exec executable="/usr/bin/g++">
       <arg value="-I${user.home}/wpilib/cpp/current/include"/>
       <arg value="-I${java.home}/../include"/>
