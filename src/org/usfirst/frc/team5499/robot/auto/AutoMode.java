@@ -3,7 +3,6 @@ package org.usfirst.frc.team5499.robot.auto;
 import java.util.ArrayDeque;
 
 import org.usfirst.frc.team5499.lib.util.Loopable;
-import org.usfirst.frc.team5499.robot.Hardware;
 import org.usfirst.frc.team5499.robot.Reference;
 import org.usfirst.frc.team5499.robot.Robot;
 

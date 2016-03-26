@@ -1,7 +1,6 @@
 package org.usfirst.frc.team5499.robot.auto;
 
 import org.usfirst.frc.team5499.lib.util.Loopable;
-import org.usfirst.frc.team5499.robot.Reference;
 import org.usfirst.frc.team5499.robot.Robot;
 import org.usfirst.frc.team5499.robot.commands.Commands;
 

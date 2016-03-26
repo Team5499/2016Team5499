@@ -5,8 +5,6 @@ import org.usfirst.frc.team5499.robot.Reference;
 import org.usfirst.frc.team5499.robot.Robot;
 import org.usfirst.frc.team5499.robot.commands.Commands;
 
-import edu.wpi.first.wpilibj.Timer;
-
 public class AutoModeSingleBall implements Loopable{
 	
 	public boolean readyToShoot;
