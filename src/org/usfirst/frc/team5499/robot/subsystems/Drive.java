@@ -5,21 +5,16 @@ import org.usfirst.frc.team5499.robot.Reference;
 import org.usfirst.frc.team5499.robot.Robot;
 import org.usfirst.frc.team5499.robot.commands.Commands;
 import org.usfirst.frc.team5499.robot.commands.Commands.ShiftRequest;
-import org.usfirst.frc.team5499.robot.controllers.DriveStraightController;
 import org.usfirst.frc.team5499.robot.controllers.PIDBase;
 import org.usfirst.frc.team5499.robot.sensors.EncoderSource;
-import org.usfirst.frc.team5499.robot.sensors.Gyro;
 import org.usfirst.frc.team5499.robot.subsystems.OI.StickEnum;
 
 import com.team1538.lib.CowGyro;
-import com.team254.lib.trajectory.Trajectory;
 import com.team254.lib.trajectory.TrajectoryFollower;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 
 public class Drive implements Loopable {

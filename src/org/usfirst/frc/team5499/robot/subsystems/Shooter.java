@@ -2,15 +2,12 @@ package org.usfirst.frc.team5499.robot.subsystems;
 
 import org.usfirst.frc.team5499.lib.util.Loopable;
 import org.usfirst.frc.team5499.robot.Reference;
-import org.usfirst.frc.team5499.robot.Robot;
 import org.usfirst.frc.team5499.robot.commands.Commands;
 import org.usfirst.frc.team5499.robot.controllers.FeedForwardOutput;
 import org.usfirst.frc.team5499.robot.controllers.FeedForwardWithPID;
 import org.usfirst.frc.team5499.robot.controllers.PIDBase;
 import org.usfirst.frc.team5499.robot.sensors.LightSensor;
 import org.usfirst.frc.team5499.robot.sensors.Pot;
-import org.usfirst.frc.team5499.robot.subsystems.OI.StickEnum;
-
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 

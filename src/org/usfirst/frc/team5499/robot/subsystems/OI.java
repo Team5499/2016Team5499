@@ -3,8 +3,6 @@ package org.usfirst.frc.team5499.robot.subsystems;
 import org.usfirst.frc.team5499.robot.Reference;
 import org.usfirst.frc.team5499.robot.Robot;
 import org.usfirst.frc.team5499.robot.commands.Commands;
-import org.usfirst.frc.team5499.robot.subsystems.OI.StickEnum;
-
 import edu.wpi.first.wpilibj.Joystick;
 
 public class OI {
