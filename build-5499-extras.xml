@@ -17,7 +17,7 @@
   		<arg value="-std=c++14"/>
   		<arg value="-fPIC"/>
   		<arg value="-shared"/>
-  		<arg value="-o CowGyroJNI.so"/>
+  		<arg value="-oCowGyroJNI.so"/>
   		<arg value="src/com/team1538/lib/c/CowGyro.cpp"/>
   		<arg value="src/com/team1538/lib/c/CowGyroJNI.cpp"/>
   	</exec>
@@ -32,7 +32,7 @@
       <arg value="-std=c++14"/>
       <arg value="-fPIC"/>
       <arg value="-shared"/>
-      <arg value="-o CowGyroJNI-Test.so"/>
+      <arg value="-oCowGyroJNI-Test.so"/>
       <arg value="src/com/team1538/lib/c/CowGyro.cpp"/>
       <arg value="src/com/team1538/lib/c/CowGyroJNI.cpp"/>
     </exec>
