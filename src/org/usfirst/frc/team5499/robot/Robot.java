@@ -13,7 +13,6 @@ import org.usfirst.frc.team5499.robot.commands.CommandManager;
 import org.usfirst.frc.team5499.robot.commands.Commands;
 import org.usfirst.frc.team5499.robot.subsystems.OI.StickEnum;
 
-import com.team1538.lib.CowGyro;
 import com.team254.lib.trajectory.Path;
 import com.team254.lib.trajectory.Trajectory;
 
@@ -65,7 +64,7 @@ public class Robot extends IterativeRobot {
 		
 		hardware.camera.startAcquire();
 		
-		System.loadLibrary("CowGyroJNI");
+		//System.loadLibrary("CowGyroJNI");
 	}
     
     @Override
@@ -79,7 +78,7 @@ public class Robot extends IterativeRobot {
 		hardware.drive.setInverted(false);
 		hardware.encLeft.reset();
 		hardware.encRight.reset();
-		CowGyro.FinalizeCalibration();
+	//	CowGyro.FinalizeCalibration();
     }
 
     @Override
@@ -95,13 +94,13 @@ public class Robot extends IterativeRobot {
     	controlLooper.start();
     	hardware.shooter.stopWheels();
     	hardware.shooter.lower();
-    	CowGyro.FinalizeCalibration();
+    	//CowGyro.FinalizeCalibration();
     }
     @Override
     public void teleopPeriodic() {
     //	System.out.println(hardware.shooter.getTopWheelSpeed());
     	Commands cmds = hardware.operatorStation.getCommands();
-    	System.out.println(CowGyro.GetAngle());
+    	//System.out.println(CowGyro.GetAngle());
     	cmdManager.update(cmds);
     }
     @Override
@@ -111,7 +110,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void disabledInit(){
     	controlLooper.stop();
-    	CowGyro.BeginCalibration();
+    	//CowGyro.BeginCalibration();
     }
     @Override
     public void disabledPeriodic(){
