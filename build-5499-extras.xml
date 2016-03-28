@@ -8,37 +8,39 @@
 	 </javah>
   </target>
 	
-  <target name="CowGyroJNI-build">
-  	<echo>Building CowGyroJNI shared object for RoboRIO...</echo>
+  <target name="CowMXP_JNI-build">
+  	<echo>Building CowMXP_JNI shared object for RoboRIO...</echo>
+  	
+  	<pathconvert pathsep=" " property="wpilib.cpp.libs">
+  		<fileset dir="${user.home}/wpilib/cpp/current/lib" id="libs">
+        <include name="*.a"/>
+  			<include name="*.so"/>
+      </fileset>
+  	</pathconvert>
+  	  	
   	<exec executable="/usr/local/bin/arm-frc-linux-gnueabi-g++">
-      <arg value="-I${user.home}/wpilib/cpp/current/include"/>
+  		<arg value="-I${user.home}/wpilib/cpp/current/include"/>
   		<arg value="-I${java.home}/../include"/>
   		<arg value="-I${java.home}/../include/darwin"/>
   		<arg value="-std=c++14"/>
   		<arg value="-fPIC"/>
   		<arg value="-shared"/>
-  		<arg value="-o CowGyroJNI.so"/>
+  		<arg value="-Os"/>
+  		<arg value="-fdata-sections"/>
+  		<arg value="-ffunction-sections"/>
   		<arg value="src/com/team1538/lib/c/CowGyro.cpp"/>
   		<arg value="src/com/team1538/lib/c/CowGyroJNI.cpp"/>
+  		<arg value="-oCowMXP_JNI.so"/>
+  		<arg value="-Wl,--whole-archive"/>
+  		<arg value="-Wl,--allow-multiple-definition"/>
+  		<arg value="-Wl,--gc-sections"/>
+  		<arg value="-L${user.home}/wpilib/cpp/current/lib"/>
+  		<arg line="${wpilib.cpp.libs}"/>
+  		<arg value="-Wl,--no-whole-archive"/>
   	</exec>
   </target>
 	
-	<target name="CowGyroJNI-build-test">
-		<echo>Building CowGyroJNI shared object for ${os.name}...</echo>
-    <exec executable="/usr/bin/g++">
-      <arg value="-I${user.home}/wpilib/cpp/current/include"/>
-      <arg value="-I${java.home}/../include"/>
-      <arg value="-I${java.home}/../include/darwin"/>
-      <arg value="-std=c++14"/>
-      <arg value="-fPIC"/>
-      <arg value="-shared"/>
-      <arg value="-o CowGyroJNI-Test.so"/>
-      <arg value="src/com/team1538/lib/c/CowGyro.cpp"/>
-      <arg value="src/com/team1538/lib/c/CowGyroJNI.cpp"/>
-    </exec>
-  </target>
-	
-	<target name="CowGyroJNI" depends="CowGyroJNI-generateHeader,CowGyroJNI-build"/>
+	<target name="CowGyroJNI" depends="CowGyroJNI-generateHeader,CowMXP_JNI-build"/>
 	
   <target name="all" depends="CowGyroJNI"/>
 </project>
