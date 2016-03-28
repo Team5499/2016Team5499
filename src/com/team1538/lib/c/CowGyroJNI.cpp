@@ -2,6 +2,12 @@
 #include "CowGyroJNI.h"
 #include "CowGyro.h"
 
+JNIEXPORT void JNICALL Java_com_team1538_lib_CowGyro_init(JNIEnv *env, jclass cls)
+{
+	HALInitialize();
+}
+
+
 JNIEXPORT jfloat JNICALL Java_com_team1538_lib_CowGyro_GetAngle(JNIEnv *env, jclass cls)
 {
   return (jfloat) CowLib::CowGyro::GetInstance()->GetAngle();
