@@ -19,7 +19,7 @@ public class Aflip implements Loopable{
 	@Override
 	public void update() {
 		if(Robot.hardware.operatorStation.getButton(StickEnum.OPERATOR, Reference.aFlipButton)){
-			armMotor.set(.8*Robot.hardware.operatorStation.getStickAxis(StickEnum.OPERATOR, Reference.intakeArmAxis) * 0.8);
+			armMotor.set(.5 * Robot.hardware.operatorStation.getStickAxis(StickEnum.OPERATOR, Reference.intakeArmAxis));
 		}else{
 			armMotor.set(0);
 		}

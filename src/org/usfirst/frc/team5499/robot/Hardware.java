@@ -1,6 +1,5 @@
 package org.usfirst.frc.team5499.robot;
 
-import org.usfirst.frc.team5499.robot.sensors.Camera;
 import org.usfirst.frc.team5499.robot.sensors.LightSensor;
 import org.usfirst.frc.team5499.robot.sensors.Pot;
 import org.usfirst.frc.team5499.robot.subsystems.Aflip;
@@ -8,6 +7,7 @@ import org.usfirst.frc.team5499.robot.subsystems.Drive;
 import org.usfirst.frc.team5499.robot.subsystems.Intake;
 import org.usfirst.frc.team5499.robot.subsystems.OI;
 import org.usfirst.frc.team5499.robot.subsystems.Shooter;
+import org.usfirst.frc.team5499.vision.Camera;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Compressor;

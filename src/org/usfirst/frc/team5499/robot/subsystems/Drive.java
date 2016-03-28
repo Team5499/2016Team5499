@@ -220,14 +220,14 @@ public class Drive implements Loopable {
 //		setMotors(left, right);
 		if(!Robot.hardware.operatorStation.getButton(StickEnum.WHEEL, 6)) {
 			if(this.low) {
-				wheel *= 0.3;
+				wheel *= 0.5; //.3
 			} else { 
-				wheel *= 0.6;
+				wheel *= 0.8; //.6
 			}
 		}
-		if(throttle < 0)
+		if(throttle < -.01){
 			wheel *= -1;
-			
+		}	
 		throttle *= -1;
 			
 		double left = throttle + wheel;
