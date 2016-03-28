@@ -18,24 +18,13 @@
   		<arg value="-fPIC"/>
   		<arg value="-shared"/>
   		<arg value="-oCowGyroJNI.so"/>
+  		<arg value="-Wl,--whole-archive"/>
+  		<arg value="-L${user.home}/wpilib/cpp/current/lib"/>
+  		<arg value="-lwpilib_nonshared"/>
+  		<arg value="-Wl,--no-whole-archive"/>
   		<arg value="src/com/team1538/lib/c/CowGyro.cpp"/>
   		<arg value="src/com/team1538/lib/c/CowGyroJNI.cpp"/>
   	</exec>
-  </target>
-	
-	<target name="CowGyroJNI-build-test">
-		<echo>Building CowGyroJNI shared object for ${os.name}...</echo>
-    <exec executable="/usr/bin/g++">
-      <arg value="-I${user.home}/wpilib/cpp/current/include"/>
-      <arg value="-I${java.home}/../include"/>
-      <arg value="-I${java.home}/../include/darwin"/>
-      <arg value="-std=c++14"/>
-      <arg value="-fPIC"/>
-      <arg value="-shared"/>
-      <arg value="-oCowGyroJNI-Test.so"/>
-      <arg value="src/com/team1538/lib/c/CowGyro.cpp"/>
-      <arg value="src/com/team1538/lib/c/CowGyroJNI.cpp"/>
-    </exec>
   </target>
 	
 	<target name="CowGyroJNI" depends="CowGyroJNI-generateHeader,CowGyroJNI-build"/>
