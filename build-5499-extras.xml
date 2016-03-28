@@ -4,8 +4,11 @@
   <target name="CowGyroJNI-generateHeader">
   	<echo>Generating CowGyroJNI header...</echo>
     <javah outputFile="src/com/team1538/lib/c/CowGyroJNI.h" classpath="build">
-	   <class name="com.team1538.lib.CowGyro"/>
-	 </javah>
+	    <class name="com.team1538.lib.CowGyro"/>
+	  </javah>
+  	<javah outputFile="src/com/team1538/lib/c/CowAlphaNumJNI.h" classpath="build">
+      <class name="com.team1538.lib.CowAlphaNum"/>
+    </javah>
   </target>
 	
   <target name="CowMXP_JNI-build">
@@ -30,6 +33,8 @@
   		<arg value="-ffunction-sections"/>
   		<arg value="src/com/team1538/lib/c/CowGyro.cpp"/>
   		<arg value="src/com/team1538/lib/c/CowGyroJNI.cpp"/>
+  		<arg value="src/com/team1538/lib/c/CowAlphaNum.cpp"/>
+  		<arg value="src/com/team1538/lib/c/CowAlphaNumJNI.cpp"/>
   		<arg value="-oCowMXP_JNI.so"/>
   		<arg value="-Wl,--whole-archive"/>
   		<arg value="-Wl,--allow-multiple-definition"/>

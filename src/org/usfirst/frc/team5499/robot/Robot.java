@@ -13,6 +13,7 @@ import org.usfirst.frc.team5499.robot.commands.CommandManager;
 import org.usfirst.frc.team5499.robot.commands.Commands;
 import org.usfirst.frc.team5499.robot.subsystems.OI.StickEnum;
 
+import com.team1538.lib.CowAlphaNum;
 import com.team1538.lib.CowGyro;
 import com.team254.lib.trajectory.Path;
 import com.team254.lib.trajectory.Trajectory;
@@ -64,6 +65,9 @@ public class Robot extends IterativeRobot {
 		hardware.shooter.lower();
 		
 		hardware.camera.startAcquire();
+		
+		CowAlphaNum.SetBanner("5499");
+		CowAlphaNum.DisplayBanner();
 	}
     
     @Override

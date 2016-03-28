@@ -9,6 +9,14 @@ extern "C" {
 #endif
 /*
  * Class:     com_team1538_lib_CowGyro
+ * Method:    init
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_team1538_lib_CowGyro_init
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_team1538_lib_CowGyro
  * Method:    GetAngle
  * Signature: ()F
  */
