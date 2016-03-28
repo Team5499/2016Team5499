@@ -10,4 +10,6 @@ public class CowAlphaNum {
 	public static native void SetBanner(String text);
 	public static native void SetBannerPosition(int position);
 	public static native void DisplayBanner();
+	
+	
 }

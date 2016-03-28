@@ -64,7 +64,7 @@ public class Robot extends IterativeRobot {
 
 		hardware.shooter.lower();
 		
-		hardware.camera.startAcquire();
+		//hardware.camera.startAcquire();
 		
 		CowAlphaNum.SetBanner("5499");
 		CowAlphaNum.DisplayBanner();
@@ -81,7 +81,7 @@ public class Robot extends IterativeRobot {
 		hardware.drive.setInverted(false);
 		hardware.encLeft.reset();
 		hardware.encRight.reset();
-	//	CowGyro.FinalizeCalibration();
+		CowGyro.FinalizeCalibration();
     }
 
     @Override
@@ -97,13 +97,13 @@ public class Robot extends IterativeRobot {
     	controlLooper.start();
     	hardware.shooter.stopWheels();
     	hardware.shooter.lower();
-    	//CowGyro.FinalizeCalibration();
+    	CowGyro.FinalizeCalibration();
     }
     @Override
     public void teleopPeriodic() {
     //	System.out.println(hardware.shooter.getTopWheelSpeed());
     	Commands cmds = hardware.operatorStation.getCommands();
-    	//System.out.println(CowGyro.GetAngle());
+    	System.out.println(CowGyro.GetAngle());
     	cmdManager.update(cmds);
     }
     @Override
@@ -113,7 +113,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void disabledInit(){
     	controlLooper.stop();
-    	//CowGyro.BeginCalibration();
+    	CowGyro.BeginCalibration();
     }
     @Override
     public void disabledPeriodic(){

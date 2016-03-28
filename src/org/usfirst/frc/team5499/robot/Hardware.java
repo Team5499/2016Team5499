@@ -77,7 +77,7 @@ public class Hardware {
 		
 		c = new Compressor();
 		
-		camera = new Camera();
+		//camera = new Camera();
 		
 		intakeArmMotor = new CANTalon(Reference.intakeArmMotorCANID);
 		intakeRollerMotor = new CANTalon(Reference.intakeRollerMotorCANID);

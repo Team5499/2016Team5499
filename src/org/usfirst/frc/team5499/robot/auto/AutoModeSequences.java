@@ -13,20 +13,21 @@ public class AutoModeSequences {
 		modes.put("do nothing", new ArrayDeque<Command>());
 		modes.get("do nothing").addLast(new Command(Command.commandType.CMD_NULL));
 		
+		modes.put("low bar goal", new ArrayDeque<Command>());
+		modes.get("low bar goal").addLast(new Command(Command.commandType.CMD_SHIFT, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 1));
+		modes.get("low bar goal").addLast(new Command(Command.commandType.CMD_INTAKE, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .5));
+		modes.get("low bar goal").addLast(new Command(Command.commandType.CMD_DRIVE, 14, 14, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .5));
+		modes.get("low bar goal").addLast(new Command(Command.commandType.CMD_TURN, -14.5, -14.5, 60, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 3));
+		modes.get("low bar goal").addLast(new Command(Command.commandType.CMD_DRIVESTRAIGHT, 9, 9, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .5));
+		modes.get("low bar goal").addLast(new Command(Command.commandType.CMD_CHANGE_SHOT, -8, -8, 0, true, true, Commands.ShotRequest.AUTO, 5200, 5000, Commands.ShiftRequest.HIGH, 2));
+		modes.get("low bar goal").addLast(new Command(Command.commandType.CMD_SHOOT, -8, -8, 0, true, true, Commands.ShotRequest.AUTO, 5200, 5000, Commands.ShiftRequest.HIGH, 1));
+
+
 		modes.put("low bar", new ArrayDeque<Command>());
 		modes.get("low bar").addLast(new Command(Command.commandType.CMD_SHIFT, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 1));
 		modes.get("low bar").addLast(new Command(Command.commandType.CMD_AFLIP, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 2));
 		modes.get("low bar").addLast(new Command(Command.commandType.CMD_DRIVE, -15, -15, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 8));
-		
-		modes.put("low bar goal", new ArrayDeque<Command>());
-		modes.get("low bar goal").addLast(new Command(Command.commandType.CMD_SHIFT, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 1));
-		modes.get("low bar goal").addLast(new Command(Command.commandType.CMD_INTAKE, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .5));
-		modes.get("low bar goal").addLast(new Command(Command.commandType.CMD_DRIVE, -14, -14, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 5));
-		modes.get("low bar goal").addLast(new Command(Command.commandType.CMD_TURN, -14.5, -14.5, 60, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 3));
-		modes.get("low bar goal").addLast(new Command(Command.commandType.CMD_DRIVESTRAIGHT, -9, -9, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 5));
-		modes.get("low bar goal").addLast(new Command(Command.commandType.CMD_CHANGE_SHOT, -8, -8, 0, true, true, Commands.ShotRequest.AUTO, 5200, 5000, Commands.ShiftRequest.HIGH, 2));
-		modes.get("low bar goal").addLast(new Command(Command.commandType.CMD_SHOOT, -8, -8, 0, true, true, Commands.ShotRequest.AUTO, 5200, 5000, Commands.ShiftRequest.HIGH, 1));
-		
+				
 		modes.put("rock wall", new ArrayDeque<Command>());
 		modes.get("rock wall").addLast(new Command(Command.commandType.CMD_SHIFT, 0, 0, 0, false, false, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.LOW, 1));
 		modes.get("rock wall").addLast(new Command(Command.commandType.CMD_DRIVE, 15, 15, 0, false, false, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.LOW, 9));
