@@ -16,9 +16,8 @@
   	
   	<pathconvert pathsep=" " property="wpilib.cpp.libs">
   		<fileset dir="${user.home}/wpilib/cpp/current/lib" id="libs">
-        <include name="*.a"/>
-  			<include name="*.so"/>
-      </fileset>
+		<include name="libwpi_2015.so"/>
+  		</fileset>
   	</pathconvert>
   	  	
   	<exec executable="/usr/local/bin/arm-frc-linux-gnueabi-g++">
