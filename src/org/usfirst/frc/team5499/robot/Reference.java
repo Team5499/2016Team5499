@@ -51,10 +51,10 @@ public class Reference {
 	
 	//Shooter Arm Constants
 	public static double shooterArmPotScale = -269.5;//-272.72; //272.72
-	public static double shooterArmPotZero = 247;//225;
+	public static double shooterArmPotZero = 209;//247;//225;
 	public static double shooterArmPGain = .1;//.27505;
 	public static double shooterArmIGain = 0;
-	public static double shooterArmDGain = 0.004;
+	public static double shooterArmDGain = 0;
 	public static double shooterArmILimit = 1000;
 	public static double shooterArmMaxOut = 1;
 	public static double armMaxAcc = 10;
@@ -91,8 +91,8 @@ public class Reference {
 	public static double bottomWheelBatterSpeed = 4000;
 	public static double topWheelCleatSpeed = 5100;
 	public static double bottomWheelCleatSpeed = 5000;
-	public static double armBatterAng = 31.5;
-	public static double armCleatAng = 38.5;
+	public static double armBatterAng = 27;
+	public static double armCleatAng = 34.75;
 	public static int wheelDriveAxis = 0;
 	public static int throttleAxis = 1;
 	public static int wheel = 0;
@@ -104,7 +104,7 @@ public class Reference {
 	public static int shootButton = 1; 
 	public static int shooterCancelButton = 6;
 	
-	public static double autoShotAngle = 36;
+	public static double autoShotAngle = 49;
 	public static double autoShotSpeedBottom = 5000;
 	public static double autoShotSpeedTop = 5200;
 	public static int aFlipButton = 11;
@@ -112,7 +112,7 @@ public class Reference {
 	public static int shooterAutoButton = 5;
 	
 	public static double driveP = .13;
-	public static double turnP = .03;
+	public static double turnP = .1; //.03
 	public static double spyShotSpeedTop = 5400;
 	public static double spyShotSpeedBottom = 5200;
 	public static double spyShotAngle = 51;

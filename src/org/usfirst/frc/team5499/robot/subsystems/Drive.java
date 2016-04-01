@@ -52,7 +52,7 @@ public class Drive implements Loopable {
 	public PIDBase rightPosControlLow;
 	
 	public Drive(CANTalon motorLeft1, CANTalon motorLeft2, CANTalon motorRight1, CANTalon motorRight2, 
-			Encoder encLeft, Encoder encRight, DoubleSolenoid leftShift, DoubleSolenoid rightShift){
+			Encoder encLeft, Encoder encRight, DoubleSolenoid leftShift, DoubleSolenoid rightShift, CowGyro gyro){
 		trajFinished = false;
 		this.inverted = -1;
 		this.motorLeft1 = motorLeft1;
@@ -61,7 +61,7 @@ public class Drive implements Loopable {
 		this.motorRight2 = motorRight2;
 		this.encLeft = encLeft;
 		this.encRight = encRight;
-		this.gyro = new CowGyro();
+		this.gyro = gyro;
 		this.encLeft.setDistancePerPulse(Reference.distancePerPulseLeft);
 		this.encRight.setDistancePerPulse(Reference.distancePerPulseRight);
 		this.encRight.setReverseDirection(false);
@@ -218,12 +218,14 @@ public class Drive implements Loopable {
 //		double right = (.5 - inverted * (wheel)) * throttle;
 //		System.out.println("Left: " + left);
 //		setMotors(left, right);
-		if(!Robot.hardware.operatorStation.getButton(StickEnum.WHEEL, 6)) {
+		if(Math.abs(throttle)>.01) {
 			if(this.low) {
-				wheel *= 0.5; //.3
+				wheel *= .3; //.3
 			} else { 
-				wheel *= 0.8; //.6
+				wheel *= .6; //.6
 			}
+		}else{
+			wheel *= 2;
 		}
 		if(throttle < -.01){
 			wheel *= -1;

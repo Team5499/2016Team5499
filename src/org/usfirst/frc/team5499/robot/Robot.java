@@ -11,6 +11,7 @@ import org.usfirst.frc.team5499.robot.auto.AutoModeSequences;
 import org.usfirst.frc.team5499.robot.auto.Command;
 import org.usfirst.frc.team5499.robot.commands.CommandManager;
 import org.usfirst.frc.team5499.robot.commands.Commands;
+import org.usfirst.frc.team5499.robot.sensors.Pot;
 import org.usfirst.frc.team5499.robot.subsystems.OI.StickEnum;
 
 import com.team1538.lib.CowAlphaNum;
@@ -61,6 +62,7 @@ public class Robot extends IterativeRobot {
         autoModeSequences = new AutoModeSequences();
         sequenceIterator = autoModeSequences.modes.entrySet().iterator();
         this.cycleNextAutoMode();
+       // autoMode.currentCommand 
 
 		hardware.shooter.lower();
 		
@@ -98,12 +100,19 @@ public class Robot extends IterativeRobot {
     	hardware.shooter.stopWheels();
     	hardware.shooter.lower();
     	CowGyro.FinalizeCalibration();
+        hardware.driveLeft1.enable();
+        hardware.driveLeft2.enable();
+        hardware.driveRight1.enable();
+        hardware.driveRight2.enable();
+
     }
     @Override
     public void teleopPeriodic() {
     //	System.out.println(hardware.shooter.getTopWheelSpeed());
     	Commands cmds = hardware.operatorStation.getCommands();
-    	System.out.println(CowGyro.GetAngle());
+    	//System.out.println(hardware.drive.encLeft.getDistance() + " left");
+    	//System.out.println(hardware.drive.encRight.getDistance()+ " right");
+    	System.out.println(hardware.shooterArmPot.getInput());
     	cmdManager.update(cmds);
     }
     @Override
@@ -114,6 +123,8 @@ public class Robot extends IterativeRobot {
     public void disabledInit(){
     	controlLooper.stop();
     	CowGyro.BeginCalibration();
+//        Reference.shooterArmPotZero =  -1 * hardware.shooterArmPot.getInput();
+//        hardware.shooterArmPot = new Pot(Reference.shooterArmPotAIPort);
     }
     @Override
     public void disabledPeriodic(){
@@ -123,6 +134,8 @@ public class Robot extends IterativeRobot {
             Timer.delay(0.5);
             this.cycleNextAutoMode();
         }
+
+
     }
 
     public void cycleNextAutoMode() {

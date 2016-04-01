@@ -11,8 +11,10 @@ import edu.wpi.first.wpilibj.Timer;
 public class AutoMode implements Loopable{
 	
 	ArrayDeque<Command> cmdSeq;
-	Command currentCommand;
+	public Command currentCommand;
 	Timer timer;
+	double lastHeading;
+	double lastTime;
 	
 	public AutoMode(){
 		timer = new Timer();
@@ -81,16 +83,20 @@ public class AutoMode implements Loopable{
 				}
 				break;
 			case CMD_TURN:
-				turnError = currentCommand.heading - Robot.hardware.drive.gyro.getInput();
+				double currentHeading = Robot.hardware.drive.gyro.getInput();
+				double currentTime = Timer.getFPGATimestamp();
+				turnError = currentCommand.heading - currentHeading;
 				outputTurn = turnError * Reference.turnP; // james fill this in
 				Robot.hardware.drive.setMotors(-outputTurn, outputTurn);
 				System.out.println("Goal: " + currentCommand.encLeftDistance);
 				System.out.println("dist: " + Robot.hardware.drive.encLeft.getDistance());
 				System.out.println("gyro: " + Robot.hardware.drive.gyro.getInput() + " / " + currentCommand.heading);
 				System.out.println("outputTurn: " + outputTurn);
-				if(turnError > -1 && turnError < 1) {
+				if(turnError > -1 && turnError < 1 && Math.abs((lastHeading - currentHeading)) < .1) {
 					result = true;
 				}
+				lastHeading = currentHeading;
+				lastTime = currentTime;
 				break;
 			case CMD_CHANGE_SHOT:
 				Robot.hardware.shooter.setShotSpeeds(currentCommand.shooterShotRequest);
@@ -105,6 +111,24 @@ public class AutoMode implements Loopable{
 			case CMD_SHIFT:
 				Robot.hardware.drive.shift(currentCommand.shiftRequest);
 				result = true;
+				break;
+			case CMD_INTAKEROLLER:
+				switch(currentCommand.intakeRollerState){
+				case IN:
+					Robot.hardware.intake.rollerIn();
+					break;
+				case OUT:
+					Robot.hardware.intake.rollerOut();
+					Robot.hardware.shooter.runWheelsIn();
+					break;
+				case OFF:
+					Robot.hardware.intake.rollerStop();
+					break;
+				}
+				break;
+			case CMD_SHOOTERDOWN:
+				Robot.hardware.shooter.lower();
+				Robot.hardware.shooter.stopWheels();
 				break;
 		}
 		if(result || timer.get() > currentCommand.timeout) {
@@ -136,6 +160,8 @@ public class AutoMode implements Loopable{
 	
 	public void doNothing(){
 		Robot.hardware.drive.setMotors(0,0);
+		Robot.hardware.shooter.lower();
+		Robot.hardware.shooter.stopWheels();
 		
 	}
 

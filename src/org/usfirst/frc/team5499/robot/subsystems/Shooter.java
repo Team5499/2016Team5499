@@ -5,10 +5,11 @@ import org.usfirst.frc.team5499.robot.Reference;
 import org.usfirst.frc.team5499.robot.commands.Commands;
 import org.usfirst.frc.team5499.robot.controllers.FeedForwardOutput;
 import org.usfirst.frc.team5499.robot.controllers.FeedForwardWithPID;
-import org.usfirst.frc.team5499.robot.controllers.PIDBase;
 import org.usfirst.frc.team5499.robot.sensors.LightSensor;
 import org.usfirst.frc.team5499.robot.sensors.Pot;
+
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter implements Loopable{
@@ -21,13 +22,14 @@ public class Shooter implements Loopable{
 	private CANTalon armPivot;
 	private LightSensor topWheelSensor;
 	public Pot armPivotPot;
-	PIDBase armController;
+	PIDController armController;
 	double currentArmSetpoint;
 	double intakeSpeed;
 	FeedForwardWithPID bottomWheelController;
 	FeedForwardWithPID topWheelController;
 	public boolean wheelsOn;
 	public boolean intaking;
+	private FeedForwardOutput armOutput;
 
 	public Shooter(String name, CANTalon bottomFlyWheel, CANTalon topFlyWheel,
 			CANTalon feedWheel, CANTalon armPivot, LightSensor bottomWheelSensor, 
@@ -41,8 +43,9 @@ public class Shooter implements Loopable{
 		this.topWheelSensor = topWheelSensor;
 		this.bottomWheelSensor.setInverted();
 		this.armPivotPot = armPivotPot;
-		this.armController = new PIDBase(Reference.shooterArmPGain, Reference.shooterArmIGain, 
-				Reference.shooterArmDGain, Reference.shooterWheelILimit, Reference.shooterArmMaxOut, armPivotPot, 5);
+		this.armOutput = new FeedForwardOutput();
+		this.armController = new PIDController(Reference.shooterArmPGain, Reference.shooterArmIGain, 
+				Reference.shooterArmDGain, armPivotPot, armOutput,  1.0/100.0);
 		this.bottomWheelController = new FeedForwardWithPID(Reference.shooterWheelPGainBot, Reference.shooterWheelIGainBot, 
 				Reference.shooterWheelDGainBot, Reference.shooterWheelKV,
 				bottomWheelSensor, new FeedForwardOutput(), Reference.shooterWheelMaxBot);
@@ -50,15 +53,16 @@ public class Shooter implements Loopable{
 		this.topWheelController = new FeedForwardWithPID(Reference.shooterWheelPGainTop, Reference.shooterWheelIGainTop, 
 				Reference.shooterWheelDGainTop, Reference.shooterWheelKV,
 				topWheelSensor, new FeedForwardOutput(), Reference.shooterWheelMaxTop);
-		
+		armController.enable();
 		topWheelController.enable();
 		bottomWheelController.enable();
 		topWheelController.setContinuous(); 
 		bottomWheelController.setContinuous();
+		armController.setContinuous();
 		//System.out.println(topWheelController.isEnable());
 		//currentArmSetpoint = 0; //cornershot 62.5 //battershot16.5
 		//this.armController.setSetpoint(currentArmSetpoint);
-		this.intakeSpeed = .8;
+		this.intakeSpeed = 1;
 		this.wheelsOn = false;
 		this.intaking =false;
 //		this.topFlyWheel.setPID(Reference.shooterWheelPGain, Reference.shooterWheelIGain, Reference.shooterWheelDGain);
@@ -103,9 +107,10 @@ public class Shooter implements Loopable{
 //		}else{
 //			feedWheel.set(0);
 //		}
-		armController.update();
+		
+		System.out.println(armOutput.output);
 		if(currentArmSetpoint > 2){
-			armPivot.set(-1*armController.getOutput());
+			armPivot.set(-1*armOutput.output);
 		}else{
 			armPivot.set(0);
 		}

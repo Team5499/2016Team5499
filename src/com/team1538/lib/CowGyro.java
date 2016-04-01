@@ -3,7 +3,7 @@ package com.team1538.lib;
 import org.usfirst.frc.team5499.robot.controllers.PIDInput;
 
 public class CowGyro implements PIDInput {
-	static {
+	public CowGyro(){
 		try {
 			System.loadLibrary("CowGyroJNI");
 		} catch (UnsatisfiedLinkError e) {

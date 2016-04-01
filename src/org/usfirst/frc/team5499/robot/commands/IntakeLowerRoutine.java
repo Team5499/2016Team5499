@@ -8,7 +8,7 @@ public class IntakeLowerRoutine extends Routine {
 			intake.lowerArm();
 			state.intakeUp = false;
 		}
-		intake.rollerRun();
+		intake.rollerIn();
 		
 		return state;
 	}

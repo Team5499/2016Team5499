@@ -16,7 +16,7 @@ public class Camera {
 		server = CameraServer.getInstance();
         server.setQuality(50);
         //the camera name (ex "cam0") can be found through the roborio web interface
-        server.startAutomaticCapture("cam1");
+        server.startAutomaticCapture("cam0");
 	}
 	/**
 	 * Start the capture of images. Call periodically to update your image.

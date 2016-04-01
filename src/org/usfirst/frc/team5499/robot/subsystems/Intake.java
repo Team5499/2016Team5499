@@ -18,7 +18,7 @@ public class Intake implements Loopable {
 	public Intake(CANTalon armMotor, CANTalon rollerMotor, Encoder enc){
 		this.armMotor = armMotor;
 		this.rollerMotor = rollerMotor;
-		this.rollerSpeed = .8;
+		this.rollerSpeed = 1;
 		this.enc = enc;
 	}
 
@@ -42,18 +42,22 @@ public class Intake implements Loopable {
 
 	public void raiseArm() {
 		armMotor.set(.6);
-		Timer.delay(.1);
+		Timer.delay(1);
 		armMotor.set(0);
 	}
 
 	public void lowerArm() {
 		armMotor.set(-.6);
-		Timer.delay(.1);
+		Timer.delay(.5);
 		armMotor.set(0);
 		
 	}
 
-	public void rollerRun() {
+	public void rollerIn() {
+		rollerMotor.set(-1 * rollerSpeed);
+	}
+	
+	public void rollerOut(){
 		rollerMotor.set(rollerSpeed);
 	}
 	

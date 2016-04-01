@@ -11,7 +11,7 @@ public class FeedForwardWithPID extends PIDController{
 	
 	public FeedForwardWithPID(double pGain, double iGain, double dGain, double kv,
 			PIDSource source, FeedForwardOutput output, double maxSpeed) {
-		super(pGain, iGain, dGain, source, output);
+		super(pGain, iGain, dGain, source, output, 1/200.0);
 		this.kv = kv;
 		this.out = output;
 		this.maxSpeed = maxSpeed;

@@ -9,6 +9,8 @@ import org.usfirst.frc.team5499.robot.subsystems.OI;
 import org.usfirst.frc.team5499.robot.subsystems.Shooter;
 import org.usfirst.frc.team5499.vision.Camera;
 
+import com.team1538.lib.CowGyro;
+
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -53,8 +55,10 @@ public class Hardware {
 	public PowerDistributionPanel pdp;
 	public Compressor c;
 	public Aflip aflip;
+	public CowGyro gyro;
 		
-	public Hardware(){		
+	public Hardware(){	
+		gyro = new CowGyro();
 		aFlipMotor = new CANTalon(Reference.aFlipCANID);
 		aflip = new Aflip(aFlipMotor);
 		
@@ -96,6 +100,6 @@ public class Hardware {
 				shooterFeedWheel, shooterArmMotor, shooterBottomSensor, shooterTopSensor, shooterArmPot);
 		operatorStation = new OI(leftStick, rightStick, xBoxController, wheel, throttle);
 		intake = new Intake(intakeArmMotor, intakeRollerMotor, intakeEncoder);
-		drive = new Drive(driveLeft1, driveLeft2, driveRight1, driveRight2, encLeft, encRight, shiftLeft, shiftRight);
+		drive = new Drive(driveLeft1, driveLeft2, driveRight1, driveRight2, encLeft, encRight, shiftLeft, shiftRight, gyro);
 	}
 }
