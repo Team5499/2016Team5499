@@ -76,10 +76,7 @@ void CowGyro::Handle()
 
 	while(true)
 	{
-		if(m_LastTime == 0)
-		{
-			m_LastTime = Timer::GetFPGATimestamp();
-		}
+
 
 		std::this_thread::sleep_for(std::chrono::milliseconds((int) ((1.0 / K_READING_RATE) * 1000)));
 
@@ -124,6 +121,11 @@ void CowGyro::Handle()
 		// Calculate
 		if(m_IsZeroed)
 		{
+			if(m_LastTime == 0)
+			{
+				m_LastTime = Timer::GetFPGATimestamp();
+			}
+
 			double currentTime = Timer::GetFPGATimestamp();
 			double timeElapsed = currentTime - m_LastTime;
 			m_LastTime = currentTime;
@@ -329,6 +331,13 @@ void CowGyro::Reset()
 	m_ZeroBias = 0;
 }
 
+void CowGyro::ResetAngle()
+{
+	m_Angle = 0;
+	m_VolatileRate = 0;
+}
+
+
 void CowGyro::BeginCalibration()
 {
 	m_Calibrating = true;
@@ -361,9 +370,9 @@ void CowGyro::FinalizeCalibration()
 		m_ZeroRatesSamples[i] = 0;
 	}
 
-	//std::cout << "attempting to log gyro" << std::endl;
-	//CowLogger::GetInstance()->Log("Gyro: Zero Bias", m_ZeroBias);
-	//std::cout << "finished to log gyro" << std::endl;
+	/*std::cout << "attempting to log gyro" << std::endl;
+	CowLogger::GetInstance()->Log("Gyro: Zero Bias", m_ZeroBias);
+	std::cout << "finished to log gyro" << std::endl;*/
 	m_LastTime = Timer::GetFPGATimestamp();
 
 	//std::cout << "Finalized gyro, angle: " << m_Angle << " bias: " << m_ZeroBias << std::endl;
