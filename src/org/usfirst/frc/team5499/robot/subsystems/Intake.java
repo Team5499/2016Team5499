@@ -28,9 +28,9 @@ public class Intake implements Loopable {
 			armMotor.set(Robot.hardware.operatorStation.getStickAxis(StickEnum.OPERATOR, Reference.intakeArmAxis) * 0.8);
 		}
 		if(Robot.hardware.operatorStation.getButton(StickEnum.OPERATOR, Reference.intakeRollerInButton)){
-			this.rollerMotor.set(-rollerSpeed);
-		}else if(Robot.hardware.operatorStation.getButton(StickEnum.OPERATOR, Reference.intakeRollerOutButton)){
 			this.rollerMotor.set(rollerSpeed);
+		}else if(Robot.hardware.operatorStation.getButton(StickEnum.OPERATOR, Reference.intakeRollerOutButton)){
+			this.rollerMotor.set(-rollerSpeed);
 		}else{	
 			this.rollerMotor.set(0);
 		}
@@ -54,11 +54,11 @@ public class Intake implements Loopable {
 	}
 
 	public void rollerIn() {
-		rollerMotor.set(-1 * rollerSpeed);
+		rollerMotor.set(rollerSpeed);
 	}
 	
 	public void rollerOut(){
-		rollerMotor.set(rollerSpeed);
+		rollerMotor.set(-1 * rollerSpeed);
 	}
 	
 	public void rollerStop(){

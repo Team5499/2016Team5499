@@ -134,6 +134,7 @@ public class Robot extends IterativeRobot {
             Timer.delay(0.5);
             this.cycleNextAutoMode();
         }
+      //  System.out.println(Robot.hardware.shooterArmPot.get());
 
 
     }

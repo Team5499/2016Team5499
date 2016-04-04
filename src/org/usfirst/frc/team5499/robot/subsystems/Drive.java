@@ -97,6 +97,8 @@ public class Drive implements Loopable {
 	@Override
 	public void update() {
 		Robot.hardware.c.setClosedLoopControl(true);
+		if(Robot.hardware.operatorStation.getButton(StickEnum.WHEEL, 7)){
+		}
 		if(Robot.getState() == Robot.StateEnum.TELEOP){
 			inverted = -1;
 //			System.out.println(Robot.hardware.pdp.getCurrent(Reference.driveLeft1PDPPort));
@@ -118,6 +120,7 @@ public class Drive implements Loopable {
 					shift(Commands.ShiftRequest.HIGH);
 					System.out.println("attempt shift high");
 					lastShiftTime = curTime;
+					
 				}else if(!Robot.hardware.operatorStation.getButton(StickEnum.THROTTLE, Reference.shiftButton)){
 					shift(Commands.ShiftRequest.LOW);
 					System.out.println("attempt shift low");
@@ -218,20 +221,23 @@ public class Drive implements Loopable {
 //		double right = (.5 - inverted * (wheel)) * throttle;
 //		System.out.println("Left: " + left);
 //		setMotors(left, right);
-		if(Math.abs(throttle)>.01) {
-			if(this.low) {
-				wheel *= .3; //.3
-			} else { 
-				wheel *= .6; //.6
+		if(!Robot.hardware.operatorStation.getButton(StickEnum.WHEEL, 6)){
+			if(Math.abs(throttle)>.1) {
+				if(this.low) {
+					wheel *= .3; //.3
+				} else { 
+					wheel *= .6; //.6
+				}
 			}
-		}else{
-			wheel *= 2;
 		}
 		if(throttle < -.01){
 			wheel *= -1;
-		}	
+		}
+		if(Math.abs(wheel)<.04){
+			wheel = 0;
+		}
 		throttle *= -1;
-			
+		System.out.println(wheel + "wheel");
 		double left = throttle + wheel;
 		double right = throttle - wheel;
 		setMotors(left, right);

@@ -50,9 +50,9 @@ public class Reference {
 	public static final int lightSensorOnValue = 115;
 	
 	//Shooter Arm Constants
-	public static double shooterArmPotScale = -269.5;//-272.72; //272.72
-	public static double shooterArmPotZero = 209;//247;//225;
-	public static double shooterArmPGain = .1;//.27505;
+	public static double shooterArmPotScale = 272;//-272.72; //272.72
+	public static double shooterArmPotZero = -44;//247;//225;
+	public static double shooterArmPGain = .08;//.27505;
 	public static double shooterArmIGain = 0;
 	public static double shooterArmDGain = 0;
 	public static double shooterArmILimit = 1000;
@@ -87,12 +87,12 @@ public class Reference {
 	public static double shooterWheelILimit = 1000;
 	public static double shooterWheelMaxTop = 5300;
 	public static double shooterWheelMaxBot = 4800;
-	public static double topWheelBatterSpeed = 4500;
-	public static double bottomWheelBatterSpeed = 4000;
+	public static double topWheelBatterSpeed = 4000;
+	public static double bottomWheelBatterSpeed = 2000;
 	public static double topWheelCleatSpeed = 5100;
 	public static double bottomWheelCleatSpeed = 5000;
-	public static double armBatterAng = 27;
-	public static double armCleatAng = 34.75;
+	public static double armBatterAng = 27.5;
+	public static double armCleatAng = 35;
 	public static int wheelDriveAxis = 0;
 	public static int throttleAxis = 1;
 	public static int wheel = 0;
