@@ -5,13 +5,14 @@ import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import org.spectrum3847.RIOdroid.RIOadb;
+import org.spectrum3847.RIOdroid.RIOdroid;
 import org.usfirst.frc.team5499.lib.util.MultiLooper;
 import org.usfirst.frc.team5499.robot.auto.AutoMode;
 import org.usfirst.frc.team5499.robot.auto.AutoModeSequences;
 import org.usfirst.frc.team5499.robot.auto.Command;
 import org.usfirst.frc.team5499.robot.commands.CommandManager;
 import org.usfirst.frc.team5499.robot.commands.Commands;
-import org.usfirst.frc.team5499.robot.sensors.Pot;
 import org.usfirst.frc.team5499.robot.subsystems.OI.StickEnum;
 
 import com.team1538.lib.CowAlphaNum;
@@ -41,11 +42,17 @@ public class Robot extends IterativeRobot {
 	AutoMode autoMode;
     AutoModeSequences autoModeSequences;
     Iterator<Entry<String, ArrayDeque<Command>>> sequenceIterator;
-
+    
+    public static String theta;
 	public static Commands cmds;
 		
     @Override
 	public void robotInit() {
+    	RIOdroid.init();
+    	RIOadb.init();
+    	RIOdroid.executeCommand("adb start-server");
+    	Timer.delay(1);
+    	RIOdroid.executeCommandThread("adb logcat | grep theta >> 'output.txt'");
     	System.out.println("robotInit");
     	hardware = new Hardware();
 		controlLooper.addLoopable(hardware.shooter);
