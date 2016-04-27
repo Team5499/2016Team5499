@@ -69,16 +69,28 @@ public class OI {
 			cmds.shotPrepRequest = Commands.ShotRequest.CLEAT;
 		}
 		if(Robot.hardware.operatorStation.getButton(StickEnum.OPERATOR, Reference.shootButton)){
+			Robot.hardware.drive.visionControl = false;
+			Robot.hardware.drive.visReady = false;
 			cmds.shootRequest = Commands.Shoot.ON;
 		}else if(Robot.hardware.operatorStation.getButton(StickEnum.OPERATOR, Reference.shooterWheelsInButton)){
 			cmds.shootRequest = Commands.Shoot.IN;
 		}else if(Robot.hardware.operatorStation.getButton(StickEnum.OPERATOR, Reference.shooterCancelButton)){
+			Robot.hardware.drive.visionControl = false;
+			Robot.hardware.drive.visReady = false;
 			cmds.shotPrepRequest = Commands.ShotRequest.OFF;
 		}else if(Robot.hardware.operatorStation.getButton(StickEnum.OPERATOR, Reference.shooterAutoButton)){
 			cmds.shotPrepRequest = Commands.ShotRequest.AUTO;
 		}
 		else{
 			cmds.shootRequest = Commands.Shoot.OFF;
+		}
+		if(Robot.hardware.operatorStation.getButton(StickEnum.OPERATOR, Reference.visionShotButton)){
+			Robot.hardware.drive.visionControl = true;
+			if(Robot.hardware.drive.visReady){
+				cmds.shotPrepRequest = Commands.ShotRequest.AUTO;
+			}
+		}else{
+			Robot.hardware.drive.visionControl = false;
 		}
 		System.out.println(cmds.shootRequest);
 		//System.out.println(cmds.shiftRequest);

@@ -14,7 +14,11 @@ public class AutoMode implements Loopable{
 	public Command currentCommand;
 	Timer timer;
 	double lastHeading;
+	double lastTheta;
 	double lastTime;
+	double thetaSnap;
+	boolean startOfVisTurn = true;
+	double lastHeadingVis;
 	
 	public AutoMode(){
 		timer = new Timer();
@@ -116,19 +120,50 @@ public class AutoMode implements Loopable{
 				switch(currentCommand.intakeRollerState){
 				case IN:
 					Robot.hardware.intake.rollerIn();
+					Robot.hardware.shooter.runWheelsIn();
 					break;
 				case OUT:
 					Robot.hardware.intake.rollerOut();
-					Robot.hardware.shooter.runWheelsIn();
 					break;
 				case OFF:
 					Robot.hardware.intake.rollerStop();
+					Robot.hardware.shooter.stopWheels();
 					break;
 				}
 				break;
 			case CMD_SHOOTERDOWN:
 				Robot.hardware.shooter.lower();
 				Robot.hardware.shooter.stopWheels();
+				break;
+			case CMD_TURNVISIONNOGYRO:
+				double theta = Robot.androidHandler.theta;
+				//double gyro = Robot.hardware.drive.gyro.getInput();
+				theta = -1 * theta;
+				double pTerm = theta * Reference.turnP;
+				Robot.hardware.drive.setMotors(-pTerm, pTerm);
+				System.out.println("pTerm: " + pTerm);
+				if( theta > -.5 && theta < .5 && Math.abs((lastTheta - theta)) < .25) {
+					result = true;
+				}
+				lastTheta = theta;
+				break;
+			case CMD_TURNVISIONSNAP:
+				if(startOfVisTurn){
+					thetaSnap = Robot.androidHandler.theta;
+					startOfVisTurn = false;
+				}
+				double currentHeadingVis = Robot.hardware.drive.gyro.getInput();
+				double turnErrorVis = (currentCommand.heading - thetaSnap) - currentHeadingVis;
+				double outputTurnVis = turnErrorVis * Reference.turnP; // james fill this in
+				Robot.hardware.drive.setMotors(-outputTurnVis, outputTurnVis);
+				System.out.println("Goal: " + currentCommand.encLeftDistance);
+				System.out.println("dist: " + Robot.hardware.drive.encLeft.getDistance());
+				System.out.println("gyro: " + Robot.hardware.drive.gyro.getInput() + " / " + currentCommand.heading);
+				System.out.println("outputTurn: " + outputTurnVis);
+				if(turnErrorVis > -1 && turnErrorVis < 1 && Math.abs((lastHeadingVis - currentHeadingVis)) < .1) {
+					result = true;
+				}
+				lastHeadingVis = currentHeadingVis;
 				break;
 		}
 		if(result || timer.get() > currentCommand.timeout) {
@@ -162,6 +197,7 @@ public class AutoMode implements Loopable{
 		Robot.hardware.drive.setMotors(0,0);
 		Robot.hardware.shooter.lower();
 		Robot.hardware.shooter.stopWheels();
+		startOfVisTurn = true;
 		
 	}
 

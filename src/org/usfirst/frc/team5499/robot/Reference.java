@@ -116,5 +116,6 @@ public class Reference {
 	public static double spyShotSpeedTop = 5400;
 	public static double spyShotSpeedBottom = 5200;
 	public static double spyShotAngle = 51;
+	public static int visionShotButton = 13;
 
 }

@@ -40,7 +40,7 @@ public class Robot extends IterativeRobot {
 	String fileString;
 	boolean autohasshot;
 	AutoMode autoMode;
-	AndroidHandler androidHandler;
+	public static AndroidHandler androidHandler;
     AutoModeSequences autoModeSequences;
     Iterator<Entry<String, ArrayDeque<Command>>> sequenceIterator;
     
@@ -85,7 +85,6 @@ public class Robot extends IterativeRobot {
     	state = StateEnum.AUTO;
     	autoMode.start();
     	controlLooper.addLoopable(autoMode);
-    	controlLooper.addLoopable(androidHandler);
     	controlLooper.start();
     	httpRequestLooper.stop();
     	httpRequestLooper.start();

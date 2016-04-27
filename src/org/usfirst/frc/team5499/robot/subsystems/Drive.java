@@ -50,6 +50,9 @@ public class Drive implements Loopable {
 	public PIDBase leftPosControlLow;
 	public boolean low;
 	public PIDBase rightPosControlLow;
+	public boolean visionControl;
+	private double lastTheta;
+	public boolean visReady;
 	
 	public Drive(CANTalon motorLeft1, CANTalon motorLeft2, CANTalon motorRight1, CANTalon motorRight2, 
 			Encoder encLeft, Encoder encRight, DoubleSolenoid leftShift, DoubleSolenoid rightShift, CowGyro gyro){
@@ -76,6 +79,9 @@ public class Drive implements Loopable {
 		this.angControlLow = new PIDBase(.6, 0, 0, 1000, 1, gyro, 2);
 		this.control = true;
 		this.low = false;
+		this.visionControl = false;
+		this.lastTheta = 0;
+		this.visReady = false;
 //		this.leftFollower = new TrajectoryFollower();
 //		this.rightFollower = new TrajectoryFollower();
 //		this.leftFollower.configure(kp, ki, kd, kv, ka);
@@ -100,39 +106,57 @@ public class Drive implements Loopable {
 		if(Robot.hardware.operatorStation.getButton(StickEnum.WHEEL, 7)){
 		}
 		if(Robot.getState() == Robot.StateEnum.TELEOP){
-			inverted = -1;
-//			System.out.println(Robot.hardware.pdp.getCurrent(Reference.driveLeft1PDPPort));
-//			System.out.println(Robot.hardware.pdp.getCurrent(Reference.driveLeft2PDPPort));
-//			System.out.println(Robot.hardware.pdp.getCurrent(Reference.driveRight1PDPPort));
-//			System.out.println(Robot.hardware.pdp.getCurrent(Reference.driveRight2PDPPort));
-			double throttleVal = Robot.hardware.operatorStation.getStickAxis(StickEnum.THROTTLE, Reference.throttleAxis);
-			if(Math.abs(throttleVal) > .05){
-				setMotorsWheel(Robot.hardware.operatorStation.getStickAxis(StickEnum.WHEEL, Reference.wheelDriveAxis),
-						throttleVal);
-			}else{
-				setMotorsWheel(Robot.hardware.operatorStation.getStickAxis(StickEnum.WHEEL, Reference.wheelDriveAxis), 0);
-			}
-//			setMotors(Robot.hardware.operatorStation.getStickAxis(StickEnum.LEFTSTICK,Reference.driveAxis),
-//					Robot.hardware.operatorStation.getStickAxis(StickEnum.RIGHTSTICK, Reference.driveAxis));
-			curTime = Timer.getFPGATimestamp();
-//			if(Math.abs(lastShiftTime - curTime) > .125){
-				if(Robot.hardware.operatorStation.getButton(StickEnum.THROTTLE, Reference.shiftButton)){
-					shift(Commands.ShiftRequest.HIGH);
-					System.out.println("attempt shift high");
-					lastShiftTime = curTime;
-					
-				}else if(!Robot.hardware.operatorStation.getButton(StickEnum.THROTTLE, Reference.shiftButton)){
-					shift(Commands.ShiftRequest.LOW);
-					System.out.println("attempt shift low");
-					lastShiftTime = curTime;
+			if(!visionControl){
+				inverted = -1;
+	//			System.out.println(Robot.hardware.pdp.getCurrent(Reference.driveLeft1PDPPort));
+	//			System.out.println(Robot.hardware.pdp.getCurrent(Reference.driveLeft2PDPPort));
+	//			System.out.println(Robot.hardware.pdp.getCurrent(Reference.driveRight1PDPPort));
+	//			System.out.println(Robot.hardware.pdp.getCurrent(Reference.driveRight2PDPPort));
+				double throttleVal = Robot.hardware.operatorStation.getStickAxis(StickEnum.THROTTLE, Reference.throttleAxis);
+				if(Math.abs(throttleVal) > .05){
+					setMotorsWheel(Robot.hardware.operatorStation.getStickAxis(StickEnum.WHEEL, Reference.wheelDriveAxis),
+							throttleVal);
 				}else{
-					shift(Commands.ShiftRequest.OFF);
+					setMotorsWheel(Robot.hardware.operatorStation.getStickAxis(StickEnum.WHEEL, Reference.wheelDriveAxis), 0);
 				}
-			System.out.println("teleop drive");
-//				
-//			}else{
-//				shift(Commands.ShiftRequest.OFF);
-//			}
+	//			setMotors(Robot.hardware.operatorStation.getStickAxis(StickEnum.LEFTSTICK,Reference.driveAxis),
+	//					Robot.hardware.operatorStation.getStickAxis(StickEnum.RIGHTSTICK, Reference.driveAxis));
+				curTime = Timer.getFPGATimestamp();
+	//			if(Math.abs(lastShiftTime - curTime) > .125){
+					if(Robot.hardware.operatorStation.getButton(StickEnum.THROTTLE, Reference.shiftButton)){
+						shift(Commands.ShiftRequest.HIGH);
+						System.out.println("attempt shift high");
+						lastShiftTime = curTime;
+						
+					}else if(!Robot.hardware.operatorStation.getButton(StickEnum.THROTTLE, Reference.shiftButton)){
+						shift(Commands.ShiftRequest.LOW);
+						System.out.println("attempt shift low");
+						lastShiftTime = curTime;
+					}else{
+						shift(Commands.ShiftRequest.OFF);
+					}
+				System.out.println("teleop drive");
+	//				
+	//			}else{
+	//				shift(Commands.ShiftRequest.OFF);
+	//			}
+			}else{
+				if(!visReady){
+					double theta = -1 * Robot.androidHandler.theta;
+					//double gyro = Robot.hardware.drive.gyro.getInput();
+					double pTerm = theta * Reference.turnP;
+					Robot.hardware.drive.setMotors(-pTerm, pTerm);
+					System.out.println("pTerm: " + pTerm);
+					if( theta > -.5 && theta < .5 && Math.abs((lastTheta - theta)) < .25) {
+						visReady = true;
+					}else{
+						visReady = false;
+					}
+					lastTheta = theta;
+				}else{
+					Robot.hardware.drive.setMotors(0, 0);
+				}
+			}
 		}else if(Robot.getState() == Robot.StateEnum.AUTO){
 //			leftPosControl.update();
 //			rightPosControl.update();
