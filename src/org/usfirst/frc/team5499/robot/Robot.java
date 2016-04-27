@@ -5,8 +5,7 @@ import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-import org.spectrum3847.RIOdroid.RIOadb;
-import org.spectrum3847.RIOdroid.RIOdroid;
+import org.usfirst.frc.team5499.lib.util.Looper;
 import org.usfirst.frc.team5499.lib.util.MultiLooper;
 import org.usfirst.frc.team5499.robot.auto.AutoMode;
 import org.usfirst.frc.team5499.robot.auto.AutoModeSequences;
@@ -32,6 +31,7 @@ public class Robot extends IterativeRobot {
 	}
 	
 	MultiLooper controlLooper = new MultiLooper("controllers", 1 / 200.0);
+	Looper httpRequestLooper;
 	public static Hardware hardware;
 	static StateEnum state;
 	CommandManager cmdManager; 
@@ -40,6 +40,7 @@ public class Robot extends IterativeRobot {
 	String fileString;
 	boolean autohasshot;
 	AutoMode autoMode;
+	AndroidHandler androidHandler;
     AutoModeSequences autoModeSequences;
     Iterator<Entry<String, ArrayDeque<Command>>> sequenceIterator;
     
@@ -48,11 +49,10 @@ public class Robot extends IterativeRobot {
 		
     @Override
 	public void robotInit() {
-    	RIOdroid.init();
-    	RIOadb.init();
-    	RIOdroid.executeCommand("adb start-server");
+    	androidHandler = new AndroidHandler();
+    	androidHandler.init();
+    	httpRequestLooper = new Looper("httprequest", androidHandler, 1 / 10.0);
     	Timer.delay(1);
-    	RIOdroid.executeCommandThread("adb logcat | grep theta >> 'output.txt'");
     	System.out.println("robotInit");
     	hardware = new Hardware();
 		controlLooper.addLoopable(hardware.shooter);
@@ -68,6 +68,7 @@ public class Robot extends IterativeRobot {
 		autoMode = new AutoMode();
         autoModeSequences = new AutoModeSequences();
         sequenceIterator = autoModeSequences.modes.entrySet().iterator();
+        
         this.cycleNextAutoMode();
        // autoMode.currentCommand 
 
@@ -84,7 +85,10 @@ public class Robot extends IterativeRobot {
     	state = StateEnum.AUTO;
     	autoMode.start();
     	controlLooper.addLoopable(autoMode);
+    	controlLooper.addLoopable(androidHandler);
     	controlLooper.start();
+    	httpRequestLooper.stop();
+    	httpRequestLooper.start();
 		//hardware.drive.setTrajectory(trajPair);
 		//hardware.shooter.lower();
 		hardware.drive.setInverted(false);
@@ -104,6 +108,8 @@ public class Robot extends IterativeRobot {
     	controlLooper.removeLoopable(autoMode);
     	controlLooper.stop();
     	controlLooper.start();
+    	httpRequestLooper.stop();
+    	httpRequestLooper.start();
     	hardware.shooter.stopWheels();
     	hardware.shooter.lower();
     	CowGyro.FinalizeCalibration();
@@ -129,6 +135,8 @@ public class Robot extends IterativeRobot {
     @Override
     public void disabledInit(){
     	controlLooper.stop();
+    	httpRequestLooper.stop();
+    	httpRequestLooper.start();
     	CowGyro.BeginCalibration();
 //        Reference.shooterArmPotZero =  -1 * hardware.shooterArmPot.getInput();
 //        hardware.shooterArmPot = new Pot(Reference.shooterArmPotAIPort);
