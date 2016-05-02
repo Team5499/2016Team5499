@@ -3,7 +3,7 @@ package org.usfirst.frc.team5499.robot.commands;
 public class Commands {
 	public static enum ShotRequest {
 		BATTER,
-		CLEAT, OFF, AUTO, SPY
+		CLEAT, OFF, AUTO, SPY, AUTO2
 
 	}
 

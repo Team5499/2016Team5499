@@ -14,10 +14,10 @@ public class CommandManager {
 		
 		if(commands.shiftRequest == Commands.ShiftRequest.LOW){
 			setCurrentRoutine(new ShiftRoutine(commands.shiftRequest));
-			System.out.println("ShiftRequestLow");
+			//System.out.println("ShiftRequestLow");
 		}else if(commands.shiftRequest == Commands.ShiftRequest.HIGH){
 			setCurrentRoutine(new ShiftRoutine(commands.shiftRequest));
-			System.out.println("ShiftRequestHigh");
+			//System.out.println("ShiftRequestHigh");
 		}else if(commands.shiftRequest == Commands.ShiftRequest.OFF){
 			setCurrentRoutine(new ShiftRoutine(commands.shiftRequest));
 		}else if(commands.shotPrepRequest == Commands.ShotRequest.BATTER){

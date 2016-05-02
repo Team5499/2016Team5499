@@ -67,7 +67,4 @@ public class LightSensor implements Loopable, PIDSource{
 		// TODO Auto-generated method stub
 		return invert * getRate(); /// maxSpeed;
 	}
-	public void setInverted(){
-		invert = -1;
-	}
 }

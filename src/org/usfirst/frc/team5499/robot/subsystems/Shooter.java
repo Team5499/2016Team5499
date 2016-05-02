@@ -43,7 +43,7 @@ public class Shooter implements Loopable{
 		this.armPivot = armPivot;
 		this.bottomWheelSensor = bottomWheelSensor;
 		this.topWheelSensor = topWheelSensor;
-		this.bottomWheelSensor.setInverted();
+		//this.bottomWheelSensor.setInverted();
 		this.armPivotPot = armPivotPot;
 		this.armOutput = new FeedForwardOutput();
 		this.armController = new PIDController(Reference.shooterArmPGain, Reference.shooterArmIGain, 
@@ -110,7 +110,7 @@ public class Shooter implements Loopable{
 //			feedWheel.set(0);
 //		}
 		
-		System.out.println(armOutput.output);
+		//System.out.println(armOutput.output);
 		if(Robot.hardware.operatorStation.getButton(StickEnum.OPERATOR, 4)){
 			armPivot.set(Robot.hardware.operatorStation.getStickAxis(StickEnum.OPERATOR, Reference.intakeArmAxis));
 		}else{
@@ -132,6 +132,9 @@ public class Shooter implements Loopable{
 	public double getTopWheelSpeed(){
 		return topWheelSensor.getRate();
 	}
+	public double getBotWheelSpeed(){
+		return bottomWheelSensor.getRate();
+	}
 	
 	public void runWheelsIn(){
 		topFlyWheel.set(-1 * intakeSpeed);
@@ -140,8 +143,8 @@ public class Shooter implements Loopable{
 	}
 	public void shootWheels(){
 		topFlyWheel.set(topWheelController.getOutput());//Reference.shootSpeed);//topWheelController.getOutput());
-		System.out.println(bottomWheelController.getOutput());
-		bottomFlyWheel.set(-1 * topWheelController.getOutput());//-1 * Reference.shootSpeed);//bottomWheelController.getOutput());
+		//System.out.println(bottomWheelController.getOutput());
+		bottomFlyWheel.set(-1 * bottomWheelController.getOutput());//-1 * Reference.shootSpeed);//bottomWheelController.getOutput());
 		//Timer.delay(.2);
 		//feedWheel.set(Reference.shooterFeedSpeed);
 	}
@@ -178,6 +181,12 @@ public class Shooter implements Loopable{
 			topWheelController.setSetpoint(Reference.spyShotSpeedTop);
 			bottomWheelController.setSetpoint(Reference.spyShotSpeedBottom);
 			currentArmSetpoint = Reference.spyShotAngle;
+			break;
+		case AUTO2:
+			topWheelController.setSetpoint(Reference.autoShotSpeedTop);
+			bottomWheelController.setSetpoint(Reference.autoShotSpeedBottom);
+			currentArmSetpoint = Reference.autoShotAngle;
+			break;
 		case OFF:
 			stopWheels();
 			lower();

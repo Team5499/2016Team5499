@@ -42,13 +42,13 @@ public class Intake implements Loopable {
 
 	public void raiseArm() {
 		armMotor.set(.6);
-		Timer.delay(1);
+		Timer.delay(.75);
 		armMotor.set(0);
 	}
 
 	public void lowerArm() {
 		armMotor.set(-.6);
-		Timer.delay(.5);
+		Timer.delay(.75);
 		armMotor.set(0);
 		
 	}

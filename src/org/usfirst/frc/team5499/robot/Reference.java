@@ -77,21 +77,21 @@ public class Reference {
 	public static int driveRight2PDPPort = 15;
 	public static int shooterFeedWheelButton = 1;
 	public static int shooterArmControlButton = 3;
-	public static double shooterWheelPGainTop = .000006; //.000006
+	public static double shooterWheelPGainTop = .000002; //.000006
 	public static double shooterWheelIGainTop = 0;
 	public static double shooterWheelDGainTop = 0;
-	public static double shooterWheelPGainBot = .00005;
+	public static double shooterWheelPGainBot = .000001;
 	public static double shooterWheelIGainBot = 0;
 	public static double shooterWheelDGainBot = 0;
 	public static double shooterWheelKV = 0;
 	public static double shooterWheelILimit = 1000;
 	public static double shooterWheelMaxTop = 5300;
 	public static double shooterWheelMaxBot = 4800;
-	public static double topWheelBatterSpeed = 4000;
-	public static double bottomWheelBatterSpeed = 2000;
+	public static double topWheelBatterSpeed = 3800;
+	public static double bottomWheelBatterSpeed = 2500;
 	public static double topWheelCleatSpeed = 5100;
 	public static double bottomWheelCleatSpeed = 5000;
-	public static double armBatterAng = 27.5;
+	public static double armBatterAng = 20.35;//27.5;
 	public static double armCleatAng = 35;
 	public static int wheelDriveAxis = 0;
 	public static int throttleAxis = 1;
@@ -113,9 +113,9 @@ public class Reference {
 	
 	public static double driveP = .13;
 	public static double turnP = .1; //.03
-	public static double spyShotSpeedTop = 5400;
-	public static double spyShotSpeedBottom = 5200;
-	public static double spyShotAngle = 51;
+	public static double spyShotSpeedTop = 5200;
+	public static double spyShotSpeedBottom = 5000;
+	public static double spyShotAngle = 45;
 	public static int visionShotButton = 13;
 
 }

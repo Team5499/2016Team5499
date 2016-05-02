@@ -103,8 +103,8 @@ public class Drive implements Loopable {
 	@Override
 	public void update() {
 		Robot.hardware.c.setClosedLoopControl(true);
-		if(Robot.hardware.operatorStation.getButton(StickEnum.WHEEL, 7)){
-		}
+//		if(Robot.hardware.operatorStation.getButton(StickEnum.WHEEL, 7)){
+//		}
 		if(Robot.getState() == Robot.StateEnum.TELEOP){
 			if(!visionControl){
 				inverted = -1;
@@ -125,37 +125,37 @@ public class Drive implements Loopable {
 	//			if(Math.abs(lastShiftTime - curTime) > .125){
 					if(Robot.hardware.operatorStation.getButton(StickEnum.THROTTLE, Reference.shiftButton)){
 						shift(Commands.ShiftRequest.HIGH);
-						System.out.println("attempt shift high");
+					//	System.out.println("attempt shift high");
 						lastShiftTime = curTime;
 						
 					}else if(!Robot.hardware.operatorStation.getButton(StickEnum.THROTTLE, Reference.shiftButton)){
 						shift(Commands.ShiftRequest.LOW);
-						System.out.println("attempt shift low");
+					//	System.out.println("attempt shift low");
 						lastShiftTime = curTime;
 					}else{
 						shift(Commands.ShiftRequest.OFF);
 					}
-				System.out.println("teleop drive");
+				 //System.out.println("teleop drive");
 	//				
 	//			}else{
 	//				shift(Commands.ShiftRequest.OFF);
 	//			}
-			}else{
-				if(!visReady){
-					double theta = -1 * Robot.androidHandler.theta;
-					//double gyro = Robot.hardware.drive.gyro.getInput();
-					double pTerm = theta * Reference.turnP;
-					Robot.hardware.drive.setMotors(-pTerm, pTerm);
-					System.out.println("pTerm: " + pTerm);
-					if( theta > -.5 && theta < .5 && Math.abs((lastTheta - theta)) < .25) {
-						visReady = true;
-					}else{
-						visReady = false;
-					}
-					lastTheta = theta;
-				}else{
-					Robot.hardware.drive.setMotors(0, 0);
-				}
+//			}else{
+//				if(!visReady){
+//					double theta = -1 * Robot.androidHandler.theta;
+//					//double gyro = Robot.hardware.drive.gyro.getInput();
+//					double pTerm = theta * Reference.turnP;
+//					Robot.hardware.drive.setMotors(-pTerm, pTerm);
+//					System.out.println("pTerm: " + pTerm);
+//					if( theta > -.5 && theta < .5 && Math.abs((lastTheta - theta)) < .25) {
+//						visReady = true;
+//					}else{
+//						visReady = false;
+//					}
+//					lastTheta = theta;
+//				}else{
+//					Robot.hardware.drive.setMotors(0, 0);
+//				}
 			}
 		}else if(Robot.getState() == Robot.StateEnum.AUTO){
 //			leftPosControl.update();
@@ -279,12 +279,12 @@ public class Drive implements Loopable {
 		case HIGH:
 			leftShift.set(DoubleSolenoid.Value.kForward);
 			rightShift.set(DoubleSolenoid.Value.kForward);
-			System.out.println("shiftHigh");
+			//System.out.println("shiftHigh");
 			break;
 		case LOW:
 			leftShift.set(DoubleSolenoid.Value.kReverse);
 			rightShift.set(DoubleSolenoid.Value.kReverse);
-			System.out.println("shiftLow");
+			//System.out.println("shiftLow");
 			break;
 		case OFF:
 			leftShift.set(DoubleSolenoid.Value.kOff);

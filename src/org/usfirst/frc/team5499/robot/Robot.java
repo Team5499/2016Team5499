@@ -5,7 +5,6 @@ import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-import org.usfirst.frc.team5499.lib.util.Looper;
 import org.usfirst.frc.team5499.lib.util.MultiLooper;
 import org.usfirst.frc.team5499.robot.auto.AutoMode;
 import org.usfirst.frc.team5499.robot.auto.AutoModeSequences;
@@ -31,7 +30,6 @@ public class Robot extends IterativeRobot {
 	}
 	
 	MultiLooper controlLooper = new MultiLooper("controllers", 1 / 200.0);
-	Looper httpRequestLooper;
 	public static Hardware hardware;
 	static StateEnum state;
 	CommandManager cmdManager; 
@@ -40,18 +38,14 @@ public class Robot extends IterativeRobot {
 	String fileString;
 	boolean autohasshot;
 	AutoMode autoMode;
-	public static AndroidHandler androidHandler;
     AutoModeSequences autoModeSequences;
     Iterator<Entry<String, ArrayDeque<Command>>> sequenceIterator;
     
-    public static String theta;
+//    public static String theta;
 	public static Commands cmds;
 		
     @Override
 	public void robotInit() {
-    	androidHandler = new AndroidHandler();
-    	androidHandler.init();
-    	httpRequestLooper = new Looper("httprequest", androidHandler, 1 / 10.0);
     	Timer.delay(1);
     	System.out.println("robotInit");
     	hardware = new Hardware();
@@ -86,8 +80,6 @@ public class Robot extends IterativeRobot {
     	autoMode.start();
     	controlLooper.addLoopable(autoMode);
     	controlLooper.start();
-    	httpRequestLooper.stop();
-    	httpRequestLooper.start();
 		//hardware.drive.setTrajectory(trajPair);
 		//hardware.shooter.lower();
 		hardware.drive.setInverted(false);
@@ -98,8 +90,8 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void autonomousPeriodic() {
-//    	cmdManager.update(cmds);
-//    	System.out.println(Robot.hardware.drive.gyro.gyro.getAngle());
+    //	cmdManager.update(cmds);
+    //	System.out.println(Robot.hardware.drive.gyro.gyro.getAngle());
     }
     @Override
     public void teleopInit(){
@@ -107,8 +99,6 @@ public class Robot extends IterativeRobot {
     	controlLooper.removeLoopable(autoMode);
     	controlLooper.stop();
     	controlLooper.start();
-    	httpRequestLooper.stop();
-    	httpRequestLooper.start();
     	hardware.shooter.stopWheels();
     	hardware.shooter.lower();
     	CowGyro.FinalizeCalibration();
@@ -120,11 +110,14 @@ public class Robot extends IterativeRobot {
     }
     @Override
     public void teleopPeriodic() {
-    //	System.out.println(hardware.shooter.getTopWheelSpeed());
+    	System.out.println(hardware.shooterTopSensor.getRate() + " top");
+    	System.out.println(hardware.shooterBottomSensor.getRate() + " bottom");
+    	//System.out.println(hardware.shooter.getTopWheelSpeed());
     	Commands cmds = hardware.operatorStation.getCommands();
     	//System.out.println(hardware.drive.encLeft.getDistance() + " left");
     	//System.out.println(hardware.drive.encRight.getDistance()+ " right");
-    	System.out.println(hardware.shooterArmPot.getInput());
+    	//System.out.println(hardware.drive.encLeft.getDistance());
+    	//System.out.println(hardware.drive.gyro.getInput());
     	cmdManager.update(cmds);
     }
     @Override
@@ -134,8 +127,6 @@ public class Robot extends IterativeRobot {
     @Override
     public void disabledInit(){
     	controlLooper.stop();
-    	httpRequestLooper.stop();
-    	httpRequestLooper.start();
     	CowGyro.BeginCalibration();
 //        Reference.shooterArmPotZero =  -1 * hardware.shooterArmPot.getInput();
 //        hardware.shooterArmPot = new Pot(Reference.shooterArmPotAIPort);

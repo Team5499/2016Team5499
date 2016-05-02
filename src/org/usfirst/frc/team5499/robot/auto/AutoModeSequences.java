@@ -15,52 +15,70 @@ public class AutoModeSequences {
 		modes.get("do nothing").addLast(new Command(Command.commandType.CMD_NULL));
 		
 		modes.put("1 ball", new ArrayDeque<Command>());
-		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_SHIFT, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 1, Command.IntakeRollerState.OFF));
-		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_AFLIP, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .1, Command.IntakeRollerState.OFF));
-		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_INTAKE, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 1, Command.IntakeRollerState.OFF));
-		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_DRIVE, -14.65, -14.65, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 6, Command.IntakeRollerState.OFF));
-		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_TURN, -13.65, -13.65, 52, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 3, Command.IntakeRollerState.OFF));
-		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_DRIVE, -7, -7, 52, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 4, Command.IntakeRollerState.OFF));
-		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_CHANGE_SHOT, -8, -8, 0, true, true, Commands.ShotRequest.CLEAT, 5200, 5000, Commands.ShiftRequest.HIGH, 1, Command.IntakeRollerState.OFF));
-		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_SHOOT, -8, -8, 0, true, true, Commands.ShotRequest.CLEAT, 5200, 5000, Commands.ShiftRequest.HIGH, 1, Command.IntakeRollerState.OFF));
+		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_SHIFT, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.LOW, .25, Command.IntakeRollerState.OFF));
+		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_AFLIP, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .5, Command.IntakeRollerState.OFF));
+		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_INTAKE, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 0.8, Command.IntakeRollerState.OFF));
+		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_DRIVE, -14.65, -14.65, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 4, Command.IntakeRollerState.OFF));
+		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_INTAKE, 0, 0, 0, false, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 0.8, Command.IntakeRollerState.OFF));
+		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_TURN, -14.65, -14.65, 52, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 1.75, Command.IntakeRollerState.OFF));
+		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_DRIVE, -1.5, -1.5, 52, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 1.75, Command.IntakeRollerState.OFF));
+		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_WAIT, -1.5, -1.5, 52, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .1, Command.IntakeRollerState.OFF));		
+		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_INTAKE, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 0.8, Command.IntakeRollerState.OFF));
+		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_CHANGE_SHOT, -8, -8, 0, true, true, Commands.ShotRequest.AUTO2, 5200, 5000, Commands.ShiftRequest.HIGH, 1, Command.IntakeRollerState.OFF));
+		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_SHOOT, -8, -8, 0, true, true, Commands.ShotRequest.AUTO2, 5200, 5000, Commands.ShiftRequest.HIGH, 1, Command.IntakeRollerState.OFF));
+//		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_SHOOTERDOWN, -8, -8, 0, true, true, Commands.ShotRequest.AUTO2, 5200, 5000, Commands.ShiftRequest.HIGH, 1, Command.IntakeRollerState.OFF));
+//
+//		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_INTAKE, 0, 0, 0, false, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 1.2, Command.IntakeRollerState.OFF));
+//		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_DRIVE, 1.5, 1.5, 53, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 2, Command.IntakeRollerState.OFF));
+//		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_TURN, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 2, Command.IntakeRollerState.OFF));
+//		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_INTAKE, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 1.2, Command.IntakeRollerState.OFF));
+//		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_DRIVE, 13.75, 13.75, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 6, Command.IntakeRollerState.OFF));
+//		
+//		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_INTAKEROLLER, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .75, Command.IntakeRollerState.IN));
+//		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_DRIVE, 1.5, 1.5, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 2, Command.IntakeRollerState.OFF));
+//		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_INTAKE, 0, 0, 0, false, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 1.2, Command.IntakeRollerState.OFF));		
+//		modes.get("1 ball").addLast(new Command(Command.commandType.CMD_INTAKEROLLER, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .1, Command.IntakeRollerState.OFF));
+//		
+////		
+		
+		
+//		modes.put("1 ball vision", new ArrayDeque<Command>());
+//		modes.get("1 ball vision").addLast(new Command(Command.commandType.CMD_SHIFT, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 1, Command.IntakeRollerState.OFF));
+//		modes.get("1 ball vision").addLast(new Command(Command.commandType.CMD_AFLIP, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .1, Command.IntakeRollerState.OFF));
+//		modes.get("1 ball vision").addLast(new Command(Command.commandType.CMD_INTAKE, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 1, Command.IntakeRollerState.OFF));
+//		modes.get("1 ball vision").addLast(new Command(Command.commandType.CMD_DRIVE, -8.65, -8.65, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 3, Command.IntakeRollerState.OFF));
+//		modes.get("1 ball vision").addLast(new Command(Command.commandType.CMD_TURN, -8.65, -8.65, 30, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 3, Command.IntakeRollerState.OFF));
+//		modes.get("1 ball vision").addLast(new Command(Command.commandType.CMD_TURNVISIONNOGYRO, -8.65, -8.65, 30, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 3, Command.IntakeRollerState.OFF));
+//		modes.get("1 ball vision").addLast(new Command(Command.commandType.CMD_CHANGE_SHOT, -8, -8, 0, true, true, Commands.ShotRequest.AUTO, 5200, 5000, Commands.ShiftRequest.HIGH, 1, Command.IntakeRollerState.OFF));
+//		modes.get("1 ball vision").addLast(new Command(Command.commandType.CMD_SHOOT, -8, -8, 0, true, true, Commands.ShotRequest.AUTO, 5200, 5000, Commands.ShiftRequest.HIGH, 1, Command.IntakeRollerState.OFF));
 
-		modes.put("1 ball vision", new ArrayDeque<Command>());
-		modes.get("1 ball vision").addLast(new Command(Command.commandType.CMD_SHIFT, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 1, Command.IntakeRollerState.OFF));
-		modes.get("1 ball vision").addLast(new Command(Command.commandType.CMD_AFLIP, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .1, Command.IntakeRollerState.OFF));
-		modes.get("1 ball vision").addLast(new Command(Command.commandType.CMD_INTAKE, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 1, Command.IntakeRollerState.OFF));
-		modes.get("1 ball vision").addLast(new Command(Command.commandType.CMD_DRIVE, -8.65, -8.65, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 3, Command.IntakeRollerState.OFF));
-		modes.get("1 ball vision").addLast(new Command(Command.commandType.CMD_TURN, -8.65, -8.65, 30, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 3, Command.IntakeRollerState.OFF));
-		modes.get("1 ball vision").addLast(new Command(Command.commandType.CMD_TURNVISIONNOGYRO, -8.65, -8.65, 30, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 3, Command.IntakeRollerState.OFF));
-		modes.get("1 ball vision").addLast(new Command(Command.commandType.CMD_CHANGE_SHOT, -8, -8, 0, true, true, Commands.ShotRequest.AUTO, 5200, 5000, Commands.ShiftRequest.HIGH, 1, Command.IntakeRollerState.OFF));
-		modes.get("1 ball vision").addLast(new Command(Command.commandType.CMD_SHOOT, -8, -8, 0, true, true, Commands.ShotRequest.AUTO, 5200, 5000, Commands.ShiftRequest.HIGH, 1, Command.IntakeRollerState.OFF));
-
-		double driveForwardDist = -6;
-		modes.put("2 ball vision", new ArrayDeque<Command>());
-		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_SHIFT, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .1, Command.IntakeRollerState.OFF));
-		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_AFLIP, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .1, Command.IntakeRollerState.OFF));
-		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_INTAKE, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .4, Command.IntakeRollerState.OFF));
-		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_DRIVE, driveForwardDist, driveForwardDist, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 1.5, Command.IntakeRollerState.OFF));
-		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_TURN, driveForwardDist, driveForwardDist, 30, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 1.5, Command.IntakeRollerState.OFF));
-		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_TURNVISIONNOGYRO, driveForwardDist, driveForwardDist, 30, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 2, Command.IntakeRollerState.OFF));
-		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_CHANGE_SHOT, 0, 0, 0, true, true, Commands.ShotRequest.AUTO, 5200, 5000, Commands.ShiftRequest.HIGH, 1, Command.IntakeRollerState.OFF));
-		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_SHOOT, 0, 0, 0, true, true, Commands.ShotRequest.AUTO, 5200, 5000, Commands.ShiftRequest.HIGH, .1, Command.IntakeRollerState.OFF));
-		
-		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_WAIT, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 5200, 5000, Commands.ShiftRequest.HIGH, .1, Command.IntakeRollerState.OFF));
-		
-		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_TURN, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 5200, 5000, Commands.ShiftRequest.HIGH, 1.5, Command.IntakeRollerState.OFF));
-		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_DRIVE, -(driveForwardDist + .5), -(driveForwardDist + .5), 0, true, true, Commands.ShotRequest.OFF, 5000, 5000, Commands.ShiftRequest.HIGH, 1.5, Command.IntakeRollerState.OFF)); 
-		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_INTAKEROLLER, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .1, Command.IntakeRollerState.IN));
-		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_DRIVE, .5, .5, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .5, Command.IntakeRollerState.IN));
-		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_INTAKE, 0, 0, 0, false, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .5, Command.IntakeRollerState.IN ));
-		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_INTAKEROLLER, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .1, Command.IntakeRollerState.OFF));
-		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_INTAKE, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .4, Command.IntakeRollerState.OFF ));
-		
-		
-		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_DRIVE, driveForwardDist, driveForwardDist, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 1.5, Command.IntakeRollerState.OFF));
-		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_TURN, driveForwardDist, driveForwardDist, 30, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 1.5, Command.IntakeRollerState.OFF));
-		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_TURNVISIONNOGYRO, driveForwardDist, driveForwardDist, 30, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 2, Command.IntakeRollerState.OFF));
-		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_CHANGE_SHOT, 0, 0, 0, true, true, Commands.ShotRequest.AUTO, 5200, 5000, Commands.ShiftRequest.HIGH, 1, Command.IntakeRollerState.OFF));
-		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_SHOOT, 0, 0, 0, true, true, Commands.ShotRequest.AUTO, 5200, 5000, Commands.ShiftRequest.HIGH, 1, Command.IntakeRollerState.OFF));		
+//		double driveForwardDist = -6;
+//		modes.put("2 ball vision", new ArrayDeque<Command>());
+//		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_SHIFT, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .1, Command.IntakeRollerState.OFF));
+//		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_AFLIP, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .1, Command.IntakeRollerState.OFF));
+//		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_INTAKE, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .4, Command.IntakeRollerState.OFF));
+//		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_DRIVE, driveForwardDist, driveForwardDist, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 1.5, Command.IntakeRollerState.OFF));
+//		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_TURN, driveForwardDist, driveForwardDist, 30, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 1.5, Command.IntakeRollerState.OFF));
+//		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_TURNVISIONNOGYRO, driveForwardDist, driveForwardDist, 30, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 2, Command.IntakeRollerState.OFF));
+//		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_CHANGE_SHOT, 0, 0, 0, true, true, Commands.ShotRequest.AUTO, 5200, 5000, Commands.ShiftRequest.HIGH, 1, Command.IntakeRollerState.OFF));
+//		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_SHOOT, 0, 0, 0, true, true, Commands.ShotRequest.AUTO, 5200, 5000, Commands.ShiftRequest.HIGH, .1, Command.IntakeRollerState.OFF));
+//		
+//		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_WAIT, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 5200, 5000, Commands.ShiftRequest.HIGH, .1, Command.IntakeRollerState.OFF));
+//		
+//		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_TURN, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 5200, 5000, Commands.ShiftRequest.HIGH, 1.5, Command.IntakeRollerState.OFF));
+//		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_DRIVE, -(driveForwardDist + .5), -(driveForwardDist + .5), 0, true, true, Commands.ShotRequest.OFF, 5000, 5000, Commands.ShiftRequest.HIGH, 1.5, Command.IntakeRollerState.OFF)); 
+//		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_INTAKEROLLER, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .1, Command.IntakeRollerState.IN));
+//		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_DRIVE, .5, .5, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .5, Command.IntakeRollerState.IN));
+//		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_INTAKE, 0, 0, 0, false, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .5, Command.IntakeRollerState.IN ));
+//		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_INTAKEROLLER, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .1, Command.IntakeRollerState.OFF));
+//		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_INTAKE, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .4, Command.IntakeRollerState.OFF ));
+//		
+//		
+//		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_DRIVE, driveForwardDist, driveForwardDist, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 1.5, Command.IntakeRollerState.OFF));
+//		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_TURN, driveForwardDist, driveForwardDist, 30, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 1.5, Command.IntakeRollerState.OFF));
+//		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_TURNVISIONNOGYRO, driveForwardDist, driveForwardDist, 30, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 2, Command.IntakeRollerState.OFF));
+//		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_CHANGE_SHOT, 0, 0, 0, true, true, Commands.ShotRequest.AUTO, 5200, 5000, Commands.ShiftRequest.HIGH, 1, Command.IntakeRollerState.OFF));
+//		modes.get("2 ball vision").addLast(new Command(Command.commandType.CMD_SHOOT, 0, 0, 0, true, true, Commands.ShotRequest.AUTO, 5200, 5000, Commands.ShiftRequest.HIGH, 1, Command.IntakeRollerState.OFF));		
 		
 //		modes.put("2 ball", new ArrayDeque<Command>());
 //		modes.get("2 ball").addLast(new Command(Command.commandType.CMD_SHIFT, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 1, IntakeRollerState.OFF));
@@ -104,12 +122,15 @@ public class AutoModeSequences {
 		
 
 		modes.put("rock wall", new ArrayDeque<Command>());
-		modes.get("rock wall").addLast(new Command(Command.commandType.CMD_SHIFT, 0, 0, 0, false, false, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.LOW, 1, IntakeRollerState.OFF));
-		modes.get("rock wall").addLast(new Command(Command.commandType.CMD_DRIVE, 15, 15, 0, false, false, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.LOW, 9, IntakeRollerState.OFF));
+		modes.get("rock wall").addLast(new Command(Command.commandType.CMD_SHIFT, 0, 0, 0, false, false, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 1, IntakeRollerState.OFF));
+		modes.get("rock wall").addLast(new Command(Command.commandType.CMD_DRIVE, -15, -15, 0, false, false, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.LOW, 9, IntakeRollerState.OFF));
 		
 		modes.put("spy shot", new ArrayDeque<Command>());
-		modes.get("spy shot").addLast(new Command(Command.commandType.CMD_SHIFT, 0, 0, 0, false, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 1, IntakeRollerState.OFF));
-		modes.get("spy shot").addLast(new Command(Command.commandType.CMD_AFLIP, 0, 0, 0, false, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 2, IntakeRollerState.OFF));
+		modes.get("spy shot").addLast(new Command(Command.commandType.CMD_SHIFT, 0, 0, 0, false, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.LOW, 1, IntakeRollerState.OFF));
+		modes.get("spy shot").addLast(new Command(Command.commandType.CMD_AFLIP, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, .5, Command.IntakeRollerState.OFF));
+		modes.get("spy shot").addLast(new Command(Command.commandType.CMD_DRIVE, -1.5, -1.5, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 4, Command.IntakeRollerState.OFF));
+		modes.get("spy shot").addLast(new Command(Command.commandType.CMD_WAIT, -1.5, -1.5, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 1, Command.IntakeRollerState.OFF));		
+		modes.get("spy shot").addLast(new Command(Command.commandType.CMD_INTAKE, 0, 0, 0, true, true, Commands.ShotRequest.OFF, 0, 0, Commands.ShiftRequest.HIGH, 0.8, Command.IntakeRollerState.OFF));
 		modes.get("spy shot").addLast(new Command(Command.commandType.CMD_CHANGE_SHOT, 0, 0, 0, false, true, Commands.ShotRequest.SPY, 5400, 5200, Commands.ShiftRequest.HIGH, 3, IntakeRollerState.OFF));
 		modes.get("spy shot").addLast(new Command(Command.commandType.CMD_SHOOT, 0, 0, 0, false, true, Commands.ShotRequest.SPY, 5400, 5200, Commands.ShiftRequest.HIGH, 2, IntakeRollerState.OFF));	
 	
