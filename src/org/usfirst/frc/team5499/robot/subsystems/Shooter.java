@@ -138,13 +138,13 @@ public class Shooter implements Loopable{
 	
 	public void runWheelsIn(){
 		topFlyWheel.set(-1 * intakeSpeed);
-		bottomFlyWheel.set(intakeSpeed);
-		feedWheel.set(-1 * Reference.shooterFeedSpeed);
+		bottomFlyWheel.set(-1 * intakeSpeed);
+		feedWheel.set(Reference.shooterFeedSpeed);
 	}
 	public void shootWheels(){
 		topFlyWheel.set(topWheelController.getOutput());//Reference.shootSpeed);//topWheelController.getOutput());
 		//System.out.println(bottomWheelController.getOutput());
-		bottomFlyWheel.set(-1 * bottomWheelController.getOutput());//-1 * Reference.shootSpeed);//bottomWheelController.getOutput());
+		bottomFlyWheel.set(bottomWheelController.getOutput());//-1 * Reference.shootSpeed);//bottomWheelController.getOutput());
 		//Timer.delay(.2);
 		//feedWheel.set(Reference.shooterFeedSpeed);
 	}
@@ -208,7 +208,7 @@ public class Shooter implements Loopable{
 
 
 	public void feed() {
-		feedWheel.set(1);
+		feedWheel.set(-1);
 	}
 
 

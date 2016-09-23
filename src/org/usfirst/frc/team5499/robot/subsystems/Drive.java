@@ -55,7 +55,7 @@ public class Drive implements Loopable {
 	public boolean visReady;
 	
 	public Drive(CANTalon motorLeft1, CANTalon motorLeft2, CANTalon motorRight1, CANTalon motorRight2, 
-			Encoder encLeft, Encoder encRight, DoubleSolenoid leftShift, DoubleSolenoid rightShift, CowGyro gyro){
+			Encoder encLeft, Encoder encRight, DoubleSolenoid leftShift, DoubleSolenoid rightShift){//, CowGyro gyro){
 		trajFinished = false;
 		this.inverted = -1;
 		this.motorLeft1 = motorLeft1;
@@ -64,7 +64,7 @@ public class Drive implements Loopable {
 		this.motorRight2 = motorRight2;
 		this.encLeft = encLeft;
 		this.encRight = encRight;
-		this.gyro = gyro;
+		//this.gyro = gyro;
 		this.encLeft.setDistancePerPulse(Reference.distancePerPulseLeft);
 		this.encRight.setDistancePerPulse(Reference.distancePerPulseRight);
 		this.encRight.setReverseDirection(false);
@@ -102,7 +102,7 @@ public class Drive implements Loopable {
 	
 	@Override
 	public void update() {
-		Robot.hardware.c.setClosedLoopControl(true);
+		Robot.hardware.c.setClosedLoopControl(false);
 //		if(Robot.hardware.operatorStation.getButton(StickEnum.WHEEL, 7)){
 //		}
 		if(Robot.getState() == Robot.StateEnum.TELEOP){

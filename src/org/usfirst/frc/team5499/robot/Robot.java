@@ -37,8 +37,8 @@ public class Robot extends IterativeRobot {
 	Trajectory.Pair trajPair;
 	String fileString;
 	boolean autohasshot;
-	AutoMode autoMode;
-    AutoModeSequences autoModeSequences;
+//	AutoMode autoMode;
+//    AutoModeSequences autoModeSequences;
     Iterator<Entry<String, ArrayDeque<Command>>> sequenceIterator;
     
 //    public static String theta;
@@ -59,33 +59,33 @@ public class Robot extends IterativeRobot {
 //		trajPair = autoModePath.getPair();
 //		System.out.println(trajPair.toString());
 		autohasshot = false;
-		autoMode = new AutoMode();
-        autoModeSequences = new AutoModeSequences();
-        sequenceIterator = autoModeSequences.modes.entrySet().iterator();
+//		autoMode = new AutoMode();
+//        autoModeSequences = new AutoModeSequences();
+//        sequenceIterator = autoModeSequences.modes.entrySet().iterator();
         
-        this.cycleNextAutoMode();
+//        this.cycleNextAutoMode();
        // autoMode.currentCommand 
 
 		hardware.shooter.lower();
 		
 		//hardware.camera.startAcquire();
 		
-		CowAlphaNum.SetBanner("5499");
-		CowAlphaNum.DisplayBanner();
+//		CowAlphaNum.SetBanner("5499");
+//		CowAlphaNum.DisplayBanner();
 	}
     
     @Override
     public void autonomousInit() {
     	state = StateEnum.AUTO;
-    	autoMode.start();
-    	controlLooper.addLoopable(autoMode);
-    	controlLooper.start();
+//    	autoMode.start();
+//    	controlLooper.addLoopable(autoMode);
+//    	controlLooper.start();
 		//hardware.drive.setTrajectory(trajPair);
 		//hardware.shooter.lower();
 		hardware.drive.setInverted(false);
 		hardware.encLeft.reset();
 		hardware.encRight.reset();
-		CowGyro.FinalizeCalibration();
+//		CowGyro.FinalizeCalibration();
     }
 
     @Override
@@ -96,12 +96,12 @@ public class Robot extends IterativeRobot {
     @Override
     public void teleopInit(){
     	state = StateEnum.TELEOP;
-    	controlLooper.removeLoopable(autoMode);
+//    	controlLooper.removeLoopable(autoMode);
     	controlLooper.stop();
     	controlLooper.start();
     	hardware.shooter.stopWheels();
     	hardware.shooter.lower();
-    	CowGyro.FinalizeCalibration();
+    //	CowGyro.FinalizeCalibration();
         hardware.driveLeft1.enable();
         hardware.driveLeft2.enable();
         hardware.driveRight1.enable();
@@ -110,8 +110,9 @@ public class Robot extends IterativeRobot {
     }
     @Override
     public void teleopPeriodic() {
-    	System.out.println(hardware.shooterTopSensor.getRate() + " top");
+    	System.out.println("Pot " + hardware.shooterArmPot.get());
     	System.out.println(hardware.shooterBottomSensor.getRate() + " bottom");
+    	System.out.println(hardware.shooterTopSensor.getRate() + " top");
     	//System.out.println(hardware.shooter.getTopWheelSpeed());
     	Commands cmds = hardware.operatorStation.getCommands();
     	//System.out.println(hardware.drive.encLeft.getDistance() + " left");
@@ -127,7 +128,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void disabledInit(){
     	controlLooper.stop();
-    	CowGyro.BeginCalibration();
+//    	CowGyro.BeginCalibration();
 //        Reference.shooterArmPotZero =  -1 * hardware.shooterArmPot.getInput();
 //        hardware.shooterArmPot = new Pot(Reference.shooterArmPotAIPort);
     }
@@ -137,21 +138,21 @@ public class Robot extends IterativeRobot {
         {
         	System.out.println("switch button pushed");
             Timer.delay(0.5);
-            this.cycleNextAutoMode();
+//            this.cycleNextAutoMode();
         }
       //  System.out.println(Robot.hardware.shooterArmPot.get());
 
 
     }
 
-    public void cycleNextAutoMode() {
-        if(!sequenceIterator.hasNext()) {
-            sequenceIterator = autoModeSequences.modes.entrySet().iterator();
-        }
-        Entry<String, ArrayDeque<Command>> sequence = (Entry<String, ArrayDeque<Command>>)sequenceIterator.next();
-        System.out.println(sequence.getKey());
-        autoMode.setCommandSequence((ArrayDeque<Command>)sequence.getValue());
-    }
+//    public void cycleNextAutoMode() {
+//        if(!sequenceIterator.hasNext()) {
+//            sequenceIterator = autoModeSequences.modes.entrySet().iterator();
+//        }
+//        Entry<String, ArrayDeque<Command>> sequence = (Entry<String, ArrayDeque<Command>>)sequenceIterator.next();
+//        System.out.println(sequence.getKey());
+//        autoMode.setCommandSequence((ArrayDeque<Command>)sequence.getValue());
+//    }
     
     public static StateEnum getState(){
     	return state;

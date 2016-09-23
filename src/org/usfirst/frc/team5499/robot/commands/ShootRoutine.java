@@ -8,7 +8,7 @@ public class ShootRoutine extends Routine{
 	public RobotState update(Commands commands, RobotState state) {
 		// TODO Auto-generated method stub
 		shooter.feed();
-		Timer.delay(.8);
+		Timer.delay(2);
 		shooter.stopWheels();
 		shooter.lower();
 		state.shooting = false;

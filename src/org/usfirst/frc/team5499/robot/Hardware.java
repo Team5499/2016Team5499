@@ -58,7 +58,7 @@ public class Hardware {
 	public CowGyro gyro;
 		
 	public Hardware(){	
-		gyro = new CowGyro();
+		//gyro = new CowGyro();
 		aFlipMotor = new CANTalon(Reference.aFlipCANID);
 		aflip = new Aflip(aFlipMotor);
 		
@@ -100,6 +100,6 @@ public class Hardware {
 				shooterFeedWheel, shooterArmMotor, shooterBottomSensor, shooterTopSensor, shooterArmPot);
 		operatorStation = new OI(leftStick, rightStick, xBoxController, wheel, throttle);
 		intake = new Intake(intakeArmMotor, intakeRollerMotor, intakeEncoder);
-		drive = new Drive(driveLeft1, driveLeft2, driveRight1, driveRight2, encLeft, encRight, shiftLeft, shiftRight, gyro);
+		drive = new Drive(driveLeft1, driveLeft2, driveRight1, driveRight2, encLeft, encRight, shiftLeft, shiftRight);//, gyro);
 	}
 }
